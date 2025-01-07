@@ -20,11 +20,12 @@ import {
 import { CurrentTime } from "../../helper/common";
 
 export class UserRepository {
-  public async userSignUpV1(userData: any, domain_code?: any): Promise<any> {
+  public async userSignUpV1(userData: any, token_data?: any): Promise<any> {
+
+    console.log('token_data', token_data)
     console.log('userData', userData)
 
     const hashedPassword = await bcrypt.hash(userData.temp_password, 10);
-    console.log("line ---- 25", hashedPassword);
 
     const check = [userData.temp_username];
     console.log(check);
@@ -36,7 +37,6 @@ export class UserRepository {
 
     if (userFind) {
 
-      console.log('line ----- 38',)
       return encrypt(
         {
           message: "Already exit",
@@ -76,7 +76,7 @@ export class UserRepository {
         userData.temp_username, // refcust Username
         userData.temp_password, // refCustPassword
         hashedPassword, // refCustHashedPassword
-        userData.temp_email,
+        userData.temp_phone,
       ];
 
       console.log(domainParams);

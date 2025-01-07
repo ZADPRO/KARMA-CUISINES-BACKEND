@@ -1,0 +1,225 @@
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T05:51:09.956Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T05:52:43.087Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T05:53:11.963Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T05:53:24.075Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/LogoUpdate conflicts with existing /api/v1/vendorRoutes/LogoUpdate\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T05:54:17.040Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T05:54:44.519Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T05:56:56.231Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:13:18.786Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:16:17.867Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:16:41.031Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:16:54.048Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:17:19.570Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:17:58.628Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:18:55.833Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:19:00.158Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:19:06.120Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:19:18.840Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:34:37.370Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:34:58.497Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T06:35:11.725Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:37:45.292Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:38:23.396Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:40:28.726Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:41:04.888Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T07:43:21.286Z"}
+{"level":"error","message":"Error in vendor profile Cannot read properties of undefined (reading 'refUserCustId')","stack":"TypeError: Cannot read properties of undefined (reading 'refUserCustId')\n    at VendorRepository.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:284:36)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:4:12)\n    at VendorRepository.VendorprofilePageDataV1 (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:220:16)\n    at VendorResolver.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\resolver.ts:12:40)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\resolver.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T07:43:21.307Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:45:14.288Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T07:45:27.789Z"}
+{"level":"error","message":"Error in vendor profile Cannot read properties of undefined (reading 'refUserCustId')","stack":"TypeError: Cannot read properties of undefined (reading 'refUserCustId')\n    at VendorRepository.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:284:36)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:4:12)\n    at VendorRepository.VendorprofilePageDataV1 (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:220:16)\n    at VendorResolver.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\resolver.ts:12:40)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\resolver.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T07:45:27.802Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:49:14.297Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T07:49:18.032Z"}
+{"level":"error","message":"Error in vendor profile Cannot read properties of undefined (reading 'refUserCustId')","stack":"TypeError: Cannot read properties of undefined (reading 'refUserCustId')\n    at VendorRepository.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:284:36)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:4:12)\n    at VendorRepository.VendorprofilePageDataV1 (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:220:16)\n    at VendorResolver.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\resolver.ts:12:40)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\resolver.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T07:49:18.054Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:50:13.615Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:50:23.268Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T07:50:26.222Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:52:34.435Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:52:37.865Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T07:53:33.011Z"}
+{"level":"error","message":"Error in vendor profile Cannot read properties of undefined (reading 'refUserCustId')","stack":"TypeError: Cannot read properties of undefined (reading 'refUserCustId')\n    at VendorRepository.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:260:36)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:4:12)\n    at VendorRepository.VendorprofilePageDataV1 (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\vendor-repository.ts:203:16)\n    at VendorResolver.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\resolver.ts:12:40)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\resolver.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T07:53:33.028Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:55:42.072Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T07:56:44.102Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T07:56:51.218Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T08:06:04.218Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T08:06:14.886Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T08:06:34.546Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T08:06:39.021Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T08:06:51.263Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T08:07:01.811Z"}
+{"level":"info","message":"Router-----Vendor Profile Page Data","timestamp":"2025-01-07T08:07:12.309Z"}
+{"level":"error","message":"Error in vendor profile Cannot read properties of undefined (reading 'id')","stack":"TypeError: Cannot read properties of undefined (reading 'id')\n    at VendorProfile.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:82:44)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:4:12)\n    at VendorProfile.VendorprofilePageData (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:78:19)\n    at exports.Manager.execute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\toolkit.js:57:29)\n    at Object.internals.handler (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\handler.js:46:48)\n    at exports.execute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\handler.js:31:36)\n    at Request._lifecycle (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\request.js:370:68)","timestamp":"2025-01-07T08:07:12.327Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T08:10:37.641Z"}
+{"level":"info","message":"Router-----Vendor Profile Page Data","timestamp":"2025-01-07T08:10:51.014Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:21:19.163Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:22:59.024Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:23:58.658Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:24:09.931Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:24:15.574Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:24:18.554Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:24:29.093Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:25:46.100Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:26:53.834Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:26:59.610Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:27:20.852Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:27:35.910Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:27:51.783Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:27:56.551Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:28:04.825Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:28:07.590Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:28:54.336Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:28:56.717Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:29:43.248Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:30:03.216Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:30:04.265Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:30:16.768Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:30:35.174Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:30:56.825Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:31:25.122Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:32:02.693Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:32:13.631Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:32:33.038Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:32:36.767Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:44:27.020Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:45:16.433Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:48:12.894Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:49:21.496Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:49:24.457Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T09:49:31.824Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:55:38.744Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:55:58.180Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:56:01.029Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:56:06.354Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T09:56:09.701Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/BasicDetailPageData conflicts with existing /api/v1/vendorRoutes/BasicDetailPageData","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/BasicDetailPageData conflicts with existing /api/v1/vendorRoutes/BasicDetailPageData\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-07T10:07:24.486Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:07:31.346Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:07:40.062Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:08:16.816Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:08:21.578Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:08:43.725Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:08:54.913Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:47:15.775Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:47:56.104Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:48:13.659Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:48:19.186Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:50:08.542Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:51:47.232Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T10:57:33.892Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T10:57:38.962Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T10:58:05.362Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:00:01.000Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:00:11.700Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:00:22.849Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:00:28.929Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:00:33.619Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:00:40.445Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:01:46.083Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:02:21.012Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:02:34.774Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:02:36.775Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:03:32.694Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:03:56.024Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:04:44.520Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:04:48.850Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:06:02.931Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:06:47.753Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:07:02.534Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:07:07.050Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:07:40.163Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:10:58.929Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:11:56.224Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:16:40.867Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:16:49.982Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:17:06.954Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:17:17.637Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:17:24.442Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:18:05.211Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:18:26.404Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:18:53.437Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:18:59.617Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:19:02.266Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:19:07.735Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:19:12.204Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:19:57.842Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:20:12.194Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:20:39.406Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:20:46.275Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:20:51.417Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:20:56.155Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:21:07.211Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:21:11.367Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:21:45.344Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:21:50.219Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:22:36.169Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:23:35.019Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:23:38.768Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:25:57.758Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:26:04.071Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:26:11.998Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:27:20.587Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:27:35.205Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:27:40.243Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:27:45.722Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:27:52.165Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:27:56.906Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:29:48.808Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:29:52.942Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:30:34.899Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:30:39.802Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:32:02.021Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:32:10.238Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:32:15.608Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:32:18.504Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:32:23.027Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:32:56.779Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:33:00.343Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:33:17.265Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:33:26.674Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:33:29.459Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:34:29.338Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:34:42.518Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:34:46.342Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:35:14.455Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:35:17.795Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:35:21.748Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:36:00.556Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:36:06.456Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:36:11.967Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:37:01.070Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:37:05.353Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:38:38.429Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:38:45.560Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:38:59.688Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:39:12.849Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:40:38.639Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:40:45.042Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T11:40:58.998Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:41:20.714Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T11:59:06.038Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:00:14.597Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:02:39.656Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:03:43.511Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:04:01.672Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:05:25.601Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T12:06:49.916Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:14:16.512Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:14:23.092Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:14:46.129Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:15:11.360Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:15:15.362Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:15:18.712Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T12:15:33.085Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:18:57.330Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:19:03.537Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:19:27.262Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:19:30.674Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T12:19:35.974Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:20:20.642Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T12:20:24.227Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T12:23:24.172Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:25:03.350Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T12:25:11.750Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:25:55.066Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T12:29:10.792Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:31:15.813Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-07T12:31:20.610Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-07T12:31:31.337Z"}

@@ -1,0 +1,155 @@
+import * as Hapi from "@hapi/hapi";
+
+
+// import { Logger } from "winston";
+import { decodeToken, validateToken } from "../../helper/token";
+import { VendorProfile } from "./controller";
+import IRoute from "../../helper/routes";
+
+
+export class vendorRoutes implements IRoute {
+  public async register(server: any): Promise<any> {
+    return new Promise((resolve) => {
+      const controller = new VendorProfile();
+      server.route([
+        {
+          method: "POST",
+          //pre: [{ method: validateToken, assign: "token" }],
+          path: "/api/v1/vendorRoutes/BasicDetails",
+          config: {
+            handler: controller.Vendorprofile,
+            description: "Store BasicDetails",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/BasicDetailPageData",
+          config: {
+            // pre: [{ method: validateToken, assign: "token" }], // Use the validateToken function here
+            handler: controller.VendorprofilePageData,
+            description: "Passing the Vendorprofile Data to the Vendorprofile Page",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/UpdateBasicDetail",
+          config: {
+            // pre: [{ method: validateToken, assign: "token" }], // Use the validateToken function here
+            handler: controller.UpdateBasicDetail,
+            description: "Passing the Vendorprofile Data to the Vendorprofile Page",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/BankDetails",
+          config: {
+            handler: controller.VendorBankDetails,
+            description: "Store VendorBankDetails",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/RestaurentDocUplaod",
+          config: {
+            // pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.RestaurentDocUplaod,
+            description: "Upload Restaurent Documents",
+            tags: ["api", "Users"],
+            auth: false,
+            payload: {
+              maxBytes: 10485760,
+              output: "stream",
+              parse: true,
+              multipart: true,
+            },
+
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/RestaurentDocUpdate",
+          config: {
+            handler: controller.RestaurentDocUpdate,
+            description: "Store Restaurent Documents",
+            auth: false,
+          },
+        },
+        {
+          method: "DELETE",
+          path: "/api/v1/vendorRoutes/deleteRestaurentDoc",
+          config: {
+            handler: controller.deleteRestaurentDoc,
+            description: "Delete Restaurent Documents",
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/LogoUpload",
+          config: {
+            // pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.LogoUpload,
+            description: "Upload Logo Image",
+            tags: ["api", "Users"],
+            auth: false,
+            payload: {
+              maxBytes: 10485760,
+              output: "stream",
+              parse: true,
+              multipart: true,
+            },
+
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/LogoUpdate",
+          config: {
+            handler: controller.LogoUpdate,
+            description: "Store Logo image",
+            auth: false,
+          },
+        },
+        {
+          method: "DELETE",
+          path: "/api/v1/vendorRoutes/deleteLogo",
+          config: {
+            handler: controller.deleteLogo,
+            description: "Delete Logo Image",
+            auth: false,
+          },
+        },
+
+        // {
+        //   method: "POST",
+        //   path: "/api/v1/vendorRoutes/LogoUpdate",
+        //   config: {
+        //     handler: controller.LogoUpdate,
+        //     description: "Store Logo image",
+        //     auth: false,
+        //   },
+        // },
+        // {
+        //   method: "POST",
+        //   path: "/api/v1/vendorRoutes/LogoUpdate",
+        //   config: {
+        //     handler: controller.LogoUpdate,
+        //     description: "Store Logo image",
+        //     auth: false,
+        //   },
+        // },
+
+      ]);
+      resolve(true);
+    });
+  }
+}
