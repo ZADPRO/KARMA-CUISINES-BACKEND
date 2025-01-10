@@ -12,7 +12,7 @@ if (!process.env.ACCESS_TOKEN) {
   throw new Error("ACCESS_TOKEN not found in .env file");
 }
 
-const TOKEN_EXPIRATION = "20m";
+const TOKEN_EXPIRATION = "1d";
 
 // WITH TOKEN EXPIRATION
 function generateTokenWithExpire(
@@ -63,13 +63,16 @@ function decodeToken(token: string): JwtPayload | { error: string } {
 // VALIDATE TOKEN
 function validateToken(request: any, h: ResponseToolkit) {
   const authHeader = request.headers.authorization;
+  console.log('authHeader line ----- 66  \n \n', authHeader)
 
   if (!authHeader) {
     return h.response({ error: "Token missing" }).code(401).takeover();
   }
 
   const token = authHeader.split(" ")[1];
+  console.log('token', token)
   const decodedToken = decodeToken(token);
+  console.log('decodedToken', decodedToken)
 
   if ("error" in decodeToken) {
     return h

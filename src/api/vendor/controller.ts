@@ -19,10 +19,17 @@ export class VendorProfile {
   ): Promise<any> => {
     logger.info("Router-----store Address");
     try {
-      const decodeToken = request.plugins.id;
+      const decodedToken ={
+        id:request.plugins.token.id
+      }
+      console.log('decodedToken', decodedToken)
+      
+    //   const decodedToken ={
+    //   id:1
+    // }
       let entity;
 
-      entity = await this.resolver.VendorProfileV1(request.payload, decodeToken);
+      entity = await this.resolver.VendorProfileV1(request.payload, decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created
@@ -46,12 +53,14 @@ export class VendorProfile {
     request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
     logger.info("Router-----store Address");
     try {
-      const decodeToken = request.plugins.id;
+      
       let entity;
-      console.log("line 53", request.payload);
-      entity = await this.resolver.VendorprofilePageDataV1(request.payload, decodeToken);
+      entity = await this.resolver.VendorprofilePageDataV1(request.payload, decodedToken);
       console.log('entity', entity)
 
       if (entity.success) {
@@ -78,10 +87,12 @@ export class VendorProfile {
   ): Promise<any> => {
     logger.info("Router-----store Address");
     try {
-      const decodeToken = request.plugins.id;
+      const decodedToken ={
+        id:request.plugins.token.id
+      }      
       let entity;
 
-      entity = await this.resolver.UpdateBasicDetailV1(request.payload, decodeToken);
+      entity = await this.resolver.UpdateBasicDetailV1(request.payload, decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created
@@ -102,20 +113,20 @@ export class VendorProfile {
     }
   };
   
-
-
   public VendorBankDetails = async (
-    request: Hapi.Request,
+    request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
-    logger.info("Router-----store Address");
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    // const decodedToken ={
+    //   id:65
+    // }
+    console.log('decodedToken line--------------- 115 \n\n', decodedToken)
     try {
       let entity;
-
-      console.log('line ---- 24',)
-
-      entity = await this.resolver.VendorBankDetailsV1(request.payload);
-
+      entity = await this.resolver.VendorBankDetailsV1(request.payload,decodedToken);
       if (entity.success) {
         return response.response(entity).code(201); // Created
       }
@@ -135,15 +146,16 @@ export class VendorProfile {
     }
   };
   public RestaurentDocUplaod = async (
-    request: Hapi.Request,
+    request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
     logger.info("Router-----store Address");
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
     try {
       let entity;
-
-
-      entity = await this.resolver.RestaurentDocUplaodV1(request.payload);
+      entity = await this.resolver.RestaurentDocUplaodV1(request.payload,decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created
@@ -164,19 +176,17 @@ export class VendorProfile {
     }
   };
   public RestaurentDocUpdate = async (
-    request: Hapi.Request,
+    request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
     logger.info("Router-----store Vendor Documents");
 
-    console.log('line ---- 178',)
     try {
       let entity;
-
-      console.log('line ---- 181',)
-
-      entity = await this.resolver.RestaurentDocUpdateV1(request.payload);
-
+      entity = await this.resolver.RestaurentDocUpdateV1(request.payload,decodedToken);
       if (entity.success) {
         return response.response(entity).code(201); // Created
       }
@@ -196,16 +206,17 @@ export class VendorProfile {
     }
   };
   public deleteRestaurentDoc = async (
-    request: Hapi.Request,
+    request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
     logger.info("Router-----store Address");
     try {
+
       let entity;
-
-      console.log('line ---- 24',)
-
-      entity = await this.resolver.deleteRestaurentDocV1(request.payload);
+      entity = await this.resolver.deleteRestaurentDocV1(request.payload,decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created
@@ -226,13 +237,16 @@ export class VendorProfile {
     }
   };
   public LogoUpload = async (
-    request: Hapi.Request,
+    request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
     logger.info("Router-----store Address");
     try {
       let entity;
-      entity = await this.resolver.LogoUploadV1(request.payload);
+      entity = await this.resolver.LogoUploadV1(request.payload,decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created
@@ -253,14 +267,17 @@ export class VendorProfile {
     }
   };
   public LogoUpdate = async (
-    request: Hapi.Request,
+    request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
     logger.info("Router-----store Vendor Documents");
 
     try {
       let entity;
-      entity = await this.resolver.LogoUpdateV1(request.payload);
+      entity = await this.resolver.LogoUpdateV1(request.payload,decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created
@@ -281,13 +298,17 @@ export class VendorProfile {
     }
   };
   public deleteLogo = async (
-    request: Hapi.Request,
+    request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
     logger.info("Router-----store Address");
     try {
       let entity;
-      entity = await this.resolver.deleteLogoV1(request.payload);
+      entity = await this.resolver.deleteLogoV1(request.payload,decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created
@@ -307,5 +328,38 @@ export class VendorProfile {
         .code(500);
     }
   };
+  public VendorAuditList = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
 
+    try {
+      logger.info(`GET URL REQ => ${request.url.href}`);
+      const domainCode = request.headers.domain_code || "";
+      const entity = await this.resolver.VendorAuditListV1(
+        request.payload,
+        decodedToken
+      );
+
+      if (entity.success) {
+        return response.response(entity).code(200);
+      }
+      return response.response(entity).code(200);
+    } catch (error) {
+      logger.error("Error in Sending Data:", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
 }

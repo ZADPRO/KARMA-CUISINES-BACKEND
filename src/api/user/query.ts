@@ -13,8 +13,8 @@ export const insertUserQuery = `
 export const insertUserDomainQuery = `
   INSERT INTO public."refUsersDomain" (
     "refUserId", "refCustId","refUserName", "refCustPassword", 
-    "refCustHashedPassword","refCustMobileNum"
-  ) VALUES ($1, $2,$3, $4, $5,$6)
+    "refCustHashedPassword","refCustMobileNum", "refEmail"
+  ) VALUES ($1, $2,$3, $4, $5,$6,$7)
   RETURNING *;`
 
 export const insertUserCommunicationQuery = `

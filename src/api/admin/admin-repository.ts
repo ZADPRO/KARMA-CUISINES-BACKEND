@@ -35,11 +35,12 @@ export class adminRepository {
 
           if (updateHistory) {
             const tokenData = { id: user.refUserId };
+
             return encrypt(
               {
                 success: true,
                 message: "Login successful",
-                // token: generateToken(tokenData, true)
+                token: generateTokenWithExpire(tokenData, true)
               },
               false
             );
@@ -66,7 +67,6 @@ export class adminRepository {
       );
     }
   }
-
 
 }
 

@@ -4,7 +4,7 @@ export const getVendorCountQuery = `
 `;
 
 export const insertVendorQuery = `
-  INSERT INTO public."VendorTable" ("refUserCustId", "vendorName", "vendordesgination")
+  INSERT INTO public."VendorTable" ("refUserId", "vendorName", "vendordesgination")
   VALUES ($1, $2, $3)
   RETURNING "refvendorId";
 `;
@@ -22,15 +22,15 @@ export const insertCommunicationQuery = `
 `;
 
 export const insertUserAddressQuery = `
-  INSERT INTO public."refUserAddress" ("refAddress", "refUserCustId")
+  INSERT INTO public."refUserAddress" ("refAddress", "refUserId")
   VALUES ($1,  $2)
   RETURNING "AddressID";
 `;
 
 export const insertVendorSocialLinksQuery = `
-  INSERT INTO public."VendorSocialLinks" ("refvendorId", "wbsiteUrl", "facebookUrl", "instagramUrl", "twitterUrl")
+  INSERT INTO public."VendorSocialLinks" ("refUserId", "wbsiteUrl", "facebookUrl", "instagramUrl", "twitterUrl")
   VALUES ($1, $2, $3, $4, $5)
-  RETURNING "VendorLinks";
+  RETURNING "VendorLinksId";
 `;
 export const RestroDetailsQuery = `select rd."CertificateType" from public."restroDocs" rd;`;
 
@@ -41,8 +41,8 @@ export const updateHistoryQuery = `
 `;
 
 export const insertVendorBankDetailsQuery = `
-  INSERT INTO public."RestaurentDoc" ("refUserCustId", "VATcertificate", "CommercialRegisterExtract", "AlcoholLicense", "FoodSafetyHygieneCertificate", "LiabilityInsurance", "logoImage")
-  VALUES ($1, $2, $3, $4, $5, $6, $7)
+  INSERT INTO public."VendorBankDetails" ("bankName","accountNumber", "ibanCode", "paymentId", "refUserId","MoneyTransferDetails")
+  VALUES ($1, $2, $3, $4, $5, $6)
   RETURNING *;
 `;
 
@@ -110,14 +110,28 @@ export const fetchProfileData = `SELECT
 FROM 
     public."VendorTable" vt
 LEFT JOIN 
-    public."Users" u ON vt."refUserCustId" = u."refUserCustId"
+    public."Users" u ON vt."refUserId" = CAST(u."refUserId" AS TEXT)
 LEFT JOIN 
     public."refCommunication" rc ON rc."refUserId" = CAST(u."refUserId" AS TEXT)
 LEFT JOIN 
-    public."refUserAddress" rua ON rua."refUserCustId" = u."refUserCustId"
+    public."refUserAddress" rua ON rua."refUserId" = CAST(u."refUserId" AS TEXT)
 LEFT JOIN 
-    public."VendorSocialLinks" vsl ON vsl."refvendorId" = u."refUserCustId"
+    public."VendorSocialLinks" vsl ON vsl."refUserId" = CAST(u."refUserId" AS TEXT)
 WHERE 
-    vt."refUserCustId" = $1;`;
+    vt."refUserId" = $1;`;
 
-export const fetchRestroCertificates = `SELECT "CertificateType" FROM "restroDocs";`;
+export const fetchRestroCertificates = `SELECT "CertificateType" FROM public."restroDocs";`;
+
+export const getUpDateList = `SELECT 
+    "TransTypeID",
+    "refUserId",
+    "transData",
+    "TransTime",
+    "updatedBy"
+FROM 
+    "public"."txnHistory" as th
+WHERE 
+    "refUserId" = $1
+ORDER BY 
+    "TransTime" DESC;
+`;

@@ -14,9 +14,9 @@ export class vendorRoutes implements IRoute {
       server.route([
         {
           method: "POST",
-          //pre: [{ method: validateToken, assign: "token" }],
           path: "/api/v1/vendorRoutes/BasicDetails",
           config: {
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.Vendorprofile,
             description: "Store BasicDetails",
             tags: ["api", "Users"],
@@ -27,7 +27,7 @@ export class vendorRoutes implements IRoute {
           method: "POST",
           path: "/api/v1/vendorRoutes/BasicDetailPageData",
           config: {
-            // pre: [{ method: validateToken, assign: "token" }], // Use the validateToken function here
+            pre: [{ method: validateToken, assign: "token" }], // Use the validateToken function here
             handler: controller.VendorprofilePageData,
             description: "Passing the Vendorprofile Data to the Vendorprofile Page",
             tags: ["api", "Users"],
@@ -38,18 +38,18 @@ export class vendorRoutes implements IRoute {
           method: "POST",
           path: "/api/v1/vendorRoutes/UpdateBasicDetail",
           config: {
-            // pre: [{ method: validateToken, assign: "token" }], // Use the validateToken function here
+            pre: [{ method: validateToken, assign: "token" }], // Use the validateToken function here
             handler: controller.UpdateBasicDetail,
             description: "Passing the Vendorprofile Data to the Vendorprofile Page",
             tags: ["api", "Users"],
             auth: false,
           },
         },
-
         {
           method: "POST",
           path: "/api/v1/vendorRoutes/BankDetails",
           config: {
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.VendorBankDetails,
             description: "Store VendorBankDetails",
             tags: ["api", "Users"],
@@ -60,7 +60,7 @@ export class vendorRoutes implements IRoute {
           method: "POST",
           path: "/api/v1/vendorRoutes/RestaurentDocUplaod",
           config: {
-            // pre: [{ method: validateToken, assign: "token" }],
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.RestaurentDocUplaod,
             description: "Upload Restaurent Documents",
             tags: ["api", "Users"],
@@ -78,6 +78,7 @@ export class vendorRoutes implements IRoute {
           method: "POST",
           path: "/api/v1/vendorRoutes/RestaurentDocUpdate",
           config: {
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.RestaurentDocUpdate,
             description: "Store Restaurent Documents",
             auth: false,
@@ -87,6 +88,7 @@ export class vendorRoutes implements IRoute {
           method: "DELETE",
           path: "/api/v1/vendorRoutes/deleteRestaurentDoc",
           config: {
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.deleteRestaurentDoc,
             description: "Delete Restaurent Documents",
             auth: false,
@@ -96,7 +98,7 @@ export class vendorRoutes implements IRoute {
           method: "POST",
           path: "/api/v1/vendorRoutes/LogoUpload",
           config: {
-            // pre: [{ method: validateToken, assign: "token" }],
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.LogoUpload,
             description: "Upload Logo Image",
             tags: ["api", "Users"],
@@ -114,6 +116,7 @@ export class vendorRoutes implements IRoute {
           method: "POST",
           path: "/api/v1/vendorRoutes/LogoUpdate",
           config: {
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.LogoUpdate,
             description: "Store Logo image",
             auth: false,
@@ -123,31 +126,22 @@ export class vendorRoutes implements IRoute {
           method: "DELETE",
           path: "/api/v1/vendorRoutes/deleteLogo",
           config: {
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.deleteLogo,
             description: "Delete Logo Image",
             auth: false,
           },
         },
-
-        // {
-        //   method: "POST",
-        //   path: "/api/v1/vendorRoutes/LogoUpdate",
-        //   config: {
-        //     handler: controller.LogoUpdate,
-        //     description: "Store Logo image",
-        //     auth: false,
-        //   },
-        // },
-        // {
-        //   method: "POST",
-        //   path: "/api/v1/vendorRoutes/LogoUpdate",
-        //   config: {
-        //     handler: controller.LogoUpdate,
-        //     description: "Store Logo image",
-        //     auth: false,
-        //   },
-        // },
-
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/VendorAuditList",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.VendorAuditList,
+            description: "sending Vendor Details to Vendor Audit page ",
+            auth: false,
+          },
+        },
       ]);
       resolve(true);
     });

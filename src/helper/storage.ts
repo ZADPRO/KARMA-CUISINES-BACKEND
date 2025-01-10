@@ -91,6 +91,7 @@ export const viewFile = (filePath: string): Promise<Buffer> => {
 };
 
 export const deleteFile = async (filePath: string): Promise<void> => {
+  console.log('filePath line ----------------- 94 \n', filePath)
   return new Promise((resolve, reject) => {
     fs.unlink(filePath, (err) => {
       if (err) {

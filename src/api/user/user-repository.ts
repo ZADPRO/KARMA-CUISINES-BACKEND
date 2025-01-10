@@ -63,6 +63,7 @@ export class UserRepository {
         userData.temp_lname, // refStLName
         newCustomerId,
         (userType = 1),
+        // userData.temp_email
       ];
       console.log(params);
 
@@ -77,6 +78,7 @@ export class UserRepository {
         userData.temp_password, // refCustPassword
         hashedPassword, // refCustHashedPassword
         userData.temp_phone,
+        userData.temp_email
       ];
 
       console.log(domainParams);
@@ -103,7 +105,6 @@ export class UserRepository {
           1,
           CurrentTime(),
           newUser.refUserId,
-
           "User SignUp",
         ];
         
