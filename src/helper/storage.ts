@@ -39,9 +39,9 @@ export const storeFile = async (
     console.log('uploadType', uploadType)
 
     uploadDir = path.join(process.cwd(), "./src/assets/vendorDocs");
-  }else if (uploadType === 3) {
+  } else if (uploadType === 3) {
     uploadDir = path.join(process.cwd(), "./src/assets/LogoImage");
-  } 
+  }
   else {
     uploadDir = path.join(
       process.cwd(),

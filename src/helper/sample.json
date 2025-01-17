@@ -1,0 +1,48 @@
+{
+    "foodContents": {
+        "1": {
+            "productId": 1,
+            "foodName": "Food Name 1",
+            "foodQuantity": 3, 
+            "individualPrice": 100,
+            "overallPrice": 300
+        },
+        "2": {
+            "productId": 4,
+            "foodName": "Food Name 1",
+            "foodQuantity": 3,
+            "individualPrice": 100,
+            "overallPrice": 300
+        },
+        "3": {
+            "productId": 20,
+            "foodName": "Food Name 1",
+            "foodQuantity": 3,
+            "individualPrice": 100,
+            "overallPrice": 300
+        }
+    },
+    "totalAmount": {
+        "totalPrice": 900,
+        "taxApplied": 50,
+        "offersApplied": true,
+        "offerAmount": 200,
+        "grandTotalBill": 750
+    },
+    "userAddress": {
+        "addressMode": "Home",
+        "addressStreet": "No 1, Street Name",
+        "addressCity": "City Name",
+        "addressPostalCode": "5325",
+        "addressZone": "Zone Name",
+        "addressCountry": "Country Name"
+    },
+    "contactNumber": {
+        "mobile": "9393939393"
+    },
+    "modeOfPayment": {
+        "paymentStatus": "Paid",
+        "paymentMethod": "Online",
+        "paymentMode": "Twint or 3"
+    }
+}

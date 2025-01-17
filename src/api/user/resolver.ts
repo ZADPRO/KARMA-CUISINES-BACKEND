@@ -7,9 +7,13 @@ export class UserResolver {
     this.userRepository = new UserRepository();
   }
   public async userSignUpV1(user_data: any, domain_code: any): Promise<any> {
-    console.log('user_data line ---9', user_data)
-
-    console.log('line --- 10')
     return await this.userRepository.userSignUpV1(user_data, domain_code);
+  }
+
+  public async verifyUserNameEmailV1(user_data: any, domain_code: any): Promise<any> {
+    return await this.userRepository.verifyUserNameEmailV1(user_data, domain_code);
+  }
+  public async orderplacementV1(user_data: any, domain_code: any): Promise<any> {
+    return await this.userRepository.orderplacementV1(user_data, domain_code);
   }
 }

@@ -40,30 +40,31 @@ import { CurrentTime } from "../../helper/common";
 
 export class VendorRepository {
 
-  public async VendorProfileV1(user_data: any,tokendata:any ): Promise<any> {
+  public async VendorProfileV1(user_data: any, tokendata: any): Promise<any> {
+    const client: PoolClient = await getClient();
+    const token = { id: tokendata.id };
+    console.log('token', token);
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
 
-    const token={id:tokendata.id}
-    console.log('token', token)
-    const tokens=generateTokenWithExpire(token,true)
-    console.log('tokens', tokens)
     try {
+      await client.query("BEGIN");
       const ui = user_data.user_data;
+
+      // Vendor count and generation of new vendor ID
       const VendorCountResult = await executeQuery(getVendorCountQuery);
       console.log('VendorCountResult', VendorCountResult);
-
       const VendorCount = parseInt(VendorCountResult[0].count, 10); // Extract and convert count to a number
       const newVendorId = `VD${(VendorCount + 1).toString().padStart(3, '0')}`;
       console.log('Generated VendorId:', newVendorId);
 
-      console.log('ui', ui)
-      console.log("Userdata", ui.user_data);
-
+      // Insert User
       const userParams = [
         ui.user_data.user.refUserFname,
         ui.user_data.user.refUserLname,
         newVendorId,
-        ui.user_data.user.refRoleId];
-      console.log('userParams', userParams);
+        ui.user_data.user.refRoleId
+      ];
       const userResult = await executeQuery(insertUserQuery, userParams);
       console.log('userResult', userResult);
 
@@ -71,69 +72,96 @@ export class VendorRepository {
         throw new Error('Failed to insert user');
       }
       const userId = userResult[0].refUserId;
-      console.log('userId line ------------- 69', userId)
+      console.log('userId:', userId);
 
+      // Insert Communication
       const communicationParams = [
         userId,
         ui.user_data.communication.refMobileno,
         ui.user_data.communication.refEmail
       ];
-
-      console.log(' communicationParams', communicationParams)
       const communicationResult = await executeQuery(insertCommunicationQuery, communicationParams);
       console.log('communicationResult', communicationResult);
 
+      // Insert User Address
       const userAddressParams = [
-        ui.user_data.address.refAddress,
-        userId];
+        userId,
+        ui.user_data.address.refStreet,
+        ui.user_data.address.refCity,
+        ui.user_data.address.refPostalCode,
+        ui.user_data.address.refZone,
+        ui.user_data.address.refCountry
+      ];
       const userAddressResult = await executeQuery(insertUserAddressQuery, userAddressParams);
       console.log('userAddressResult', userAddressResult);
 
+      // Insert Vendor
       const vendorParams = [
         userId,
         ui.user_data.vendorName,
-        ui.user_data.vendordesgination];
+        ui.user_data.vendordesgination
+      ];
       const vendorResult = await executeQuery(insertVendorQuery, vendorParams);
-      console.log('vendorResult line ------------ 93', vendorResult);
+      console.log('vendorResult', vendorResult);
 
       if (!vendorResult || vendorResult.length === 0) {
         throw new Error('Failed to insert vendor');
       }
-      const vendorId = vendorResult[0].refvendorId;
+      const vendorId = vendorResult[0].refVendorId;
 
+      // Insert Social Links
       const socialLinksParams = [
         userId,
-        ui.user_data.socialLinks.websiteUrl,
+        ui.user_data.socialLinks.websiteUrl, // Check if socialLinks exist before using
         ui.user_data.socialLinks.facebookUrl,
         ui.user_data.socialLinks.instagramUrl,
         ui.user_data.socialLinks.twitterUrl
       ];
-      const socialLinksResult = await executeQuery(insertVendorSocialLinksQuery, socialLinksParams);
-      console.log('socialLinksResult line -------------- 108', socialLinksResult);
 
+      // Ensure socialLinks exist and are passed correctly
+      let socialLinksResult;
+      if (ui.user_data.socialLinks) {
+        socialLinksResult = await executeQuery(insertVendorSocialLinksQuery, socialLinksParams);
+        console.log('socialLinksResult', socialLinksResult);
+      } else {
+        console.warn('No social links provided, skipping insertion.');
+      }
+
+      // Insert History
       const txnHistoryParams = [
-        22, // TransTypeID
+        5, // TransTypeID
         userId, // refUserId
         "vendor profile entry", // transData
         CurrentTime(),  // TransTime
-        "vendor" // UpdatedBy
+        "Admin" // UpdatedBy
       ];
       await executeQuery(updateHistoryQuery, txnHistoryParams);
 
-      const restroDetails = await executeQuery(RestroDetailsQuery)
+      // Get Restaurant Details
+      const restroDetails = await executeQuery(RestroDetailsQuery);
 
-      // const restroDetails = await 
-      // Return the Success Response with VendorId (refUserCustId) and UserId
+      // Check if all queries were successful
+      if (VendorCountResult && userResult && communicationResult && userAddressResult && vendorResult && socialLinksResult && restroDetails) {
+        console.log('Transaction successful. Committing.');
+        await client.query("COMMIT");
+      } else {
+        console.log('Transaction failed. Rolling back.');
+        await client.query("ROLLBACK");
+      }
+
+      // Return success response
       return encrypt({
         success: true,
         message: 'Vendor and user data with social links inserted successfully',
-        token:tokens,
+        token: tokens,
         refUserCustId: newVendorId, // Return the generated vendorId as refUserCustId
         restroDetails: restroDetails,
         userId: userId
-      },true)
+      }, false);
 
     } catch (error) {
+      // Ensure rollback on error
+      await client.query("ROLLBACK");
       let errorMessage;
       if (error instanceof Error) {
         errorMessage = error.message;
@@ -146,22 +174,24 @@ export class VendorRepository {
         success: false,
         message: 'Data insertion failed',
         error: errorMessage,
-        token:tokens
-      },true); 
+        token: tokens
+      }, false);
+    } finally {
+      client.release();
     }
   }
 
-  public async VendorprofilePageDataV1(userData: any,tokendata:any): Promise<any> {
-    const token={id:tokendata.id}
-    console.log('token', token)
-    const tokens=generateTokenWithExpire(token,true)
-    console.log('tokens', tokens)
+  public async VendorprofilePageDataV1(userData: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id }
+    const tokens = generateTokenWithExpire(token, true)
 
     try {
       console.log('Received userData', userData);
 
-      const refUserId = userData.refUserId;
+      const refUserId = userData.userData.refUserId;
+      console.log('refUserId', refUserId)
       if (!refUserId) {
+        console.log('refUserId', refUserId)
         throw new Error("Invalid refUserId. Cannot be null or undefined.");
       }
 
@@ -186,7 +216,7 @@ export class VendorRepository {
         phone: profileResult[0].refMobileno,
         address: profileResult[0].refAddress,
         socialLinks: {
-          wbsiteUrl: profileResult[0].wbsiteUrl,
+          websiteUrl: profileResult[0].websiteUrl,
           facebookUrl: profileResult[0].facebookUrl,
           instagramUrl: profileResult[0].instagramUrl,
           twitterUrl: profileResult[0].twitterUrl
@@ -195,8 +225,9 @@ export class VendorRepository {
 
 
       const Result = await executeQuery(fetchRestroCertificates, []);
+      console.log('Result', Result)
       const restroDetails = Result.map((row: any) => ({
-        CertificateType: row.CertificateType,
+        CertificateType: row.refCertificateType,
       }));
 
       const registerData = {
@@ -209,27 +240,27 @@ export class VendorRepository {
       return encrypt({
         success: true,
         message: "Vendor Profile Page Data retrieved successfully",
-        token:tokens,
+        token: tokens,
         data: registerData,
-      },true);
+      }, false);
     } catch (error) {
       const errorMessage = (error as Error).message; // Cast `error` to `Error` type
       console.error('Error in VendorprofilePageDataV1:', errorMessage);
       return encrypt({
         success: false,
         message: `Error in Vendor Profile Page Data retrieval: ${errorMessage}`,
-        token:tokens
-      },true);
+        token: tokens
+      }, false);
     }
   }
 
-  public async UpdateBasicDetailV1(userData: any,tokendata:any): Promise<any> {
+  public async UpdateBasicDetailV1(userData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient();
     const refUserId = userData.userData.refUserId;
-    console.log( "line ------------------------------ 228 \n\n",userData.userData.refUserId)
-    const token={id:tokendata.id}
+    console.log("line ------------------------------ 228 \n\n", userData.userData.refUserId)
+    const token = { id: tokendata.id }
     console.log('token', token)
-    const tokens=generateTokenWithExpire(token,true)
+    const tokens = generateTokenWithExpire(token, true)
     console.log('tokens', tokens)
     try {
       await client.query("BEGIN");
@@ -239,34 +270,34 @@ export class VendorRepository {
 
       for (const section in updateSections) {
 
-        console.log('line ------- 241', )
+        console.log('line ------- 241',)
         if (updateSections.hasOwnProperty(section)) {
 
-          console.log(' line --------- 244', )
+          console.log(' line --------- 244',)
           let tableName: string;
           let updatedData: any = {};
           let oldData: any = {};
 
           console.log('section line ------ 249', section)
           switch (section) {
-            case "vendorName":
-              console.log('vendorName', )
-              tableName = "VendorTable";
+            case "refVendorName":
+              console.log('vendorName',)
+              tableName = "vendorTable";
               console.log('tableName', tableName);
               updatedData = { [section]: updateSections[section].newData };
               oldData = { [section]: updateSections[section].oldData };
               break;
 
-            case "vendordesgination":
-              console.log('vendordesgination', )
+            case "refVendorDesignation":
+              console.log('vendordesgination',)
               tableName = "VendorTable";
               updatedData = { [section]: updateSections[section].newData };
               oldData = { [section]: updateSections[section].oldData };
               break;
 
             case "user":
-              console.log('user', )
-              tableName = "Users";
+              console.log('user',)
+              tableName = "users";
               for (const key in updateSections.user) {
                 updatedData[key] = updateSections.user[key].newData;
                 oldData[key] = updateSections.user[key].oldData;
@@ -274,7 +305,7 @@ export class VendorRepository {
               break;
 
             case "communication":
-              console.log('communication', )
+              console.log('communication',)
               tableName = "refCommunication";
               for (const key in updateSections.communication) {
                 updatedData[key] = updateSections.communication[key].newData;
@@ -283,21 +314,22 @@ export class VendorRepository {
               break;
 
             case "address":
-              console.log('address', )
+              console.log('address',)
               tableName = "refUserAddress";
-              updatedData["refAddress"] = updateSections.address.refAddress.newData;
-              oldData["refAddress"] = updateSections.address.refAddress.oldData;
-              break;
-
-            case "socialLinks":
-              console.log('socialLinks', )
-              tableName = "VendorSocialLinks";
               for (const key in updateSections.socialLinks) {
                 updatedData[key] = updateSections.socialLinks[key].newData;
                 oldData[key] = updateSections.socialLinks[key].oldData;
               }
               break;
 
+            case "socialLinks":
+              console.log('socialLinks',)
+              tableName = "vendorSocialLinks";
+              for (const key in updateSections.socialLinks) {
+                updatedData[key] = updateSections.socialLinks[key].newData;
+                oldData[key] = updateSections.socialLinks[key].oldData;
+              }
+              break;
             default:
               continue;
           }
@@ -347,11 +379,11 @@ export class VendorRepository {
 
       // Insert transaction history
       const txnHistoryParams = [
-        26, // TransTypeID
+        10, // TransTypeID
         userData.userData.refUserId, // refUserId
         "Vendor details Updated", // transData
         CurrentTime(),  // TransTime
-        "Admin" // UpdatedBy
+        "Vendor" // UpdatedBy
       ];
       console.log('Inserting transaction history with params:', txnHistoryParams);
       const txnResult = await client.query(updateHistoryQuery, txnHistoryParams);
@@ -365,8 +397,8 @@ export class VendorRepository {
       return encrypt({
         success: true,
         message: "Profile data updated successfully",
-        token:tokens,
-      },true);
+        token: tokens,
+      }, false);
     } catch (error) {
       await client.query("ROLLBACK");
 
@@ -378,19 +410,19 @@ export class VendorRepository {
       return encrypt({
         success: false,
         message: errorMessage,
-        token:tokens,
-      },true);
+        token: tokens,
+      }, false);
     } finally {
       client.release();
     }
   }
 
   public async VendorBankDetailsV1(
-    bankDetails: { bankName: string, accountNumber: string, ibanCode: string, paymentId: number, userId: string, moneyTransferDetails: string },tokendata:any
+    bankDetails: { bankName: string, accountNumber: string, ibanCode: string, paymentId: number, userId: string, moneyTransferDetails: string }, tokendata: any
   ): Promise<any> {
     const { bankName, accountNumber, ibanCode, paymentId, userId, moneyTransferDetails } = bankDetails;
-    const token={id:tokendata.id}
-    const tokens=generateTokenWithExpire(token,true)
+    const token = { id: tokendata.id }
+    const tokens = generateTokenWithExpire(token, true)
 
     try {
       console.log('Fetching payment type name for paymentId:', paymentId);
@@ -403,7 +435,14 @@ export class VendorRepository {
       const paymentTypeName = paymentTypeResult[0].paymentTypeName;
       console.log('Payment Type Name:', paymentTypeName);
 
-      const vendorBankDetailsParams = [bankName, accountNumber, ibanCode, paymentId, userId, moneyTransferDetails];
+      const vendorBankDetailsParams = [
+        bankName,
+        accountNumber,
+        ibanCode,
+        paymentId,
+        userId,
+        moneyTransferDetails
+      ];
       console.log('Inserting vendor bank details with params:', vendorBankDetailsParams);
 
       const result = await executeQuery(insertVendorBankDetailsQuery, vendorBankDetailsParams);
@@ -415,7 +454,7 @@ export class VendorRepository {
 
       // Insert transaction history
       const txnHistoryParams = [
-        19, // TransTypeID
+        4, // TransTypeID
         userId, // refUserId
         "Bank details Updated", // transData
         CurrentTime(),  // TransTime
@@ -427,27 +466,27 @@ export class VendorRepository {
       // return { vendorBankDetailsId: result[0].vendorBankDetailsId };
 
       return encrypt({
-        success:true,
-        message:"bank details added successfully",
-        token:tokens,
+        success: true,
+        message: "bank details added successfully",
+        token: tokens,
         vendorBankDetailsId: result[0].vendorBankDetailsId
-      },true
-    );
-      
+      }, false
+      );
+
     } catch (error) {
       console.error('Error occurred:', error);
       return encrypt({
-        success:false,
-        message:"error in adding the Bank details",
-        token:tokens,
-      },true
-    );
+        success: false,
+        message: "error in adding the Bank details",
+        token: tokens,
+      }, false
+      );
     }
   }
 
-  public async RestaurentDocUplaodV1(userData: any,tokendata:any): Promise<any> {
-    const token={id:tokendata.id}
-    const tokens=generateTokenWithExpire(token,true)
+  public async RestaurentDocUplaodV1(userData: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id }
+    const tokens = generateTokenWithExpire(token, true)
     try {
       const pdfs = userData.PDF;
 
@@ -482,7 +521,7 @@ export class VendorRepository {
         {
           success: true,
           message: "PDFs Stored Successfully",
-          token:tokens,
+          token: tokens,
           filePaths: filePaths,
           files: storedFiles,
 
@@ -495,17 +534,17 @@ export class VendorRepository {
         {
           success: false,
           message: "Error In Storing the PDFs",
-          token:tokens
+          token: tokens
         },
         true
       );
     }
   }
 
-  public async RestaurentDocUpdateV1(userData: any,tokendata:any): Promise<any> {
+  public async RestaurentDocUpdateV1(userData: any, tokendata: any): Promise<any> {
 
-    const token={id:tokendata.id}
-    const tokens=generateTokenWithExpire(token,true)
+    const token = { id: tokendata.id }
+    const tokens = generateTokenWithExpire(token, true)
     try {
       const {
         VATcertificate,
@@ -547,7 +586,7 @@ export class VendorRepository {
         //documentId
       ]);
       const updatedRow = result[0]; // Access the first element of the result array
-      const TransTypeID = 21;
+      const TransTypeID = 6;
       const transData = "Restaurent Documents Updated";
       const TransTime = CurrentTime(); // Current time in ISO format
       const updatedBy = "Vendor";
@@ -559,10 +598,10 @@ export class VendorRepository {
         {
           success: true,
           message: "Restaurent Documents Store Successfully",
-          token:tokens,
+          token: tokens,
           data: updatedRow,
         },
-        true
+        false
       );
     } catch (error) {
       console.error('Error updating data:', (error as Error).message); // Log the error for debugging
@@ -570,16 +609,16 @@ export class VendorRepository {
         {
           success: false,
           message: `Error In Updating the Documents: ${(error as Error).message}`,
-          token:tokens
+          token: tokens
         },
-        true
+        false
       );
     }
   }
 
-  public async deleteRestaurentDocV1(userData: any,tokendata:any): Promise<any> {
-    const token={id:tokendata.id}
-    const tokens=generateTokenWithExpire(token,true)
+  public async deleteRestaurentDocV1(userData: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id }
+    const tokens = generateTokenWithExpire(token, true)
     try {
       let filePath: string | any;
 
@@ -607,7 +646,7 @@ export class VendorRepository {
         // Delete the file from local storage
         await deleteFile(filePath);
       }
-      const TransTypeID = 23;
+      const TransTypeID = 7;
       const transData = "Restaurent Documents Deleted";
       const TransTime = CurrentTime(); // Current time in ISO format
       const updatedBy = "Vendor";
@@ -619,7 +658,7 @@ export class VendorRepository {
         {
           success: true,
           message: "Restaurent Documents Deleted Successfully",
-          token:tokens
+          token: tokens
         },
         true
       );
@@ -629,16 +668,16 @@ export class VendorRepository {
         {
           success: false,
           message: `Error In Deleting the Restaurent Documents: ${(error as Error).message}`,
-          token:tokens
+          token: tokens
         },
         true
       );
     }
   }
 
-  public async LogoUploadV1(userData: any,tokendata:any): Promise<any> {
-    const token={id:tokendata.id}
-    const tokens=generateTokenWithExpire(token,true)
+  public async LogoUploadV1(userData: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id }
+    const tokens = generateTokenWithExpire(token, true)
     try {
       // Extract the image from userData
       const image = userData.Image;
@@ -670,7 +709,7 @@ export class VendorRepository {
         {
           success: true,
           message: "Image Stored Successfully",
-          token:tokens,
+          token: tokens,
           filePath: filePath,
           files: storedFiles,
         },
@@ -682,16 +721,16 @@ export class VendorRepository {
         {
           success: false,
           message: "Error in Storing the Image",
-          token:tokens,
+          token: tokens,
         },
         true
       );
     }
   }
 
-  public async LogoUpdateV1(userData: any,tokendata:any): Promise<any> {
-    const token={id:tokendata.id}
-    const tokens=generateTokenWithExpire(token,true)
+  public async LogoUpdateV1(userData: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id }
+    const tokens = generateTokenWithExpire(token, true)
     try {
       const {
         logoImage,
@@ -703,7 +742,7 @@ export class VendorRepository {
       ]);
 
       const updatedRow = result[0]; // Access the first element of the result array
-      const TransTypeID = 24;
+      const TransTypeID = 8;
       const transData = "Restaurant Logo Updated";
       const TransTime = CurrentTime(); // Current time in ISO format
       const updatedBy = "Vendor";
@@ -715,7 +754,7 @@ export class VendorRepository {
         {
           success: true,
           message: "Restaurant Logo Stored Successfully",
-          token:tokens,
+          token: tokens,
           data: updatedRow,
         },
         true
@@ -726,16 +765,16 @@ export class VendorRepository {
         {
           success: false,
           message: `Error In Updating the Logo: ${(error as Error).message}`,
-          token:tokens
+          token: tokens
         },
         true
       );
     }
   }
 
-  public async deleteLogoV1(userData: any,tokendata:any): Promise<any> {
-    const token={id:tokendata.id}
-    const tokens=generateTokenWithExpire(token,true)
+  public async deleteLogoV1(userData: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id }
+    const tokens = generateTokenWithExpire(token, true)
     try {
       let filePath: string | any;
 
@@ -748,7 +787,7 @@ export class VendorRepository {
             {
               success: false,
               message: "Image record not found",
-              token:tokens
+              token: tokens
             },
             false
           );
@@ -771,7 +810,7 @@ export class VendorRepository {
       }
       console.log('Attempting to delete file at:', filePath);
 
-      const TransTypeID = 25;
+      const TransTypeID = 9;
       const transData = "Restaurent Documents Deleted";
       const TransTime = CurrentTime(); // Current time in ISO format
       const updatedBy = "Admin";
@@ -783,7 +822,7 @@ export class VendorRepository {
         {
           success: true,
           message: "Restaurent Documents Deleted Successfully",
-          token:tokens
+          token: tokens
         },
         true
       );
@@ -793,18 +832,18 @@ export class VendorRepository {
         {
           success: false,
           message: `Error In Deleting the Restaurent Documents: ${(error as Error).message}`,
-          token:tokens
+          token: tokens
         },
         true
       );
     }
   }
 
-  public async VendorAuditListV1(userData: { refUserId: string }, tokendata:any): Promise<any> {
+  public async VendorAuditListV1(userData: { refUserId: string }, tokendata: any): Promise<any> {
 
-    const token={id:tokendata.id}
+    const token = { id: tokendata.id }
     console.log('token', token)
-    const tokens=generateTokenWithExpire(token,true)
+    const tokens = generateTokenWithExpire(token, true)
     console.log('tokens', tokens)
     try {
       const { refUserId } = userData;
@@ -819,7 +858,7 @@ export class VendorRepository {
           success: true,
           message: "Audit list Data is sent successfully",
           data: getList,
-          token:tokens
+          token: tokens
         },
         true
       );
@@ -833,7 +872,7 @@ export class VendorRepository {
           success: false,
           message: "Error in Update Audit list Data sending",
           error: errorMessage,  // Updated to handle unknown type
-          token:tokens
+          token: tokens
         },
         true
       );

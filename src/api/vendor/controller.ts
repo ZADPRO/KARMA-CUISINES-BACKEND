@@ -29,7 +29,7 @@ export class VendorProfile {
     // }
       let entity;
 
-      entity = await this.resolver.VendorProfileV1(request.payload, decodedToken);
+      entity = await this.resolver.VendorProfileV1(request.payload,decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created

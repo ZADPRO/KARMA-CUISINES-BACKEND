@@ -142,6 +142,7 @@ export class vendorRoutes implements IRoute {
             auth: false,
           },
         },
+        
       ]);
       resolve(true);
     });

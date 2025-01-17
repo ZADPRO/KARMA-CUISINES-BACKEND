@@ -30,7 +30,7 @@ export class adminRepository {
         // Verify the password
         const validPassword = await bcrypt.compare(user_data.password, user.refCustHashedPassword);
         if (validPassword) {
-          const history = [20, user.refUserId, "Login", CurrentTime(), "Admin"];
+          const history = [2, user.refUserId, "Login", CurrentTime(), "Admin"];
           const updateHistory = await executeQuery(updateHistoryQuery, history);
 
           if (updateHistory) {

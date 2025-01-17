@@ -101,3 +101,33 @@ export {
   validateToken,
   generateTokenWithoutExpire,
 };
+
+const TOKEN_EXPIRATION_OTP = "20m";
+
+function generateTokenOtp(tokenData: object, action: boolean): string | object {
+  console.log("action", action);
+  if (action) {
+    console.log("tokenData", tokenData);
+    const token = jwt.sign(tokenData, process.env.ACCESS_TOKEN as string, {
+      expiresIn: TOKEN_EXPIRATION_OTP,
+    });
+    console.log("token", token);
+    return token;
+  } else {
+    return tokenData;
+  }
+}
+
+function decodeTokenOtp(token: string): JwtPayload | { error: string } {
+  try {
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN as string);
+    if (typeof decoded === "string") {
+      return { error: "Invalid token format" };
+    }
+    return decoded;
+  } catch (error) {
+    return { error: "Invalid or expired OTP" };
+  }
+}
+
+export { generateTokenOtp, decodeTokenOtp };

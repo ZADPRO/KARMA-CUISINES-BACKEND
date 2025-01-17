@@ -4,6 +4,9 @@ import path from "path";
 import { encrypt } from "../../helper/encrypt";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { sendEmail } from "../../helper/mail";
+import { sendOtpTemplate } from "../../helper/mailcontent";
+import { generateTokenOtp, decodeTokenOtp } from "../../helper/token";
 
 import {
   generateTokenWithExpire,
@@ -15,7 +18,9 @@ import {
   insertUserQuery,
   insertUserDomainQuery,
   insertUserCommunicationQuery,
-  updateHistoryQuery
+  updateHistoryQuery,
+  ValidateEmailUserName, validateResendMail, SetOtp,
+  insertOrderMasterQuery, insertUserContactQuery, insertProductContentQuery, insertorderContentQuery, insertUserAddressQuery
 } from "./query";
 import { CurrentTime } from "../../helper/common";
 
@@ -95,7 +100,7 @@ export class UserRepository {
 
       const communicationResult = await executeQuery(insertUserCommunicationQuery, communicationParams);
 
-      console.log(' line --------- 96', )
+      console.log(' line --------- 96',)
       if (
         userResult.length > 0 &&
         domainResult.length > 0 &&
@@ -107,11 +112,11 @@ export class UserRepository {
           newUser.refUserId,
           "User SignUp",
         ];
-        
+
         console.log('history', history)
         const updateHistory = await executeQuery(updateHistoryQuery, history);
 
-        console.log('line ----- 113', )
+        console.log('line ----- 113',)
         if (updateHistory && updateHistory.length > 0) {
           const tokenData = {
             id: newUser.refUserId, // refUserId from users table
@@ -149,6 +154,217 @@ export class UserRepository {
     }
   }
 
+  public async verifyUserNameEmailV1(userData: any): Promise<any> {
+    try {
+      const { refUserId } = userData;
+
+      let ValidationTextResult = userData.emailId;
+      // if (userData.validateText) {
+      //   ValidationTextResult = await executeQuery(ValidateEmailUserName, [
+      //     userData.validateText,
+      //   ]);
+      // } else if (userData.id) {
+      //   ValidationTextResult = await executeQuery(validateResendMail, [
+      //     userData.id,
+      //   ]);
+      // }
+
+      let result;
+      console.log('ValidationTextResult', ValidationTextResult)
+      if (ValidationTextResult.length > 0) {
+        function generateNumericOtp(length = 6) {
+          let otp = "";
+          for (let i = 0; i < length; i++) {
+            otp += Math.floor(Math.random() * 10); // Generates a random digit (0-9)
+          }
+          return otp;
+        }
+
+        const OTP = { otp: generateNumericOtp() };
+        console.log('OTP', OTP)
+
+        const main = async () => {
+          const mailOptions = {
+            to: ValidationTextResult,
+            subject: "Password Request OTP",
+            html: sendOtpTemplate(
+              "Testing " +
+              " " +
+              "User",
+              OTP.otp
+            ),
+          };
+
+          try {
+            await sendEmail(mailOptions);
+          } catch (error) {
+            console.error("Failed to send email:", error);
+
+            const results = {
+              success: false,
+              message: "error in sending the resetpassword request",
+            };
+            return encrypt(results, true);
+          }
+        };
+
+        await main();
+        const tokenOtp = generateTokenOtp(OTP, true);
+
+        const params = [
+          //ValidationTextResult[0].refUserId,
+          refUserId,
+          tokenOtp,
+          CurrentTime(),
+        ];
+
+        result = await executeQuery(SetOtp, params);
+
+        const txnHistoryParams = [
+          3, // TransTypeID (integer)
+          refUserId, // refUserId (integer)
+          "OTP Updated", // transData (ensure this matches the column type)
+          CurrentTime(), // TransTime (ensure this matches the column type, likely TIMESTAMP)
+          "User", // UpdatedBy (ensure this matches the column type)
+        ];
+
+        await executeQuery(updateHistoryQuery, txnHistoryParams);
+
+      } else {
+        const results = {
+          success: true,
+          validation: false,
+          message: "MailId or Username Does not Match",
+        };
+        return encrypt(results, true);
+      }
+      const results = {
+        success: true,
+        validation: true,
+        message: "Otp Mail Send Successfully",
+        id: result[0].otpId,
+      };
+      return encrypt(results, true);
+    } catch (error) {
+      console.log("error", error);
+      const results = {
+        success: false,
+        message: "error in sending the resetpassword request",
+      };
+      return encrypt(results, true);
+    }
+  }
+
+  public async orderplacementV1(orderData: any): Promise<any> {
+    const client: PoolClient = await getClient(); // Assuming getClient() is a function to get DB client
+    // const tokens = generateTokenWithExpire({ id: orderData.userId }, true); // Mock token generation
+    // console.log('Generated Token:', tokens);
+
+    try {
+      await client.query("BEGIN");
+
+      const { foodContents, totalAmount, userAddress, contactNumber, modeOfPayment } = orderData;
+
+      // Insert Order Master
+      const orderMasterParams = [
+
+        // orderData.userId, // refUserId
+        totalAmount.totalPrice, // refPrice
+        totalAmount.taxApplied, // taxAppliedId
+        totalAmount.offerAmount, // refOfferId
+        totalAmount.grandTotalBill, // totalBill
+        modeOfPayment.paymentMethod, // paymentMethodId
+        modeOfPayment.paymentStatus, // refStatus
+        modeOfPayment.paymentMode, // paymentMode
+      ];
+      const orderMasterResult = await client.query(insertOrderMasterQuery, orderMasterParams);
+      console.log('Order Master Result:', orderMasterResult);
+
+      // Insert User Contact
+      const contactParams = [
+        contactNumber.mobile, // refMobileNo
+        parseInt(orderData.userId),
+      ];
+      console.log('contactParams', contactParams)
+      const contactResult = await client.query(insertUserContactQuery, contactParams);
+      console.log('contactResult', contactResult)
+
+      // Insert Food Contents
+      for (const key in foodContents) {
+        const food = foodContents[key];
+        const productTable = [
+          food.foodName, // productName
+          food.individualPrice, // productPrice
+        ];
+
+        const orderTable = [
+          food.productId, // productId
+          food.foodQuantity, // productQuantity
+          food.overallPrice, // totalPrice
+        ];
+
+        const foodContentResult = await client.query(insertProductContentQuery, productTable);
+        const foodOrderResult = await client.query(insertorderContentQuery, orderTable);
+
+        // const foodContentResult = await executeQuery(insertFoodContentQuery, foodContentParams);
+        // console.log(`Inserted Food Content for productId ${food.productId}:`, foodContentResult);
+
+        // Insert User Address
+        const userAddressParams = [
+          // orderData.userId, // refUserId
+          userAddress.addressMode, // addressMode
+          userAddress.addressStreet, // refStreet
+          userAddress.addressCity, // refCity
+          userAddress.addressPostalCode, // refPostalCode
+          userAddress.addressZone, // refZone
+          userAddress.addressCountry, // refCountry
+        ];
+        const userAddressResult = await client.query(insertUserAddressQuery, userAddressParams);
+        console.log('User Address Result:', userAddressResult);
+
+        // Insert Transaction History
+        const txnHistoryParams = [
+          11, // TransTypeID
+          parseInt(orderData.userId), // refOrderId
+          "Food order processed", // transData
+          CurrentTime(), // TransTime
+          "System", // UpdatedBy
+        ];
+        await client.query(updateHistoryQuery, txnHistoryParams);
+
+
+        // Commit the transaction
+        console.log('Transaction successful. Committing.');
+        await client.query("COMMIT");
+
+        // Return success response
+        return encrypt({
+          success: true,
+          message: 'Order processed successfully',
+          //token: tokens,
+          orderId: parseInt(orderData.userId),
+        }, false);
+      }
+    } catch (error) {
+      // Rollback the transaction in case of error
+      console.error('Error during order processing:', error);
+      await client.query("ROLLBACK");
+      let errorMessage = 'An unknown error occurred';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      return encrypt({
+        success: false,
+        message: 'Order processing failed',
+        error: errorMessage,
+        // token: tokens,
+      }, false);
+    } finally {
+      await client.query("COMMIT");
+      client.release();
+    }
+  }
 
 }
 

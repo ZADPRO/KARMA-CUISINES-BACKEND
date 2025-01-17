@@ -1,84 +1,78 @@
 
 export const getVendorCountQuery = `
-  SELECT COUNT(*) as count FROM public."VendorTable";
+  SELECT COUNT(*) as count FROM public."vendorTable";
 `;
 
 export const insertVendorQuery = `
-  INSERT INTO public."VendorTable" ("refUserId", "vendorName", "vendordesgination")
+  INSERT INTO public."vendorTable" ("refUserId", "refVendorName", "refVendorDesignation")
   VALUES ($1, $2, $3)
-  RETURNING "refvendorId";
+  RETURNING "refVendorId";
 `;
 
 export const insertUserQuery = `
-  INSERT INTO public."Users" ("refUserFname", "refUserLname", "refUserCustId", "refRoleId")
+  INSERT INTO public."users" ("refUserFName", "refUserLName", "refUserCustId", "refRoleId")
   VALUES ($1, $2, $3, $4)
   RETURNING "refUserId";
 `;
 
 export const insertCommunicationQuery = `
-  INSERT INTO public."refCommunication" ("refUserId", "refMobileno", "refEmail")
+ INSERT INTO public."refCommunication" ("refUserId", "refMobileNo", "refEmail")
   VALUES ($1, $2, $3)
-  RETURNING "refComId";
+  RETURNING "refCommId";
 `;
 
 export const insertUserAddressQuery = `
-  INSERT INTO public."refUserAddress" ("refAddress", "refUserId")
-  VALUES ($1,  $2)
-  RETURNING "AddressID";
+  INSERT INTO public."refUserAddress" ("refUserId", "refStreet", "refCity", "refPostalCode", "refZone","refCountry")
+  VALUES ($1, $2, $3, $4 , $5, $6)
+  RETURNING "addressID";
 `;
 
 export const insertVendorSocialLinksQuery = `
-  INSERT INTO public."VendorSocialLinks" ("refUserId", "wbsiteUrl", "facebookUrl", "instagramUrl", "twitterUrl")
+ INSERT INTO public."vendorSocialLinks" ("refUserId", "websiteUrl", "facebookUrl", "instagramUrl", "twitterUrl")
   VALUES ($1, $2, $3, $4, $5)
-  RETURNING "VendorLinksId";
+  RETURNING "vendorLinkId";
 `;
-export const RestroDetailsQuery = `select rd."CertificateType" from public."restroDocs" rd;`;
+export const RestroDetailsQuery = `select rd."refCertificateType" from public."restroDocs" rd;`;
 
 export const updateHistoryQuery = `
-  INSERT INTO public."txnHistory" ("TransTypeID", "refUserId", "transData", "TransTime", "updatedBy")
+ INSERT INTO public."refTransactionHistory" ("transTypeId", "refUserId", "transData", "transTime", "updatedBy")
   VALUES ($1, $2, $3, $4, $5)
   ;
 `;
 
 export const insertVendorBankDetailsQuery = `
-  INSERT INTO public."VendorBankDetails" ("bankName","accountNumber", "ibanCode", "paymentId", "refUserId","MoneyTransferDetails")
+  INSERT INTO public."vendorBankDetails" ("refBankName","refAccountNumber", "refIbanCode", "paymentId", "refUserId","refMoneyTransferDetails")
   VALUES ($1, $2, $3, $4, $5, $6)
   RETURNING *;
 `;
 
 export const getPaymentTypeNameQuery = `
-  SELECT "paymentTypeName" FROM public."PaymentType"
+  SELECT "paymentTypeName" FROM public."paymentType"
   WHERE "paymentId" = $1;
 `;
 
 export const getVendorCount = `
-  SELECT COUNT(*) AS count FROM public."VendorBankDetails";
-`;
+SELECT COUNT(*) AS count FROM public."vendorBankDetails";`;
 
 export const RestaurentDocStoreQuery = `
-    INSERT INTO public."RestaurentDoc" ("VATcertificate", "CommercialRegisterExtract", "AlcoholLicense", "FoodSafetyHygieneCertificate", "LiabilityInsurance")
-  VALUES ($1, $2, $3, $4, $5)
-  RETURNING *;
+INSERT INTO public."refRestaurentDocuments" 
+("VATcertificate", "CommercialRegisterExtract", "AlcoholLicense", "FoodSafetyHygieneCertificate", "LiabilityInsurance")
+VALUES ($1, $2, $3, $4, $5)
+RETURNING *;
 `;
 
 export const getDocumentQuery = `
-    SELECT "VATcertificate", "CommercialRegisterExtract", "AlcoholLicense", "FoodSafetyHygieneCertificate", "LiabilityInsurance", "logoImage"
-    FROM Public."RestaurentDoc" 
+   SELECT "VATcertificate", "CommercialRegisterExtract", "AlcoholLicense", "FoodSafetyHygieneCertificate", "LiabilityInsurance", "logoImage"
+    FROM Public."refRestaurentDocuments" 
     WHERE "documentId" = $1;
 `;
 
 export const deleteDocumentQuery = `
    UPDATE
-  public."RestaurentDoc"
-SET
-  "VATcertificate" = $1, 
-  "CommercialRegisterExtract" =$2, 
-  "AlcoholLicense"=$3, 
-  "FoodSafetyHygieneCertificate"=$4,
-  "LiabilityInsurance"=$5
-WHERE
-  "documentId" = $6
-  RETURNING *;
+  public."refRestaurentDocuments" SET "VATcertificate" = $1,  "CommercialRegisterExtract" =$2, 
+  "AlcoholLicense"=$3, "FoodSafetyHygieneCertificate"=$4, "LiabilityInsurance"=$5
+WHERE "documentId" = $6 RETURNING *;
+
 `;
 
 export const ImageStoreQuery = `
@@ -88,50 +82,38 @@ export const ImageStoreQuery = `
 `;
 
 export const deleteImageQuery = `
-  UPDATE public."RestaurentDoc" SET "logoImage" = $1
+  UPDATE public."refRestaurentDocuments" SET "logoImage" = $1
 WHERE
   "documentId" = $2
 `;
 
 export const fetchProfileData = `SELECT
-    vt."vendorName", 
-    vt."vendordesgination", 
-    u."refUserFname", 
-    u."refUserCustId",
-    u."refUserLname", 
-    u."refRoleId", 
-    rc."refMobileno", 
-    rc."refEmail", 
-    rua."refAddress", 
-    vsl."wbsiteUrl",
-    vsl."facebookUrl", 
-    vsl."instagramUrl", 
-    vsl."twitterUrl"
+    vt."refVendorName", vt."refVendorDesignation", 
+    u."refUserFName", u."refUserCustId", u."refUserLName", u."refRoleId", 
+    rc."refMobileNo", rc."refEmail", 
+    rua."refStreet", rua."refCity", rua."refPostalCode", rua."refZone", rua."refCountry",
+    vsl."websiteUrl", vsl."facebookUrl", vsl."instagramUrl", vsl."twitterUrl"
 FROM 
-    public."VendorTable" vt
+    public."vendorTable" vt
 LEFT JOIN 
-    public."Users" u ON vt."refUserId" = CAST(u."refUserId" AS TEXT)
+    public."users" u ON vt."refUserId" = (u."refUserId")
 LEFT JOIN 
-    public."refCommunication" rc ON rc."refUserId" = CAST(u."refUserId" AS TEXT)
+    public."refCommunication" rc ON rc."refUserId" = (u."refUserId")
 LEFT JOIN 
-    public."refUserAddress" rua ON rua."refUserId" = CAST(u."refUserId" AS TEXT)
+    public."refUserAddress" rua ON rua."refUserId" = (u."refUserId")
 LEFT JOIN 
-    public."VendorSocialLinks" vsl ON vsl."refUserId" = CAST(u."refUserId" AS TEXT)
+    public."vendorSocialLinks" vsl ON vsl."refUserId" = (u."refUserId")
 WHERE 
     vt."refUserId" = $1;`;
 
-export const fetchRestroCertificates = `SELECT "CertificateType" FROM public."restroDocs";`;
+export const fetchRestroCertificates = `SELECT "refCertificateType" FROM public."restroDocs";`;
 
 export const getUpDateList = `SELECT 
-    "TransTypeID",
-    "refUserId",
-    "transData",
-    "TransTime",
-    "updatedBy"
+    "transTypeId", "refUserId", "transData", "transTime", "updatedBy"
 FROM 
-    "public"."txnHistory" as th
+    "public"."refTransactionHistory" as th
 WHERE 
     "refUserId" = $1
 ORDER BY 
-    "TransTime" DESC;
+    "transTime" DESC;
 `;

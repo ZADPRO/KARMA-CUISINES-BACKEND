@@ -19,6 +19,7 @@ export class adminRouters implements IRoute {
               auth: false,
             },
           },
+          
         ]);
   
         // Logger.info("API created successfully");
