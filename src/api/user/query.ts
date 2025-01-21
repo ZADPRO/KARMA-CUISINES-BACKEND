@@ -1,27 +1,28 @@
-export const checkQuery = `SELECT * FROM public."refUsersDomain" WHERE "refUserName"=$1 LIMIT 10;`
+export const checkQuery = `SELECT * FROM public."refUsersDomain" WHERE "refUserName"=$1 LIMIT 10;`;
 
 export const getCustomerCount = `SELECT COUNT(*) FROM public."users" u WHERE u."refUserCustId" LIKE 'KC%'`;
-   
+
 export const insertUserQuery = `
   INSERT INTO public."users" (
     "refUserFName", "refUserLName",
    "refUserCustId","refRoleId"
   ) VALUES ($1, $2, $3, $4) 
   RETURNING "refRoleId", "refUserCustId","refUserId";
-`
+`;
 
 export const insertUserDomainQuery = `
   INSERT INTO public."refUsersDomain" (
     "refUserId", "refCustId","refUserName", "refCustPassword", 
     "refCustHashedPassword","refCustMobileNum1", "refUserEmail"
   ) VALUES ($1, $2,$3, $4, $5, $6, $7)
-  RETURNING *;`
+  RETURNING *;`;
+
 
 export const insertUserCommunicationQuery = `
   INSERT INTO public."refCommunication" (
     "refUserId", "refMobileNo", "refEmail"
   ) VALUES ($1, $2, $3)
-  RETURNING *;`
+  RETURNING *;`;
 
 export const updateHistoryQuery = `
   INSERT INTO public."refTransactionHistory" (
@@ -65,20 +66,23 @@ export const SetOtp = `INSERT INTO
 values
   ($1, $2, $3) RETURNING *;`;
 
-  export const insertOrderMasterQuery = `INSERT INTO
+export const mobileNumbersQuery = `SELECT "refCustMobileNum1" FROM public."refUsersDomain" WHERE "refUserEmail" = $1`;
+
+export const userQuery = `SELECT "refUserId", "refUserEmail" FROM public."refUsersDomain" WHERE "refCustMobileNum1" = $1 AND "refUserEmail" = $2`;
+
+export const SetOtptime = `INSERT INTO public."refOTPTime" ("otp", "startTime", "endTime") values ($1, $2, $3);`;
+
+export const insertOrderMasterQuery = `INSERT INTO
   public."orderTransactionTable" ("refPrice", "taxAppliedId", "refOfferId", "totalBill", "paymentMethodId", "refStatus", "paymentId")
-values
-  ($1, $2, $3, $4, $5, $6, $7) 
-  RETURNING *;
+values ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`;
+
+export const insertUserContactQuery = `INSERT INTO "public"."refCommunication" ("refMobileNo", "refUserId") values ($1, $2)`;
+
+export const insertProductContentQuery = `INSERT INTO "public"."refProductTable" ("productName", "productPrice" ) values ($1, $2)
 `;
+export const insertorderContentQuery = `INSERT INTO "public"."refOrderTable" ("productId", "quantity", "totalPrice") values ($1, $2, $3)`;
 
-  export const insertUserContactQuery = `INSERT INTO "public"."refCommunication" ("refMobileNo", "refUserId") values ($1, $2)`;
-
-  export const insertProductContentQuery = `INSERT INTO "public"."refProductTable" ("productName", "productPrice" ) values ($1, $2)
-`;
-  export const insertorderContentQuery = `INSERT INTO "public"."refOrderTable" ("productId", "quantity", "totalPrice") values ($1, $2, $3)`;
-
-  export const insertUserAddressQuery = `INSERT INTO public."refUserAddress" ("addressMode", "refStreet", "refCity", "refPostalCode", "refZone","refCountry")
+export const insertUserAddressQuery = `INSERT INTO public."refUserAddress" ("addressMode", "refStreet", "refCity", "refPostalCode", "refZone","refCountry")
   VALUES ($1, $2, $3, $4 , $5, $6)
   RETURNING "addressID";`;
 

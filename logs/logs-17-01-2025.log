@@ -71,3 +71,4 @@
 {"level":"info","message":"Router ------------","timestamp":"2025-01-17T12:24:26.278Z"}
 {"level":"info","message":"Router ------------","timestamp":"2025-01-17T12:25:56.398Z"}
 {"level":"info","message":"Router ------------","timestamp":"2025-01-17T12:27:23.692Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-17T13:00:24.224Z"}

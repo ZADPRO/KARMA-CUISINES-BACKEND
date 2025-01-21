@@ -23,10 +23,30 @@ export class UserRouters implements IRoute {
         },
         {
           method: "POST",
-          path: "/api/v1/users/Otp",
+          path: "/api/v1/users/forgotPassword",
           config: {
-            handler: controller.Otp,
-            description: "User order placement",
+            handler: controller.forgotPassword,
+            description: "forgotPassword",
+            tags: ["api", "users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/users/sendOtp",
+          config: {
+            handler: controller.sendOtp,
+            description: "forgotPassword",
+            tags: ["api", "users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/users/addProduct",
+          config: {
+            handler: controller.addProduct,
+            description: "forgotPassword",
             tags: ["api", "users"],
             auth: false,
           },

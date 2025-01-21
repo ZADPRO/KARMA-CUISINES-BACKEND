@@ -33,7 +33,7 @@ import {
   fetchProfileData,
   fetchRestroCertificates,
   getUpDateList,
-  deleteImageQuery
+  deleteImageQuery, insertproductQuery
 } from './query';
 import { CurrentTime } from "../../helper/common";
 
@@ -157,7 +157,7 @@ export class VendorRepository {
         refUserCustId: newVendorId, // Return the generated vendorId as refUserCustId
         restroDetails: restroDetails,
         userId: userId
-      }, false);
+      }, true);
 
     } catch (error) {
       // Ensure rollback on error
@@ -175,7 +175,7 @@ export class VendorRepository {
         message: 'Data insertion failed',
         error: errorMessage,
         token: tokens
-      }, false);
+      }, true);
     } finally {
       client.release();
     }
@@ -242,7 +242,7 @@ export class VendorRepository {
         message: "Vendor Profile Page Data retrieved successfully",
         token: tokens,
         data: registerData,
-      }, false);
+      }, true);
     } catch (error) {
       const errorMessage = (error as Error).message; // Cast `error` to `Error` type
       console.error('Error in VendorprofilePageDataV1:', errorMessage);
@@ -250,7 +250,7 @@ export class VendorRepository {
         success: false,
         message: `Error in Vendor Profile Page Data retrieval: ${errorMessage}`,
         token: tokens
-      }, false);
+      }, true);
     }
   }
 
@@ -398,7 +398,7 @@ export class VendorRepository {
         success: true,
         message: "Profile data updated successfully",
         token: tokens,
-      }, false);
+      }, true);
     } catch (error) {
       await client.query("ROLLBACK");
 
@@ -411,7 +411,7 @@ export class VendorRepository {
         success: false,
         message: errorMessage,
         token: tokens,
-      }, false);
+      }, true);
     } finally {
       client.release();
     }
@@ -470,7 +470,7 @@ export class VendorRepository {
         message: "bank details added successfully",
         token: tokens,
         vendorBankDetailsId: result[0].vendorBankDetailsId
-      }, false
+      }, true
       );
 
     } catch (error) {
@@ -479,7 +479,7 @@ export class VendorRepository {
         success: false,
         message: "error in adding the Bank details",
         token: tokens,
-      }, false
+      }, true
       );
     }
   }
@@ -838,7 +838,224 @@ export class VendorRepository {
       );
     }
   }
+  
+  // public async addProductV1(userData: any, tokendata: any): Promise<any> {
+  //   const client: PoolClient = await getClient();
+  //   const token = { id: tokendata.id };
+  //   console.log('token', token);
+  //   const tokens = generateTokenWithExpire(token, true);
+  //   console.log('tokens', tokens);
 
+  //   try {
+  //     await client.query('BEGIN');
+  
+  //     // Vendor count and generation of new vendor ID
+  //     // const VendorCountResult = await executeQuery(getVendorCountQuery);
+  //     // console.log('VendorCountResult', VendorCountResult);
+  
+  //     // const VendorCount = parseInt(VendorCountResult[0].count, 10); // Extract and convert count to a number
+  //     // const newVendorId = `VD${(VendorCount + 1).toString().padStart(3, '0')}`;
+  //     // console.log('Generated VendorId:', newVendorId);
+  
+  //     const {
+  //       productName,
+  //       productPrice,
+  //       category,
+  //       description,
+  //       rating,
+  //       offerAppliedStatus,
+  //       offer,
+  //       range,
+  //     } = userData;
+  
+  //     // Apply logic based on offerAppliedStatus
+  //     const finalOffer = offerAppliedStatus ? offer : '-';
+     
+  //     const params = [
+  //     //  newVendorId,
+  //       productName,
+  //       productPrice,
+  //       category,
+  //       description,
+  //       rating,
+  //       offerAppliedStatus,
+  //       finalOffer, // Use the computed offer value
+  //       range,
+  //     ];
+  //     console.log('Insert Product Params:', params);
+  
+  //     const userResult = await client.query(insertproductQuery, params);
+  //     const newUser = userResult.rows[0];
+  //     console.log('newUser', newUser);
+    
+  //     if (newUser) {
+  //       const history = [
+  //         1,
+  //         newUser.refUserId,
+  //         'add products ',
+  //         CurrentTime(),
+  //         'vendor',
+  //       ];
+  
+  //       console.log('history', history);
+  //       const updateHistory = await client.query(updateHistoryQuery, history);
+  //       } else {
+  //         await client.query('ROLLBACK'); // Rollback if history update fails
+  //         return encrypt(
+  //           {
+  //             success: false,
+  //             message: 'Failed to update history',
+  //             token: tokens,
+  //           },
+  //           false,
+  //         );
+  //       }
+      
+  //   } catch (error: unknown) {
+  //     await client.query('ROLLBACK'); // Rollback the transaction in case of any error
+  //     console.error('Error during user signup:', error);
+  
+  //     if (error instanceof Error) {
+  //       return encrypt(
+  //         {
+  //           success: false,
+  //           message: 'An unexpected error occurred during signup',
+  //           error: error.message,
+  //         },
+  //         false,
+  //       );
+  //     } else {
+  //       return encrypt(
+  //         {
+  //           success: false,
+  //           message: 'An unknown error occurred during signup',
+  //           token: tokens,
+  //           error: String(error),
+  //         },
+  //         false,
+  //       );
+  //     }
+  //   } finally {
+  //     client.release(); // Release the client back to the pool
+  //   }
+  // }
+  public async addProductV1(userData: any, tokendata: any): Promise<any> {
+    const client: PoolClient = await getClient();
+    const token = { id: tokendata.id };
+    console.log('token', token);
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
+  
+    try {
+      await client.query('BEGIN');
+  
+      const {
+        refVendorId,       // Extract refVendorId from userData
+        productName,
+        productPrice,
+        category,
+        description,
+        rating,
+        offerAppliedStatus,
+        offer,
+        range,
+        refUserId,
+      } = userData;
+  
+      // Apply logic based on offerAppliedStatus
+      const finalOffer = offerAppliedStatus ? offer : '-';
+  
+      // Add refVendorId and refUserId to the parameters
+      const params = [
+        refVendorId,
+        productName,
+        productPrice,
+        category,
+        description,
+        rating,
+        offerAppliedStatus,
+        finalOffer, // Use the computed offer value
+        range,
+      ];
+      console.log('Insert Product Params:', params);
+  
+      const userResult = await client.query(insertproductQuery, params);
+      const newUser = userResult.rows[0];
+      console.log('newUser', newUser);
+  
+      if (newUser) {
+        const history = [
+          1,
+          refUserId, // Use refUserId from userData
+          'add products ',
+          CurrentTime(),
+          'vendor',
+        ];
+  
+        console.log('history', history);
+        const updateHistory = await client.query(updateHistoryQuery, history);
+  
+        if (updateHistory.rowCount === 0) {
+          await client.query('ROLLBACK'); // Rollback if history update fails
+          return encrypt(
+            {
+              success: false,
+              message: 'Failed to update history',
+              token: tokens,
+            },
+            false
+          );
+        }
+  
+        await client.query('COMMIT'); // Commit the transaction
+        return encrypt(
+          {
+            success: true,
+            message: 'Product added successfully',
+            token: tokens,
+          },
+          false
+        );
+      } else {
+        await client.query('ROLLBACK'); // Rollback if any insert fails
+        return encrypt(
+          {
+            success: false,
+            message: 'Product insertion failed',
+            token: tokens,
+          },
+          false
+        );
+      }
+    } catch (error: unknown) {
+      await client.query('ROLLBACK'); // Rollback the transaction in case of any error
+      console.error('Error during product addition:', error);
+  
+      if (error instanceof Error) {
+        return encrypt(
+          {
+            success: false,
+            message: 'An unexpected error occurred during product addition',
+            error: error.message,
+          },
+          false
+        );
+      } else {
+        return encrypt(
+          {
+            success: false,
+            message: 'An unknown error occurred during product addition',
+            token: tokens,
+            error: String(error),
+          },
+          false
+        );
+      }
+    } finally {
+      client.release(); // Release the client back to the pool
+    }
+  }
+  
   public async VendorAuditListV1(userData: { refUserId: string }, tokendata: any): Promise<any> {
 
     const token = { id: tokendata.id }

@@ -3,7 +3,7 @@
         "1": {
             "productId": 1,
             "foodName": "Food Name 1",
-            "foodQuantity": 3, 
+            "foodQuantity": 3,
             "individualPrice": 100,
             "overallPrice": 300
         },
@@ -46,3 +46,7 @@
         "paymentMode": "Twint or 3"
     }
 }
+
+
+
+

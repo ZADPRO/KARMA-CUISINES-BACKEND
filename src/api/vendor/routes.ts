@@ -134,6 +134,17 @@ export class vendorRoutes implements IRoute {
         },
         {
           method: "POST",
+          path: "/api/v1/vendorRoutes/addProduct",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.addProduct,
+            description: "adding products",
+            auth: false,
+          },
+        },
+        
+        {
+          method: "POST",
           path: "/api/v1/vendorRoutes/VendorAuditList",
           config: {
             pre: [{ method: validateToken, assign: "token" }],

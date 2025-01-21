@@ -1,0 +1,19 @@
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T04:39:47.089Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-21T04:40:02.990Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-21T04:40:58.558Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-21T04:43:16.148Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-21T04:43:44.847Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-21T04:44:08.904Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-21T04:44:25.496Z"}
+{"level":"error","message":"Error in store vendor social links: Cannot read properties of undefined (reading 'success')","stack":"TypeError: Cannot read properties of undefined (reading 'success')\n    at VendorProfile.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:344:18)\n    at Generator.next (<anonymous>)\n    at fulfilled (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-01-21T04:45:52.659Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T04:46:40.331Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T04:48:45.961Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T04:48:59.950Z"}
+{"level":"error","message":"Error in adding products Cannot read properties of undefined (reading 'success')","stack":"TypeError: Cannot read properties of undefined (reading 'success')\n    at VendorProfile.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:344:18)\n    at Generator.next (<anonymous>)\n    at fulfilled (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-01-21T04:49:07.312Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T04:54:28.042Z"}
+{"level":"error","message":"Error in adding products Cannot read properties of undefined (reading 'success')","stack":"TypeError: Cannot read properties of undefined (reading 'success')\n    at VendorProfile.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:344:18)\n    at Generator.next (<anonymous>)\n    at fulfilled (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\controller.ts:5:58)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-01-21T04:54:41.231Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T04:57:33.586Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T04:59:29.882Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T05:00:35.930Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T05:00:46.090Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-21T05:03:52.624Z"}

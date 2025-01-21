@@ -117,3 +117,7 @@ WHERE
 ORDER BY 
     "transTime" DESC;
 `;
+
+export const insertproductQuery = `INSERT INTO public."refProductTable" ( "refVendorId", "productName", "productPrice", "category", "description", "ratings", "offerApplied", "offer", "range")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+  RETURNING *;`;

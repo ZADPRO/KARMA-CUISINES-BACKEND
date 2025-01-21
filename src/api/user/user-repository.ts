@@ -13,53 +13,49 @@ import {
   generateTokenWithoutExpire,
 } from "../../helper/token";
 import {
-  checkQuery,
-  getCustomerCount,
-  insertUserQuery,
-  insertUserDomainQuery,
-  insertUserCommunicationQuery,
+  checkQuery, getCustomerCount, insertUserQuery, insertUserDomainQuery, insertUserCommunicationQuery,
   updateHistoryQuery,
-  ValidateEmailUserName, validateResendMail, SetOtp,
+  userQuery, SetOtptime, SetOtp, mobileNumbersQuery,
   insertOrderMasterQuery, insertUserContactQuery, insertProductContentQuery, insertorderContentQuery, insertUserAddressQuery
 } from "./query";
-import { CurrentTime } from "../../helper/common";
+import { CurrentTime, formatDate } from "../../helper/common";
 
 export class UserRepository {
+
   public async userSignUpV1(userData: any, token_data?: any): Promise<any> {
+    const client: PoolClient = await getClient();
+    try {
+      await client.query('BEGIN');
 
-    console.log('token_data', token_data)
-    console.log('userData', userData)
+      const hashedPassword = await bcrypt.hash(userData.temp_password, 10);
 
-    const hashedPassword = await bcrypt.hash(userData.temp_password, 10);
+      const check = [userData.temp_username];
+      console.log(check);
 
-    const check = [userData.temp_username];
-    console.log(check);
-    // const userCheck = await executeQuery(checkQuery, [userData.temp_username]);
-    const userCheck = await executeQuery(checkQuery, check)
-    console.log('userCheck', userCheck);
-    const userFind = userCheck[0];
-    console.log('userFind', userFind);
+      const userCheck = await client.query(checkQuery, check);
+      console.log('userCheck', userCheck);
 
-    if (userFind) {
+      const userFind = userCheck.rows[0];
+      console.log('userFind', userFind);
 
-      return encrypt(
-        {
-          message: "Already exit",
-          success: true,
-        },
-        false
-      );
-    } else {
-      // Generate newCustomerId in the format KC001, KC002, etc.
-      const userCountResult = await executeQuery(getCustomerCount);
+      if (userFind) {
+        await client.query('ROLLBACK');
+        return encrypt(
+          {
+            message: "Already exists",
+            success: true,
+          },
+          false
+        );
+      }
+
+      const userCountResult = await client.query(getCustomerCount);
       console.log('userCountResult', userCountResult);
-      const userCount = parseInt(userCountResult[0].count, 10); // Extract and convert count to a number
+
+      const userCount = parseInt(userCountResult.rows[0].count, 10);
       console.log('userCount', userCount);
 
-      let newCustomerId;
-      if (userCount >= 0) {
-        newCustomerId = `KC${(userCount + 1).toString().padStart(3, '0')}`; // Generate the ID in the format KCxxx
-      }
+      const newCustomerId = `KC${(userCount + 1).toString().padStart(3, '0')}`;
       let userType = 1;
       console.log('newCustomerId', newCustomerId);
 
@@ -67,14 +63,13 @@ export class UserRepository {
         userData.temp_fname, // refStFName
         userData.temp_lname, // refStLName
         newCustomerId,
-        (userType = 1),
-        // userData.temp_email
+        userType,
       ];
       console.log(params);
 
-      const userResult = await executeQuery(insertUserQuery, params);
-      const newUser = userResult[0];
-      console.log('newUser', newUser)
+      const userResult = await client.query(insertUserQuery, params);
+      const newUser = userResult.rows[0];
+      console.log('newUser', newUser);
 
       const domainParams = [
         newUser.refUserId, // refUserId from users table
@@ -83,47 +78,45 @@ export class UserRepository {
         userData.temp_password, // refCustPassword
         hashedPassword, // refCustHashedPassword
         userData.temp_phone,
-        userData.temp_email
+        userData.temp_email,
       ];
-
       console.log(domainParams);
-
-      const domainResult = await executeQuery(insertUserDomainQuery, domainParams);
-
+      const domainResult = await client.query(insertUserDomainQuery, domainParams);
       const communicationParams = [
         newUser.refUserId, // refUserId from users table
         userData.temp_phone,
         userData.temp_email,
       ];
-
       console.log(communicationParams);
 
-      const communicationResult = await executeQuery(insertUserCommunicationQuery, communicationParams);
+      const communicationResult = await client.query(insertUserCommunicationQuery, communicationParams);
 
-      console.log(' line --------- 96',)
+      console.log('line --------- 96');
       if (
-        userResult.length > 0 &&
-        domainResult.length > 0 &&
-        communicationResult.length > 0
+        userResult.rows.length > 0 &&
+        domainResult.rows.length > 0 &&
+        communicationResult.rows.length > 0
       ) {
         const history = [
           1,
-          CurrentTime(),
           newUser.refUserId,
           "User SignUp",
+          CurrentTime(),
+          "user"
         ];
 
-        console.log('history', history)
-        const updateHistory = await executeQuery(updateHistoryQuery, history);
+        console.log('history', history);
+        const updateHistory = await client.query(updateHistoryQuery, history);
 
-        console.log('line ----- 113',)
-        if (updateHistory && updateHistory.length > 0) {
+        if (updateHistory.rows.length > 0) {
           const tokenData = {
             id: newUser.refUserId, // refUserId from users table
             email: userData.temp_su_email,
             custId: newUser.refSCustId,
             status: newUser.refSUserStatus,
           };
+
+          await client.query('COMMIT');  // Commit the transaction
           return encrypt(
             {
               success: true,
@@ -134,6 +127,7 @@ export class UserRepository {
             false
           );
         } else {
+          await client.query('ROLLBACK');  // Rollback if history update fails
           return encrypt(
             {
               success: false,
@@ -143,6 +137,7 @@ export class UserRepository {
           );
         }
       } else {
+        await client.query('ROLLBACK');  // Rollback if any insert fails
         return encrypt(
           {
             success: false,
@@ -151,114 +146,358 @@ export class UserRepository {
           false
         );
       }
-    }
-  }
+    } catch (error: unknown) {
+      await client.query('ROLLBACK');  // Rollback the transaction in case of any error
+      console.error('Error during user signup:', error);
 
-  public async verifyUserNameEmailV1(userData: any): Promise<any> {
-    try {
-      const { refUserId } = userData;
-
-      let ValidationTextResult = userData.emailId;
-      // if (userData.validateText) {
-      //   ValidationTextResult = await executeQuery(ValidateEmailUserName, [
-      //     userData.validateText,
-      //   ]);
-      // } else if (userData.id) {
-      //   ValidationTextResult = await executeQuery(validateResendMail, [
-      //     userData.id,
-      //   ]);
-      // }
-
-      let result;
-      console.log('ValidationTextResult', ValidationTextResult)
-      if (ValidationTextResult.length > 0) {
-        function generateNumericOtp(length = 6) {
-          let otp = "";
-          for (let i = 0; i < length; i++) {
-            otp += Math.floor(Math.random() * 10); // Generates a random digit (0-9)
-          }
-          return otp;
-        }
-
-        const OTP = { otp: generateNumericOtp() };
-        console.log('OTP', OTP)
-
-        const main = async () => {
-          const mailOptions = {
-            to: ValidationTextResult,
-            subject: "Password Request OTP",
-            html: sendOtpTemplate(
-              "Testing " +
-              " " +
-              "User",
-              OTP.otp
-            ),
-          };
-
-          try {
-            await sendEmail(mailOptions);
-          } catch (error) {
-            console.error("Failed to send email:", error);
-
-            const results = {
-              success: false,
-              message: "error in sending the resetpassword request",
-            };
-            return encrypt(results, true);
-          }
-        };
-
-        await main();
-        const tokenOtp = generateTokenOtp(OTP, true);
-
-        const params = [
-          //ValidationTextResult[0].refUserId,
-          refUserId,
-          tokenOtp,
-          CurrentTime(),
-        ];
-
-        result = await executeQuery(SetOtp, params);
-
-        const txnHistoryParams = [
-          3, // TransTypeID (integer)
-          refUserId, // refUserId (integer)
-          "OTP Updated", // transData (ensure this matches the column type)
-          CurrentTime(), // TransTime (ensure this matches the column type, likely TIMESTAMP)
-          "User", // UpdatedBy (ensure this matches the column type)
-        ];
-
-        await executeQuery(updateHistoryQuery, txnHistoryParams);
-
+      if (error instanceof Error) {
+        return encrypt(
+          {
+            success: false,
+            message: "An unexpected error occurred during signup",
+            error: error.message,
+          },
+          false
+        );
       } else {
-        const results = {
-          success: true,
-          validation: false,
-          message: "MailId or Username Does not Match",
-        };
-        return encrypt(results, true);
+        return encrypt(
+          {
+            success: false,
+            message: "An unknown error occurred during signup",
+            error: String(error),
+          },
+          false
+        );
       }
-      const results = {
-        success: true,
-        validation: true,
-        message: "Otp Mail Send Successfully",
-        id: result[0].otpId,
-      };
-      return encrypt(results, true);
+    } finally {
+      client.release();  // Release the client back to the pool
+    }
+  }
+  // public async forgotPasswordV1(userData: any): Promise<any> {
+  //   console.log('userData', userData)
+  //   const client: PoolClient = await getClient();
+
+  //   try {
+  //     await client.query('BEGIN');
+
+  //     const { refUserId, emailId } = userData;
+  //     console.log('refUserId', refUserId)
+
+  //     // Validate email ID or refUserId
+  //     if (!emailId || !refUserId) {
+  //       return encrypt(
+  //         {
+  //           success: false,
+  //           message: "Email ID or User ID is missing",
+  //         },
+  //         false
+  //       );
+  //     }
+
+  //     // Fetch all mobile numbers associated with the user
+  //     const mobileNumbers = await executeQuery(mobileNumbersQuery, [emailId]);
+  //     console.log('mobileNumbers', mobileNumbers)
+
+  //     if (!mobileNumbers.length) {
+  //       return encrypt(
+  //         {
+  //           success: false,
+  //           message: "No mobile numbers found for the user",
+  //         },
+  //         true
+  //       );
+  //     }
+
+  //     // Generate a numeric OTP
+  //     const generateNumericOtp = (length = 6): string =>
+  //       Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
+
+  //     const otp = generateNumericOtp();
+  //     console.log("Generated OTP:", otp);
+
+  //     // Prepare email content
+  //     const mailOptions = {
+  //       to: emailId,
+  //       subject: "Forgot Password OTP",
+  //       html: sendOtpTemplate("Dear", otp),
+  //     };
+
+  //     // Attempt to send OTP email
+  //     try {
+  //       await sendEmail(mailOptions);
+  //     } catch (error) {
+  //       console.error("Failed to send OTP email:", error);
+  //       return encrypt(
+  //         {
+  //           success: false,
+  //           message: "Failed to send OTP email",
+  //         },
+  //         false
+  //       );
+  //     }
+
+  //     // Create a token for OTP (if needed)
+  //     const tokenOtp = generateTokenOtp({ otp }, true);
+
+  //     // Store OTP in the database
+      // const otpParams = [refUserId, tokenOtp, CurrentTime()];
+      // const otpResult = await client.query(SetOtp, otpParams);
+
+      // const otpTimeParams = [
+      //   tokenOtp, CurrentTime(), formatDate
+      // ];
+      // const otpTimeResult = await client.query(SetOtptime, otpTimeParams);
+
+      // // Update transaction history
+      // const txnHistoryParams = [
+      //   3, // TransTypeID
+      //   refUserId, // refUserId
+      //   "Forgot Password OTP Generated", // Transaction description
+      //   CurrentTime(), // Transaction time
+      //   "System", // Updated by
+      // ];
+      // await executeQuery(updateHistoryQuery, txnHistoryParams);
+
+  //     // Return success response with mobile numbers
+  //     await client.query('COMMIT');  // Commit the transaction
+
+  //     return encrypt(
+  //       {
+  //         success: true,
+  //         validation: true,
+  //         message: "OTP sent successfully",
+  //         mobileNumbers: mobileNumbers.map((row: any) => row.refCustMobileNum1), // Include mobile numbers in the response
+  //         emailId
+  //       },
+  //       false
+  //     );
+  //   } catch (error) {
+  //     await client.query('ROLLBACK');  // Rollback if history update fails
+
+  //     console.error("Error in forgot password process:", error);
+  //     return encrypt(
+  //       {
+  //         success: false,
+  //         message: "Internal server error",
+  //       },
+  //       false
+  //     );
+  //   } finally {
+  //     client.release();  // Release the client back to the pool
+  //   }
+  // }
+  public async forgotPasswordV1(userData: any): Promise<any> {
+    console.log("Input Payload:", userData);
+    const client: PoolClient = await getClient();
+  
+    try {
+      const { refUserId, emailId } = userData;
+  
+      // Validate input
+      if (!emailId || !refUserId) {
+        return encrypt(
+          {
+            success: false,
+            message: "Email ID or User ID is missing",
+          },
+          false
+        );
+      }
+  
+      console.log("Validating User ID and Email ID:", { refUserId, emailId });
+  
+      // Begin database transaction
+      await client.query("BEGIN");
+  
+      // Fetch all mobile numbers associated with the user
+  
+      const mobileNumbersResult = await executeQuery(mobileNumbersQuery, [
+    
+        emailId,
+      ]);
+  
+      console.log("Mobile Numbers Result:", mobileNumbersResult);
+  
+      // Check if any mobile numbers were found
+      if (!mobileNumbersResult.length) {
+        return encrypt(
+          {
+            success: false,
+            message: "No mobile numbers found for the user",
+          },
+          false
+        );
+      }
+  
+      // Map mobile numbers from the result
+      const mobileNumbers = mobileNumbersResult.map(
+        (row: any) => row.refCustMobileNum1
+      );
+  
+      console.log("Mapped Mobile Numbers:", mobileNumbers);
+  
+      // Commit transaction
+      await client.query("COMMIT");
+  
+      // Return the mobile numbers and email ID in the response
+      return encrypt(
+        {
+          success: true,
+          message: "Contact information retrieved successfully",
+          emailId,
+          mobileNumbers,
+        },
+        false
+      );
     } catch (error) {
-      console.log("error", error);
-      const results = {
-        success: false,
-        message: "error in sending the resetpassword request",
-      };
-      return encrypt(results, true);
+      console.error("Error retrieving user contact info:", error);
+  
+      // Rollback transaction in case of failure
+      await client.query("ROLLBACK");
+  
+      return encrypt(
+        {
+          success: false,
+          message: "Internal server error",
+        },
+        false
+      );
+    } finally {
+      client.release(); // Release the client back to the pool
     }
   }
 
+  public async sendOtpV1(userData: any): Promise<any> {
+    console.log("Input Payload:", userData);
+    const client: PoolClient = await getClient();
+  
+    try {
+      const { mobileNumber, emailId } = userData;
+  
+      // Validate input
+      if (!mobileNumber || !emailId) {
+        return encrypt(
+          {
+            success: false,
+            message: "Mobile number or email ID is missing",
+          },
+          false
+        );
+      }
+  
+      console.log("Validating Mobile Number and Email ID:", { mobileNumber, emailId });
+  
+      // Begin database transaction
+      await client.query("BEGIN");
+  
+      // Fetch user record with the specific mobile number and email ID
+
+  
+      const userResult = await executeQuery(userQuery, [mobileNumber, emailId]);
+  
+      console.log("User Query Result:", userResult);
+  
+      if (!userResult.length) {
+        return encrypt(
+          {
+            success: false,
+            message: "No matching user found for the given mobile number and email ID",
+          },
+          false
+        );
+      }
+  
+      const { refUserId } = userResult[0];
+      console.log("refUserId:", refUserId);
+  
+      // Generate a numeric OTP
+      const generateNumericOtp = (length = 6): string =>
+        Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
+  
+      const otp = generateNumericOtp();
+      console.log("Generated OTP:", otp);
+  
+      // Prepare email content
+      const mailOptions = {
+        to: emailId,
+        subject: "Forgot Password OTP",
+        html: sendOtpTemplate("Dear User", otp),
+      };
+  
+      // Attempt to send OTP email
+      try {
+        await sendEmail(mailOptions);
+      } catch (error) {
+        console.error("Failed to send OTP email:", error);
+        return encrypt(
+          {
+            success: false,
+            message: "Failed to send OTP email",
+          },
+          false
+        );
+      }
+  
+      // Create a token for OTP
+      const tokenOtp = generateTokenOtp({ otp }, true);
+  
+      // Store OTP in the database
+      const otpParams = [refUserId, tokenOtp, CurrentTime()];
+      const otpResult = await client.query(SetOtp, otpParams);
+  
+      const otpTimeParams = [tokenOtp, CurrentTime(), formatDate(30)]; // Adds 30 seconds
+      const otpTimeResult = await client.query(SetOtptime, otpTimeParams);
+  
+      // Update transaction history
+      const txnHistoryParams = [
+        3, // TransTypeID
+        refUserId, // refUserId
+        "Forgot Password OTP Generated", // Transaction description
+        CurrentTime(), // Transaction time
+        "System", // Updated by
+      ];
+      await executeQuery(updateHistoryQuery, txnHistoryParams);
+  
+      // Commit transaction
+      await client.query("COMMIT");
+  
+      // Return success response
+      return encrypt(
+        {
+          success: true,
+          validation: true,
+          message: "OTP sent successfully",
+          mobileNumber,
+          emailId,
+        },
+        false
+      );
+    } catch (error) {
+      console.error("Error in forgot password process:", error);
+  
+      // Rollback transaction in case of failure
+      await client.query("ROLLBACK");
+  
+      return encrypt(
+        {
+          success: false,
+          message: "Internal server error",
+        },
+        false
+      );
+    } finally {
+      client.release(); // Release the client back to the pool
+    }
+  }
+  
+  public async addProductV1(userData: any): Promise<any> {
+
+  }
+  
   public async orderplacementV1(orderData: any): Promise<any> {
     const client: PoolClient = await getClient(); // Assuming getClient() is a function to get DB client
-    // const tokens = generateTokenWithExpire({ id: orderData.userId }, true); // Mock token generation
-    // console.log('Generated Token:', tokens);
+    const tokens = generateTokenWithExpire({ id: orderData.userId }, true); // Mock token generation
+    console.log('Generated Token:', tokens);
 
     try {
       await client.query("BEGIN");
@@ -341,9 +580,9 @@ export class UserRepository {
         return encrypt({
           success: true,
           message: 'Order processed successfully',
-          //token: tokens,
+          token: tokens,
           orderId: parseInt(orderData.userId),
-        }, false);
+        }, true);
       }
     } catch (error) {
       // Rollback the transaction in case of error
@@ -358,8 +597,8 @@ export class UserRepository {
         success: false,
         message: 'Order processing failed',
         error: errorMessage,
-        // token: tokens,
-      }, false);
+        token: tokens,
+      }, true);
     } finally {
       await client.query("COMMIT");
       client.release();
