@@ -61,10 +61,7 @@ FROM
   INNER JOIN public."users" u ON rf."refUserId" = u."refUserId"
 WHERE rf."otpId" = $1;`;
 
-export const SetOtp = `INSERT INTO
-  public."refOTPGen"  ("refUserId", "otp", "createdAt")
-values
-  ($1, $2, $3) RETURNING *;`;
+export const SetOtp = `INSERT INTO public."refOTPGen"  ("refUserId", "otp", "createdAt") values ($1, $2, $3) RETURNING *;`;
 
 export const mobileNumbersQuery = `SELECT "refCustMobileNum1" FROM public."refUsersDomain" WHERE "refUserEmail" = $1`;
 

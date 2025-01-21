@@ -32,13 +32,12 @@ export const insertVendorSocialLinksQuery = `
   VALUES ($1, $2, $3, $4, $5)
   RETURNING "vendorLinkId";
 `;
-export const RestroDetailsQuery = `select rd."refCertificateType" from public."restroDocs" rd;`;
+export const RestroDetailsQuery = `select * from public."restroDocs" rd;`;
 
 export const updateHistoryQuery = `
  INSERT INTO public."refTransactionHistory" ("transTypeId", "refUserId", "transData", "transTime", "updatedBy")
   VALUES ($1, $2, $3, $4, $5)
-  ;
-`;
+  ;`;
 
 export const insertVendorBankDetailsQuery = `
   INSERT INTO public."vendorBankDetails" ("refBankName","refAccountNumber", "refIbanCode", "paymentId", "refUserId","refMoneyTransferDetails")
@@ -121,3 +120,17 @@ ORDER BY
 export const insertproductQuery = `INSERT INTO public."refProductTable" ( "refVendorId", "productName", "productPrice", "category", "description", "ratings", "offerApplied", "offer", "range")
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
   RETURNING *;`;
+
+export const insertOfferQuery = `
+          INSERT INTO public."offersTable" (
+            "refOfferName", "refOfferDescription", "refOfferMinValue", "refOfferTypeId", "refStartDate", "refEndDate", "refCoupon") VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+
+export const insertDocumentQuery = `
+         INSERT INTO public."restroDocs" ("refCertificateType", "visibility") VALUES ($1, true) RETURNING *;`;     
+
+export const updateRestroQuery = `UPDATE public."restroDocs" SET "refCertificateType" = $1, "visibility" = true WHERE "restroDocTypeId" = $2 RETURNING *;`;         
+
+export const updatevisibilityQuery = `UPDATE public."restroDocs"
+SET "visibility" = $1
+WHERE "restroDocTypeId" = $2
+RETURNING *;`;

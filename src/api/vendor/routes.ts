@@ -142,7 +142,56 @@ export class vendorRoutes implements IRoute {
             auth: false,
           },
         },
-        
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/offersApplied",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.offersApplied,
+            description: "adding products",
+            auth: false,
+          },
+        },
+        {
+          method: "GET",
+          path: "/api/v1/vendorRoutes/getDocuments",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.getDocuments,
+            description: "getting documents",
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/addDocuments",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.addDocuments,
+            description: "add documents",
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/UpdateDocuments",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.UpdateDocuments,
+            description: "update documents",
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/visibility",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.visibility,
+            description: "visibility",
+            auth: false,
+          },
+        },
         {
           method: "POST",
           path: "/api/v1/vendorRoutes/VendorAuditList",

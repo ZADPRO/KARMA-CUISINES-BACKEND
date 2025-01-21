@@ -163,7 +163,7 @@ export class VendorProfile {
       return response.response(entity).code(200); // Bad Request if failed
 
     } catch (error) {
-      logger.error("Error in store vendor social links:", error);
+      logger.error("Error in upload vendor restaurent documents ", error);
       return response
         .response({
           success: false,
@@ -193,7 +193,7 @@ export class VendorProfile {
       return response.response(entity).code(200); // Bad Request if failed
 
     } catch (error) {
-      logger.error("Error in store vendor social links:", error);
+      logger.error("Error in restaurent document update", error);
       return response
         .response({
           success: false,
@@ -224,7 +224,7 @@ export class VendorProfile {
       return response.response(entity).code(200); // Bad Request if failed
 
     } catch (error) {
-      logger.error("Error in store vendor social links:", error);
+      logger.error("Error in delete restaurent documents", error);
       return response
         .response({
           success: false,
@@ -254,7 +254,7 @@ export class VendorProfile {
       return response.response(entity).code(200); // Bad Request if failed
 
     } catch (error) {
-      logger.error("Error in store vendor social links:", error);
+      logger.error("Error in logo upload", error);
       return response
         .response({
           success: false,
@@ -285,7 +285,7 @@ export class VendorProfile {
       return response.response(entity).code(200); // Bad Request if failed
 
     } catch (error) {
-      logger.error("Error in store vendor social links:", error);
+      logger.error("Error in logo update:", error);
       return response
         .response({
           success: false,
@@ -316,7 +316,7 @@ export class VendorProfile {
       return response.response(entity).code(200); // Bad Request if failed
 
     } catch (error) {
-      logger.error("Error in store vendor social links:", error);
+      logger.error("Error in delete logo:", error);
       return response
         .response({
           success: false,
@@ -348,6 +348,161 @@ export class VendorProfile {
 
     } catch (error) {
       logger.error("Error in adding products", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  public offersApplied = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
+    // logger.info("Router-----store Address");
+    try {
+      let entity;
+      entity = await this.resolver.offersAppliedV1(request.payload,decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201); // Created
+      }
+      return response.response(entity).code(200); // Bad Request if failed
+
+    } catch (error) {
+      logger.error("Error in offer Applied", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  public getDocuments = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
+    // logger.info("Router-----store Address");
+    try {
+      let entity;
+      entity = await this.resolver.getDocumentsV1(request.payload,decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201); // Created
+      }
+      return response.response(entity).code(200); // Bad Request if failed
+
+    } catch (error) {
+      logger.error("Error in view documents", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  public addDocuments = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
+    // logger.info("Router-----store Address");
+    try {
+      let entity;
+      entity = await this.resolver.addDocumentsV1(request.payload,decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201); // Created
+      }
+      return response.response(entity).code(200); // Bad Request if failed
+
+    } catch (error) {
+      logger.error("Error in add documents", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  public UpdateDocuments = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
+    // logger.info("Router-----store Address");
+    try {
+      let entity;
+      entity = await this.resolver.UpdateDocumentsV1(request.payload,decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201); // Created
+      }
+      return response.response(entity).code(200); // Bad Request if failed
+
+    } catch (error) {
+      logger.error("Error in update documents", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  public visibility = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
+    // logger.info("Router-----store Address");
+    try {
+      let entity;
+      entity = await this.resolver.visibilityV1(request.payload,decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201); // Created
+      }
+      return response.response(entity).code(200); // Bad Request if failed
+
+    } catch (error) {
+      logger.error("Error in visibility", error);
       return response
         .response({
           success: false,

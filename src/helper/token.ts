@@ -102,7 +102,7 @@ export {
   generateTokenWithoutExpire,
 };
 
-const TOKEN_EXPIRATION_OTP = "20m";
+const TOKEN_EXPIRATION_OTP = "2m";
 
 function generateTokenOtp(tokenData: object, action: boolean): string | object {
   console.log("action", action);

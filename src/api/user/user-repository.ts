@@ -445,6 +445,7 @@ export class UserRepository {
       const otpParams = [refUserId, tokenOtp, CurrentTime()];
       const otpResult = await client.query(SetOtp, otpParams);
   
+      console.log('formatDate(30)', formatDate(30))
       const otpTimeParams = [tokenOtp, CurrentTime(), formatDate(30)]; // Adds 30 seconds
       const otpTimeResult = await client.query(SetOtptime, otpTimeParams);
   
@@ -490,9 +491,7 @@ export class UserRepository {
     }
   }
   
-  public async addProductV1(userData: any): Promise<any> {
 
-  }
   
   public async orderplacementV1(orderData: any): Promise<any> {
     const client: PoolClient = await getClient(); // Assuming getClient() is a function to get DB client

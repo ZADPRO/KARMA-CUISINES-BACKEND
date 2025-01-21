@@ -33,7 +33,10 @@ import {
   fetchProfileData,
   fetchRestroCertificates,
   getUpDateList,
-  deleteImageQuery, insertproductQuery
+  deleteImageQuery, insertproductQuery,
+  insertOfferQuery,insertDocumentQuery,
+  updateRestroQuery,
+  updatevisibilityQuery
 } from './query';
 import { CurrentTime } from "../../helper/common";
 
@@ -950,7 +953,7 @@ export class VendorRepository {
       await client.query('BEGIN');
   
       const {
-        refVendorId,       // Extract refVendorId from userData
+        refVendorname,       // Extract refVendorId from userData
         productName,
         productPrice,
         category,
@@ -959,7 +962,7 @@ export class VendorRepository {
         offerAppliedStatus,
         offer,
         range,
-        refUserId,
+        refUserId
       } = userData;
   
       // Apply logic based on offerAppliedStatus
@@ -967,7 +970,7 @@ export class VendorRepository {
   
       // Add refVendorId and refUserId to the parameters
       const params = [
-        refVendorId,
+        refVendorname,
         productName,
         productPrice,
         category,
@@ -976,6 +979,7 @@ export class VendorRepository {
         offerAppliedStatus,
         finalOffer, // Use the computed offer value
         range,
+        
       ];
       console.log('Insert Product Params:', params);
   
@@ -985,9 +989,9 @@ export class VendorRepository {
   
       if (newUser) {
         const history = [
-          1,
-          refUserId, // Use refUserId from userData
-          'add products ',
+          12,
+          token.id,, // Use refUserId from userData
+          "add products",
           CurrentTime(),
           'vendor',
         ];
@@ -1055,6 +1059,332 @@ export class VendorRepository {
       client.release(); // Release the client back to the pool
     }
   }
+  
+  public async offersAppliedV1(userData: any, tokendata: any): Promise<any> {
+    const client: PoolClient = await getClient();
+    const token = { id: tokendata.id };
+    console.log('token', token);
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
+  
+    try {
+      // Start the transaction
+      await client.query("BEGIN");
+  
+      // Extract user data from the input
+      const {
+        refOfferName,
+        refOfferDescription,
+        refOfferMinValue,
+        refOfferType,
+        refStartDate,
+        refEndDate,
+        refCoupon
+      } = userData;
+  
+      // Prepare parameters for the offer insertion
+      const offerParams = [
+        refOfferName,
+        refOfferDescription,
+        refOfferMinValue,
+        refOfferType,
+        refStartDate,
+        refEndDate,
+        refCoupon
+      ];
+      console.log('Insert Offer Params:', offerParams);
+  
+      // Execute the query to insert the offer into the database
+      const offerResult = await client.query(insertOfferQuery, offerParams);
+      console.log('Offer Insert Result:', offerResult);
+  
+      // Check if the offer insertion was successful
+      if (offerResult.rowCount === 0) {
+        throw new Error('Failed to insert the offer');
+      }
+  
+      const newOffer = offerResult.rows[0];
+      console.log('New Offer:', newOffer);
+  
+      // Prepare transaction history parameters
+      const txnHistoryParams = [
+        19, // Transaction Type ID (assuming this corresponds to a predefined action like "Offer Created")
+        tokendata.id, // refUserId from token data
+        "Offer added to the system", // Description of the action
+        CurrentTime(), // Transaction timestamp
+        "vendor" // Role of the user who performed the action
+      ];
+      console.log('Transaction History Params:', txnHistoryParams);
+  
+      // Insert transaction history record
+      const txnHistoryResult = await client.query(updateHistoryQuery, txnHistoryParams);
+  
+      if (txnHistoryResult.rowCount === 0) {
+        throw new Error('Failed to insert transaction history');
+      }
+  
+      // Commit the transaction if everything was successful
+      await client.query("COMMIT");
+      console.log('Transaction successful. Offer and history inserted.');
+  
+      // Return success response
+      return encrypt({
+        success: true,
+        message: 'Offer applied and transaction history recorded successfully',
+        token: tokens,
+      }, true);
+  
+    } catch (error: unknown) {
+      // Ensure rollback if an error occurs
+      await client.query("ROLLBACK");
+      let errorMessage = 'An unknown error occurred';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+  
+      console.error('Error during offer application:', error);
+      return encrypt({
+        success: false,
+        message: 'Offer application failed',
+        error: errorMessage,
+        token: tokens
+      }, true);
+  
+    } finally {
+      // Release the client back to the pool
+      client.release();
+    }
+  }
+
+  public async getDocumentsV1(user_data: any, tokendata: any): Promise<any> {
+    const client: PoolClient = await getClient(); // Get database client
+    const token = { id: tokendata.id }; // Extract token ID
+    console.log('token', token);
+  
+    // Generate token with expiration
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
+  
+    try {
+      // Get Restaurant/Document Details
+      const restroDetails = await executeQuery(RestroDetailsQuery);
+      console.log('restroDetails', restroDetails);
+  
+      // Return success response
+      return encrypt(
+        {
+          success: true,
+          message: 'return restaurent docs successfully',
+          token: tokens,
+          restroDetails: restroDetails,
+        },
+        false
+      );
+    } catch (error) {
+      // Error handling
+      const errorMessage =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      console.error('Error during data retrieval:', error);
+  
+      // Return error response
+      return encrypt(
+        {
+          success: false,
+          message: 'Data retrieval failed',
+          error: errorMessage,
+          token: tokens,
+        },
+        false
+      );
+    }
+  }
+
+  public async addDocumentsV1(user_data: any, tokendata: any): Promise<any> {
+  const client: PoolClient = await getClient(); // Get database client
+  const token = { id: tokendata.id }; // Extract token ID
+  console.log('token', token);
+
+  // Generate token with expiration
+  const tokens = generateTokenWithExpire(token, true);
+  console.log('tokens', tokens);
+
+  try {
+    // Extract the document name from user_data
+    const { restroDocs } = user_data;
+
+    // Validate the input
+    if (!restroDocs || typeof restroDocs !== "string") {
+      return encrypt(
+        {
+          success: false,
+          message: "'restroDocs' must be a non-empty string.",
+          token: tokens,
+        },
+        false
+      );
+    }
+    // Insert document into the database with conflict handling
+    const result = await executeQuery(insertDocumentQuery, [restroDocs]);
+    // const insertedData = result.rows[0];
+    
+ const txnHistoryParams = [
+  14, // TransTypeID
+  tokendata.id, // refUserId
+  "add Documents", // transData
+  CurrentTime(),  // TransTime
+  "vendor" // UpdatedBy
+];
+const txnHistoryResult = await client.query(updateHistoryQuery, txnHistoryParams);
+  
+    // Return success response
+    return encrypt(
+      {
+        success: true,
+        message: 'Restaurant document inserted or updated successfully.',
+        token: tokens,
+        //data: insertedData, // Return the inserted document data
+      },
+      false
+    );
+  } catch (error) {
+    // Error handling
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    console.error('Error during document insertion:', error);
+
+    // Return error response
+    return encrypt(
+      {
+        success: false,
+        message: 'Document insertion failed',
+        error: errorMessage,
+        token: tokens,
+      },
+      false
+    );
+  } 
+  }
+
+  public async UpdateDocumentsV1(user_data: any, tokendata: any): Promise<any> {
+    const client: PoolClient = await getClient(); // Get database client
+    const token = { id: tokendata.id }; // Extract token ID
+    console.log('token', token);
+  
+    // Generate token with expiration
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
+  
+    try {
+      // Get Restaurant/Document Details
+      const {
+        refCertificateType,
+        restroDocTypeId
+      } = user_data;
+  
+      // Prepare parameters for the offer insertion
+      const documentParams = [
+        refCertificateType,
+        restroDocTypeId
+      ];
+
+      const restroDetails = await executeQuery(updateRestroQuery, documentParams);
+      const txnHistoryParams = [
+        15, // TransTypeID
+        tokendata.id, // refUserId
+        "edit Documents", // transData
+        CurrentTime(),  // TransTime
+        "vendor" // UpdatedBy
+      ];
+      const txnHistoryResult = await client.query(updateHistoryQuery, txnHistoryParams);
+        
+      // Return success response
+      return encrypt(
+        {
+          success: true,
+          message: 'update restaurent docs successfully',
+          token: tokens,
+          restroDetails: restroDetails,
+        },
+        false
+      );
+    } catch (error) {
+      // Error handling
+      const errorMessage =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      console.error('Error during data retrieval:', error);
+  
+      // Return error response
+      return encrypt(
+        {
+          success: false,
+          message: 'Data retrieval failed',
+          error: errorMessage,
+          token: tokens,
+        },
+        false
+      );
+    }
+  }
+  public async visibilityV1(user_data: any, tokendata: any): Promise<any> {
+    const client: PoolClient = await getClient(); // Get database client
+    const token = { id: tokendata.id }; // Extract token ID
+    console.log('token', token);
+  
+    // Generate token with expiration
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
+  
+    try {
+      // Get Restaurant/Document Details
+      const {
+        visibility,
+        restroDocTypeId
+      } = user_data;
+  
+      // Prepare parameters for the offer insertion
+      const documentParams = [
+        visibility,
+        restroDocTypeId
+      ];
+
+      const restroDetails = await executeQuery(updatevisibilityQuery, documentParams);
+      const txnHistoryParams = [
+        16, // TransTypeID
+        tokendata.id, // refUserId
+        "add visibility", // transData
+        CurrentTime(),  // TransTime
+        "vendor" // UpdatedBy
+      ];
+      const txnHistoryResult = await executeQuery(updateHistoryQuery, txnHistoryParams);
+        
+      // Return success response
+      return encrypt(
+        {
+          success: true,
+          message: 'update restaurent docs successfully',
+          token: tokens,
+          restroDetails: restroDetails,
+        },
+        false
+      );
+    } catch (error) {
+      // Error handling
+      const errorMessage =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      console.error('Error during data retrieval:', error);
+  
+      // Return error response
+      return encrypt(
+        {
+          success: false,
+          message: 'Data retrieval failed',
+          error: errorMessage,
+          token: tokens,
+        },
+        false
+      );
+    }
+  }
+
   
   public async VendorAuditListV1(userData: { refUserId: string }, tokendata: any): Promise<any> {
 
