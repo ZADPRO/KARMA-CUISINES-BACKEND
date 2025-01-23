@@ -83,3 +83,40 @@ export const insertUserAddressQuery = `INSERT INTO public."refUserAddress" ("add
   VALUES ($1, $2, $3, $4 , $5, $6)
   RETURNING "addressID";`;
 
+export const orderDetailsQuery = `SELECT 
+  ot."refTransactionId", 
+  ot."refPrice", 
+  ot."taxAppliedId", 
+  ot."refOfferId", 
+  ot."totalBill", 
+  ot."paymentMethodId", 
+  ot."refStatus", 
+  ot."paymentId", 
+  rc."refMobileNo", 
+  rc."refUserId", 
+  rp."productName", 
+  rp."productPrice", 
+  ro."quantity" AS "productQuantity", 
+  ro."totalPrice" AS "productTotalPrice", 
+  rua."addressMode", 
+  rua."refStreet", 
+  rua."refCity", 
+  rua."refPostalCode", 
+  rua."refZone", 
+  rua."refCountry"
+FROM 
+  public."orderTransactionTable" ot
+LEFT JOIN 
+  public."refCommunication" rc 
+  ON ot."refUserId" = rc."refUserId"
+LEFT JOIN 
+  public."refOrderTable" ro 
+  ON ot."refOrderId" = ro."refOrderId"
+LEFT JOIN 
+  public."refProductTable" rp 
+  ON ro."productId" = rp."productId"
+LEFT JOIN 
+  public."refUserAddress" rua 
+  ON ot."refUserId" = rua."refUserId"
+WHERE 
+  ot."refTransactionId" = $1;`;

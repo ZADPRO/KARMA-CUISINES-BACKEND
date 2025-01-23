@@ -63,7 +63,7 @@ export class adminRepository {
           success: false,
           message: "Internal server error",
         },
-        false
+        true
       );
     }
   }

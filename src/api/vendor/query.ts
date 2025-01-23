@@ -117,16 +117,16 @@ ORDER BY
     "transTime" DESC;
 `;
 
-export const insertproductQuery = `INSERT INTO public."refProductTable" ( "refVendorId", "productName", "productPrice", "category", "description", "ratings", "offerApplied", "offer", "range")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+export const insertproductQuery = `INSERT INTO public."refProductTable" ( "refVendorId", "productName", "productPrice", "category", "description", "ratings", "offerApplied", "offer", "range", "refArrange")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
   RETURNING *;`;
 
-export const insertOfferQuery = `
-          INSERT INTO public."offersTable" (
-            "refOfferName", "refOfferDescription", "refOfferMinValue", "refOfferTypeId", "refStartDate", "refEndDate", "refCoupon") VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+export const insertOfferQuery = `INSERT INTO public."offersTable" (
+  "refOfferName", "refOfferDescription", "refOfferMinValue", "refOfferTypeId", "refStartDate", "refEndDate", "refCoupon") VALUES ($1, $2, $3, $4, $5, $6, $7);`;
 
-export const insertDocumentQuery = `
-         INSERT INTO public."restroDocs" ("refCertificateType", "visibility") VALUES ($1, true) RETURNING *;`;     
+export const RestroOffersQuery = `select * from public."offersTable" ot;`;
+
+export const insertDocumentQuery = `INSERT INTO public."restroDocs" ("refCertificateType", "visibility") VALUES ($1, true) RETURNING *;`;     
 
 export const updateRestroQuery = `UPDATE public."restroDocs" SET "refCertificateType" = $1, "visibility" = true WHERE "restroDocTypeId" = $2 RETURNING *;`;         
 
@@ -134,3 +134,11 @@ export const updatevisibilityQuery = `UPDATE public."restroDocs"
 SET "visibility" = $1
 WHERE "restroDocTypeId" = $2
 RETURNING *;`;
+
+export const reArrangeQuery = `SELECT * FROM
+  public."refProductTable" rpt
+WHERE
+  rpt."refVendorId" = $1`;
+
+export const RestroproductsQuery = `SELECT * FROM public."refProductTable" rpt
+ORDER BY rpt."refArrange";`;

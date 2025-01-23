@@ -1,0 +1,62 @@
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T04:50:21.669Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T04:50:34.927Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T04:51:22.392Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T04:51:26.857Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T04:51:26.957Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T05:42:25.402Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T05:42:35.615Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T05:42:40.083Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T05:55:24.024Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/users/orderplacement conflicts with existing /api/v1/users/orderplacement","name":"AssertError","stack":"AssertError: New route /api/v1/users/orderplacement conflicts with existing /api/v1/users/orderplacement\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\routes.ts:13:14\n    at new Promise (<anonymous>)\n    at UserRouters.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\routes.ts:11:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-23T06:01:53.864Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:02:01.991Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:02:07.236Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:02:12.775Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:02:53.870Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:03:00.423Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:03:08.784Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:04:39.621Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:04:57.654Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:05:30.901Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:06:23.688Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:06:49.753Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:07:50.072Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:08:05.607Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:08:13.930Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:08:57.682Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:10:57.623Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:17:07.855Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T06:19:18.584Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:20:31.631Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:20:38.188Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T06:20:41.322Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:21:24.273Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:21:56.859Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:22:30.228Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T06:22:32.528Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T06:23:17.117Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T06:23:29.025Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:24:30.020Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:24:54.295Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:25:35.986Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:25:46.333Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:26:48.369Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:26:55.563Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T06:38:21.771Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T06:42:59.342Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T07:05:11.292Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T07:05:55.552Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T07:06:01.305Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T07:07:54.373Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T07:08:29.862Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T07:09:06.350Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T07:09:40.828Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T07:40:41.177Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T08:26:54.583Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T08:32:17.144Z"}
+{"level":"error","message":"Error in userSignUp: Cannot read properties of undefined (reading 'id')","stack":"TypeError: Cannot read properties of undefined (reading 'id')\n    at UserRepository.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:605:37)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:4:12)\n    at UserRepository.vieworderplacementV1 (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:490:16)\n    at UserResolver.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\resolver.ts:25:38)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\resolver.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-23T08:32:17.163Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T08:34:17.411Z"}
+{"level":"error","message":"Error in userSignUp: Cannot read properties of undefined (reading 'id')","stack":"TypeError: Cannot read properties of undefined (reading 'id')\n    at UserRepository.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:605:37)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:4:12)\n    at UserRepository.vieworderplacementV1 (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:490:16)\n    at UserResolver.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\resolver.ts:25:38)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\resolver.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-23T08:34:17.417Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T08:34:32.894Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-23T08:34:34.622Z"}
+{"level":"error","message":"Error in userSignUp: Cannot read properties of undefined (reading 'id')","stack":"TypeError: Cannot read properties of undefined (reading 'id')\n    at UserRepository.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:605:37)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:4:12)\n    at UserRepository.vieworderplacementV1 (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\user-repository.ts:490:16)\n    at UserResolver.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\resolver.ts:25:38)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\user\\resolver.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-23T08:34:34.632Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-23T08:35:17.733Z"}

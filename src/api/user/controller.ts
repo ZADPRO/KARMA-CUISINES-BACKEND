@@ -84,15 +84,18 @@ export class UserController {
         .code(500);
     }
   }
-
-  public addProduct = async (
-    request: Hapi.Request,
+  public orderplacement = async (
+    request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
     logger.info("Router ------------");
     try {
+      const decodedToken ={
+        id:request.plugins.token.id
+      }
+      console.log('decodedToken', decodedToken)
       let entity;
-      entity = await this.resolver.addProductV1(request.payload);
+      entity = await this.resolver.orderplacementV1(request.payload, decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created
@@ -108,16 +111,14 @@ export class UserController {
         .code(500);
     }
   }
-
-
-  public orderplacement = async (
+  public vieworderplacement = async (
     request: Hapi.Request,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
     logger.info("Router ------------");
     try {
       let entity;
-      entity = await this.resolver.orderplacementV1(request.payload);
+      entity = await this.resolver.vieworderplacementV1(request.payload);
 
       if (entity.success) {
         return response.response(entity).code(201); // Created

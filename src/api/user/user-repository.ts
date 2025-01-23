@@ -16,7 +16,8 @@ import {
   checkQuery, getCustomerCount, insertUserQuery, insertUserDomainQuery, insertUserCommunicationQuery,
   updateHistoryQuery,
   userQuery, SetOtptime, SetOtp, mobileNumbersQuery,
-  insertOrderMasterQuery, insertUserContactQuery, insertProductContentQuery, insertorderContentQuery, insertUserAddressQuery
+  insertOrderMasterQuery, insertUserContactQuery, insertProductContentQuery, insertorderContentQuery, insertUserAddressQuery,
+  orderDetailsQuery
 } from "./query";
 import { CurrentTime, formatDate } from "../../helper/common";
 
@@ -490,11 +491,9 @@ export class UserRepository {
       client.release(); // Release the client back to the pool
     }
   }
-  
-
-  
-  public async orderplacementV1(orderData: any): Promise<any> {
+  public async orderplacementV1(orderData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient(); // Assuming getClient() is a function to get DB client
+    const token = { id: tokendata.id }
     const tokens = generateTokenWithExpire({ id: orderData.userId }, true); // Mock token generation
     console.log('Generated Token:', tokens);
 
@@ -505,7 +504,6 @@ export class UserRepository {
 
       // Insert Order Master
       const orderMasterParams = [
-
         // orderData.userId, // refUserId
         totalAmount.totalPrice, // refPrice
         totalAmount.taxApplied, // taxAppliedId
@@ -581,7 +579,7 @@ export class UserRepository {
           message: 'Order processed successfully',
           token: tokens,
           orderId: parseInt(orderData.userId),
-        }, true);
+        }, false);
       }
     } catch (error) {
       // Rollback the transaction in case of error
@@ -597,12 +595,50 @@ export class UserRepository {
         message: 'Order processing failed',
         error: errorMessage,
         token: tokens,
-      }, true);
+      }, false);
     } finally {
       await client.query("COMMIT");
       client.release();
     }
   }
+  public async vieworderplacementV1(user_data: any, tokendata: any): Promise<any> {
+      const token = { id: tokendata.id }; 
+      console.log('token', token);
+      const tokens = generateTokenWithExpire(token, true);
+        console.log('tokens', tokens);
 
+      try {
+        // Get Restaurant/Document Details
+        const orderdetails = await executeQuery(orderDetailsQuery);
+        console.log('order details', orderdetails);
+  
+        // Return success response
+        return encrypt(
+          {
+            success: true,
+            message: 'return products successfully',
+            token: tokens,
+            orderdetails: orderdetails,
+          },
+          false
+        );
+      } catch (error) {
+        // Error handling
+        const errorMessage =
+          error instanceof Error ? error.message : 'An unknown error occurred';
+        console.error('Error during data retrieval:', error);
+  
+        // Return error response
+        return encrypt(
+          {
+            success: false,
+            message: 'Data retrieval failed',
+            error: errorMessage,
+            token: tokens,
+          },
+          false
+        );
+      }
+  }
+  
 }
-

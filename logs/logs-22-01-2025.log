@@ -1,0 +1,102 @@
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:05:17.375Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-22T06:05:26.325Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-22T06:06:00.072Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-22T06:06:57.492Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-22T06:10:22.525Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:13:07.977Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:13:20.872Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:13:32.010Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-22T06:22:07.851Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:24:05.249Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:27:34.641Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:27:39.257Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-22T06:27:41.242Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-22T06:28:56.433Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:38:22.791Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:47:51.165Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:49:22.066Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-22T06:55:49.511Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:57:58.760Z"}
+{"level":"info","message":"Router-----store Address","timestamp":"2025-01-22T06:58:53.757Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T06:59:38.067Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:00:01.118Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:05:24.035Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:05:36.550Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:06:21.080Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:07:08.683Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:07:13.766Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:13:29.469Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:13:57.937Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:14:09.484Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T07:14:25.348Z"}
+{"level":"info","message":"Router-----store Vendor Documents","timestamp":"2025-01-22T07:26:25.371Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:00:48.286Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:05:40.692Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:07:12.510Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:12:57.001Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:18:04.558Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:18:08.924Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:19:46.280Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:21:49.008Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:21:55.218Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:34:13.160Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:34:20.163Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T08:35:29.592Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:20:55.230Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/offersApplied conflicts with existing /api/v1/vendorRoutes/offersApplied","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/offersApplied conflicts with existing /api/v1/vendorRoutes/offersApplied\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-22T09:30:55.597Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:31:01.172Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:31:12.325Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:31:17.080Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:32:08.474Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:32:16.166Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:32:39.033Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:32:43.283Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:33:10.150Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:33:27.710Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:34:09.547Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:37:06.948Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:37:16.741Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:37:21.497Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:37:44.780Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:37:55.159Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:38:07.737Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:55:11.153Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T09:55:16.690Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:05:48.698Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:06:57.581Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:08:05.342Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:08:13.999Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:11:48.287Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:12:10.646Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:15:28.115Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:15:48.986Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:15:52.735Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:15:56.755Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:23:02.127Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:27:07.276Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:38:43.060Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:44:20.644Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:51:12.679Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:51:22.173Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:51:26.013Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:51:40.913Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:51:56.317Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:54:06.927Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:54:14.832Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:54:23.511Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:54:57.523Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:55:42.961Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:55:49.731Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T10:56:01.709Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:00:32.464Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/addProduct conflicts with existing /api/v1/vendorRoutes/addProduct","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/addProduct conflicts with existing /api/v1/vendorRoutes/addProduct\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KarmaCuisineBackend\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-22T11:00:47.389Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:00:56.973Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:01:02.593Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:01:59.380Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:02:06.873Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:02:27.838Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:02:31.731Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:02:49.780Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:03:11.411Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:06:16.140Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-22T11:50:56.932Z"}

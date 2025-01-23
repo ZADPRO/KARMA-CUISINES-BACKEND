@@ -43,19 +43,20 @@ export class UserRouters implements IRoute {
         },
         {
           method: "POST",
-          path: "/api/v1/users/addProduct",
+          path: "/api/v1/users/orderplacement",
           config: {
-            handler: controller.addProduct,
-            description: "forgotPassword",
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.orderplacement,
+            description: "User order placement",
             tags: ["api", "users"],
             auth: false,
           },
         },
         {
-          method: "POST",
-          path: "/api/v1/users/orderplacement",
+          method: "GET",
+          path: "/api/v1/users/vieworderplacement",
           config: {
-            handler: controller.orderplacement,
+            handler: controller.vieworderplacement,
             description: "User order placement",
             tags: ["api", "users"],
             auth: false,

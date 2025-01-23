@@ -16,10 +16,12 @@ export class UserResolver {
   public async sendOtpV1(user_data: any, domain_code: any): Promise<any> {
     return await this.userRepository.sendOtpV1(user_data, domain_code);
   }
-  public async addProductV1(user_data: any, domain_code: any): Promise<any> {
-    return await this.userRepository.addProductV1(user_data, domain_code);
+ 
+  public async orderplacementV1(user_data: any, token_data: any, domain_code: any): Promise<any> {
+    return await this.userRepository.orderplacementV1(user_data, token_data, domain_code);
   }
-  public async orderplacementV1(user_data: any, domain_code: any): Promise<any> {
-    return await this.userRepository.orderplacementV1(user_data, domain_code);
+
+  public async vieworderplacementV1(user_data: any, token_data: any, domain_code: any): Promise<any> {
+    return await this.userRepository.vieworderplacementV1(user_data, token_data, domain_code);
   }
 }

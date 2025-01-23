@@ -143,11 +143,31 @@ export class vendorRoutes implements IRoute {
           },
         },
         {
+          method: "GET",
+          path: "/api/v1/vendorRoutes/ViewaddedProduct",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.ViewaddedProduct,
+            description: "adding products",
+            auth: false,
+          },
+        },
+        {
           method: "POST",
           path: "/api/v1/vendorRoutes/offersApplied",
           config: {
             pre: [{ method: validateToken, assign: "token" }],
             handler: controller.offersApplied,
+            description: "adding products",
+            auth: false,
+          },
+        },
+        {
+          method: "GET",
+          path: "/api/v1/vendorRoutes/getOffers",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.getOffers,
             description: "adding products",
             auth: false,
           },
