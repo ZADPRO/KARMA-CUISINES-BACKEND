@@ -67,23 +67,19 @@ export const getDocumentQuery = `
 `;
 
 export const deleteDocumentQuery = `
-   UPDATE
-  public."refRestaurentDocuments" SET "VATcertificate" = $1,  "CommercialRegisterExtract" =$2, 
-  "AlcoholLicense"=$3, "FoodSafetyHygieneCertificate"=$4, "LiabilityInsurance"=$5
-WHERE "documentId" = $6 RETURNING *;
-
-`;
+   UPDATE public."refRestaurentDocuments" 
+SET "VATcertificate" = '', "CommercialRegisterExtract" = '', "AlcoholLicense" = '', "FoodSafetyHygieneCertificate" = '', "LiabilityInsurance" = ''
+WHERE "documentId" = $1 
+RETURNING *;`;
 
 export const ImageStoreQuery = `
-    INSERT INTO public."RestaurentDoc" ("logoImage")
-  VALUES ($1)
-  RETURNING *;
-`;
+ UPDATE public."refRestaurentDocuments" SET "logoImage" = $1 WHERE "documentId" = $2
+RETURNING *;`;
 
 export const deleteImageQuery = `
-  UPDATE public."refRestaurentDocuments" SET "logoImage" = $1
+  UPDATE public."refRestaurentDocuments" SET "logoImage" =''
 WHERE
-  "documentId" = $2
+  "documentId" = $1
 `;
 
 export const fetchProfileData = `SELECT
@@ -142,3 +138,8 @@ WHERE
 
 export const RestroproductsQuery = `SELECT * FROM public."refProductTable" rpt
 ORDER BY rpt."refArrange";`;
+
+export const paymentDetailsQuery = `SELECT * from public."paymentType" pt;`;
+
+export const updatePayementVisibilityQuery = `UPDATE public."paymentType" SET "visibility" = $1 WHERE "paymentId" = $2
+RETURNING *;`;

@@ -305,7 +305,7 @@ export class VendorProfile {
       id:request.plugins.token.id
     }
     console.log('decodedToken', decodedToken)
-    logger.info("Router-----store Address");
+    // logger.info("Router-----store Address");
     try {
       let entity;
       entity = await this.resolver.deleteLogoV1(request.payload,decodedToken);
@@ -576,6 +576,70 @@ export class VendorProfile {
         .code(500);
     }
   };
+
+  public getPayement = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
+    // logger.info("Router-----store Address");
+    try {
+      let entity;
+      entity = await this.resolver.getPayementV1(request.payload,decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201); // Created
+      }
+      return response.response(entity).code(200); // Bad Request if failed
+
+    } catch (error) {
+      logger.error("Error in view payments type", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  public paymentVisibility = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
+    // logger.info("Router-----store Address");
+    try {
+      let entity;
+      entity = await this.resolver.paymentVisibilityV1(request.payload,decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201); // Created
+      }
+      return response.response(entity).code(200); // Bad Request if failed
+
+    } catch (error) {
+      logger.error("Error in payment visibility", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  // ---------------------------------------
   public VendorAuditList = async (
     request: any,
     response: Hapi.ResponseToolkit

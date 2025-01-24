@@ -213,6 +213,26 @@ export class vendorRoutes implements IRoute {
           },
         },
         {
+          method: "GET",
+          path: "/api/v1/vendorRoutes/getPayement",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.getPayement,
+            description: "getting documents",
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/paymentVisibility",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.paymentVisibility,
+            description: "visibility",
+            auth: false,
+          },
+        },
+        {
           method: "POST",
           path: "/api/v1/vendorRoutes/VendorAuditList",
           config: {
@@ -222,7 +242,6 @@ export class vendorRoutes implements IRoute {
             auth: false,
           },
         },
-        
       ]);
       resolve(true);
     });

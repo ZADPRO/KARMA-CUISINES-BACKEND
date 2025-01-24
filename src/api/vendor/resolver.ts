@@ -62,6 +62,12 @@ export class VendorResolver {
   public async visibilityV1(user_data: any, token_data: any, domain_code: any,): Promise<any> {
     return await this.VendorRepository.visibilityV1(user_data, token_data, domain_code);
   }
+  public async getPayementV1(user_data: any, token_data: any, domain_code: any,): Promise<any> {
+    return await this.VendorRepository.getPayementV1(user_data, token_data, domain_code);
+  }
+  public async paymentVisibilityV1(user_data: any, token_data: any, domain_code: any,): Promise<any> {
+    return await this.VendorRepository.paymentVisibilityV1(user_data, token_data, domain_code);
+  }
   public async VendorAuditListV1(user_data: any, token_data:any, domain_code: any): Promise<any> {
     return await this.VendorRepository.VendorAuditListV1(user_data,token_data, domain_code);
   }

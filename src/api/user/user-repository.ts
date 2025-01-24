@@ -20,6 +20,7 @@ import {
   orderDetailsQuery
 } from "./query";
 import { CurrentTime, formatDate } from "../../helper/common";
+import { tooManyRequests } from "@hapi/boom";
 
 export class UserRepository {
 
@@ -134,7 +135,7 @@ export class UserRepository {
               success: false,
               message: "Failed to update history",
             },
-            false
+            true
           );
         }
       } else {
@@ -167,126 +168,14 @@ export class UserRepository {
             message: "An unknown error occurred during signup",
             error: String(error),
           },
-          false
+          true
         );
       }
     } finally {
       client.release();  // Release the client back to the pool
     }
   }
-  // public async forgotPasswordV1(userData: any): Promise<any> {
-  //   console.log('userData', userData)
-  //   const client: PoolClient = await getClient();
-
-  //   try {
-  //     await client.query('BEGIN');
-
-  //     const { refUserId, emailId } = userData;
-  //     console.log('refUserId', refUserId)
-
-  //     // Validate email ID or refUserId
-  //     if (!emailId || !refUserId) {
-  //       return encrypt(
-  //         {
-  //           success: false,
-  //           message: "Email ID or User ID is missing",
-  //         },
-  //         false
-  //       );
-  //     }
-
-  //     // Fetch all mobile numbers associated with the user
-  //     const mobileNumbers = await executeQuery(mobileNumbersQuery, [emailId]);
-  //     console.log('mobileNumbers', mobileNumbers)
-
-  //     if (!mobileNumbers.length) {
-  //       return encrypt(
-  //         {
-  //           success: false,
-  //           message: "No mobile numbers found for the user",
-  //         },
-  //         true
-  //       );
-  //     }
-
-  //     // Generate a numeric OTP
-  //     const generateNumericOtp = (length = 6): string =>
-  //       Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
-
-  //     const otp = generateNumericOtp();
-  //     console.log("Generated OTP:", otp);
-
-  //     // Prepare email content
-  //     const mailOptions = {
-  //       to: emailId,
-  //       subject: "Forgot Password OTP",
-  //       html: sendOtpTemplate("Dear", otp),
-  //     };
-
-  //     // Attempt to send OTP email
-  //     try {
-  //       await sendEmail(mailOptions);
-  //     } catch (error) {
-  //       console.error("Failed to send OTP email:", error);
-  //       return encrypt(
-  //         {
-  //           success: false,
-  //           message: "Failed to send OTP email",
-  //         },
-  //         false
-  //       );
-  //     }
-
-  //     // Create a token for OTP (if needed)
-  //     const tokenOtp = generateTokenOtp({ otp }, true);
-
-  //     // Store OTP in the database
-      // const otpParams = [refUserId, tokenOtp, CurrentTime()];
-      // const otpResult = await client.query(SetOtp, otpParams);
-
-      // const otpTimeParams = [
-      //   tokenOtp, CurrentTime(), formatDate
-      // ];
-      // const otpTimeResult = await client.query(SetOtptime, otpTimeParams);
-
-      // // Update transaction history
-      // const txnHistoryParams = [
-      //   3, // TransTypeID
-      //   refUserId, // refUserId
-      //   "Forgot Password OTP Generated", // Transaction description
-      //   CurrentTime(), // Transaction time
-      //   "System", // Updated by
-      // ];
-      // await executeQuery(updateHistoryQuery, txnHistoryParams);
-
-  //     // Return success response with mobile numbers
-  //     await client.query('COMMIT');  // Commit the transaction
-
-  //     return encrypt(
-  //       {
-  //         success: true,
-  //         validation: true,
-  //         message: "OTP sent successfully",
-  //         mobileNumbers: mobileNumbers.map((row: any) => row.refCustMobileNum1), // Include mobile numbers in the response
-  //         emailId
-  //       },
-  //       false
-  //     );
-  //   } catch (error) {
-  //     await client.query('ROLLBACK');  // Rollback if history update fails
-
-  //     console.error("Error in forgot password process:", error);
-  //     return encrypt(
-  //       {
-  //         success: false,
-  //         message: "Internal server error",
-  //       },
-  //       false
-  //     );
-  //   } finally {
-  //     client.release();  // Release the client back to the pool
-  //   }
-  // }
+  
   public async forgotPasswordV1(userData: any): Promise<any> {
     console.log("Input Payload:", userData);
     const client: PoolClient = await getClient();
@@ -348,7 +237,7 @@ export class UserRepository {
           emailId,
           mobileNumbers,
         },
-        false
+        true
       );
     } catch (error) {
       console.error("Error retrieving user contact info:", error);
@@ -361,7 +250,7 @@ export class UserRepository {
           success: false,
           message: "Internal server error",
         },
-        false
+        true
       );
     } finally {
       client.release(); // Release the client back to the pool
@@ -374,7 +263,6 @@ export class UserRepository {
   
     try {
       const { mobileNumber, emailId } = userData;
-  
       // Validate input
       if (!mobileNumber || !emailId) {
         return encrypt(
@@ -385,19 +273,10 @@ export class UserRepository {
           false
         );
       }
-  
       console.log("Validating Mobile Number and Email ID:", { mobileNumber, emailId });
-  
-      // Begin database transaction
       await client.query("BEGIN");
-  
-      // Fetch user record with the specific mobile number and email ID
-
-  
       const userResult = await executeQuery(userQuery, [mobileNumber, emailId]);
-  
       console.log("User Query Result:", userResult);
-  
       if (!userResult.length) {
         return encrypt(
           {
@@ -414,7 +293,7 @@ export class UserRepository {
       // Generate a numeric OTP
       const generateNumericOtp = (length = 6): string =>
         Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
-  
+
       const otp = generateNumericOtp();
       console.log("Generated OTP:", otp);
   
@@ -425,7 +304,6 @@ export class UserRepository {
         html: sendOtpTemplate("Dear User", otp),
       };
   
-      // Attempt to send OTP email
       try {
         await sendEmail(mailOptions);
       } catch (error) {
@@ -435,7 +313,7 @@ export class UserRepository {
             success: false,
             message: "Failed to send OTP email",
           },
-          false
+          true
         );
       }
   
@@ -472,7 +350,7 @@ export class UserRepository {
           mobileNumber,
           emailId,
         },
-        false
+        true
       );
     } catch (error) {
       console.error("Error in forgot password process:", error);
@@ -485,7 +363,7 @@ export class UserRepository {
           success: false,
           message: "Internal server error",
         },
-        false
+        true
       );
     } finally {
       client.release(); // Release the client back to the pool
@@ -579,7 +457,7 @@ export class UserRepository {
           message: 'Order processed successfully',
           token: tokens,
           orderId: parseInt(orderData.userId),
-        }, false);
+        }, true);
       }
     } catch (error) {
       // Rollback the transaction in case of error
@@ -595,50 +473,89 @@ export class UserRepository {
         message: 'Order processing failed',
         error: errorMessage,
         token: tokens,
-      }, false);
+      }, true);
     } finally {
       await client.query("COMMIT");
       client.release();
     }
   }
-  public async vieworderplacementV1(user_data: any, tokendata: any): Promise<any> {
-      const token = { id: tokendata.id }; 
-      console.log('token', token);
-      const tokens = generateTokenWithExpire(token, true);
-        console.log('tokens', tokens);
-
-      try {
-        // Get Restaurant/Document Details
-        const orderdetails = await executeQuery(orderDetailsQuery);
-        console.log('order details', orderdetails);
+  public async vieworderplacementV1(userData: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id }; 
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
   
-        // Return success response
-        return encrypt(
-          {
-            success: true,
-            message: 'return products successfully',
-            token: tokens,
-            orderdetails: orderdetails,
-          },
-          false
-        );
-      } catch (error) {
-        // Error handling
-        const errorMessage =
-          error instanceof Error ? error.message : 'An unknown error occurred';
-        console.error('Error during data retrieval:', error);
+    try {
+      console.log('Received userData', userData);
   
-        // Return error response
-        return encrypt(
-          {
-            success: false,
-            message: 'Data retrieval failed',
-            error: errorMessage,
-            token: tokens,
-          },
-          false
-        );
+      const refTransactionId = userData.refTransactionId;
+      if (!refTransactionId) {
+        throw new Error("Invalid refTransactionId. Cannot be null or undefined.");
       }
-  }
   
+      console.log('Parsed refTransactionId:', refTransactionId);
+  
+      // Execute query with parameters
+      const params = [refTransactionId];
+      console.log('Query parameters:', params);
+      const orderDetailsResult = await executeQuery(orderDetailsQuery, params);
+      console.log('orderDetailsResult:', orderDetailsResult);
+  
+      if (orderDetailsResult.length === 0) {
+        throw new Error("No order details found for the given refTransactionId.");
+      }
+  
+      // Format order details data
+      const orderDetails = orderDetailsResult.map((row: any) => ({
+        refTransactionId: row.refTransactionId,
+        refPrice: row.refPrice,
+        taxAppliedId: row.taxAppliedId,
+        refOfferId: row.refOfferId,
+        totalBill: row.totalBill,
+        paymentMethodId: row.paymentMethodId,
+        refStatus: row.refStatus,
+        paymentId: row.paymentId,
+        refMobileNo: row.refMobileNo,
+        refUserId: row.refUserId,
+        productName: row.productName,
+        productPrice: row.productPrice,
+        productQuantity: row.productQuantity,
+        productTotalPrice: row.productTotalPrice,
+        address: {
+          addressMode: row.addressMode,
+          street: row.refStreet,
+          city: row.refCity,
+          postalCode: row.refPostalCode,
+          zone: row.refZone,
+          country: row.refCountry,
+        },
+      }));
+  
+      console.log('Formatted orderDetails:', orderDetails);
+  
+      // Return encrypted response
+      return encrypt(
+        {
+          success: true,
+          message: "Order details retrieved successfully",
+          token: tokens,
+          data: orderDetails,
+        },
+        true
+      );
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      console.error('Error in getOrderDetailsHandler:', errorMessage);
+  
+      // Return encrypted error response
+      return encrypt(
+        {
+          success: false,
+          message: `Error in retrieving order details: ${errorMessage}`,
+          token: tokens,
+        },
+        true
+      );
+    }
+  };
+   
 }

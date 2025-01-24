@@ -53,9 +53,10 @@ export class UserRouters implements IRoute {
           },
         },
         {
-          method: "GET",
+          method: "POST",
           path: "/api/v1/users/vieworderplacement",
           config: {
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.vieworderplacement,
             description: "User order placement",
             tags: ["api", "users"],

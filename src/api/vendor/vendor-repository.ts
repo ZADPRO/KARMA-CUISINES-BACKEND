@@ -15,29 +15,24 @@ import {
 } from "../../helper/token";
 
 import {
-  getVendorCountQuery,
-  insertVendorQuery,
-  insertUserQuery,
-  insertCommunicationQuery,
-  insertUserAddressQuery,
+  getVendorCountQuery, insertVendorQuery, insertUserQuery, insertCommunicationQuery, insertUserAddressQuery,
   insertVendorSocialLinksQuery,
   RestroDetailsQuery,
   updateHistoryQuery,
   getPaymentTypeNameQuery,
   insertVendorBankDetailsQuery,
   getVendorCount,
-  RestaurentDocStoreQuery,
-  getDocumentQuery,
-  deleteDocumentQuery,
-  ImageStoreQuery,
-  fetchProfileData,
-  fetchRestroCertificates,
+  RestaurentDocStoreQuery,  deleteDocumentQuery,
+  ImageStoreQuery, deleteImageQuery,
+  fetchProfileData, fetchRestroCertificates,
   getUpDateList,
-  deleteImageQuery, insertproductQuery,
-  insertOfferQuery, insertDocumentQuery,
+  insertproductQuery,
+  insertOfferQuery,
+  getDocumentQuery, insertDocumentQuery,
   updateRestroQuery,
   updatevisibilityQuery,
-  RestroOffersQuery, reArrangeQuery,RestroproductsQuery
+  RestroOffersQuery, reArrangeQuery,RestroproductsQuery,
+  paymentDetailsQuery,updatePayementVisibilityQuery
 } from './query';
 import { CurrentTime } from "../../helper/common";
 
@@ -245,7 +240,7 @@ export class VendorRepository {
         message: "Vendor Profile Page Data retrieved successfully",
         token: tokens,
         data: registerData,
-      }, false);
+      }, true);
     } catch (error) {
       const errorMessage = (error as Error).message; // Cast `error` to `Error` type
       console.error('Error in VendorprofilePageDataV1:', errorMessage);
@@ -253,7 +248,7 @@ export class VendorRepository {
         success: false,
         message: `Error in Vendor Profile Page Data retrieval: ${errorMessage}`,
         token: tokens
-      }, false);
+      }, true);
     }
   }
 
@@ -475,7 +470,7 @@ export class VendorRepository {
         message: "bank details added successfully",
         token: tokens,
         // vendorBankDetailsId: result[0].vendorBankDetailsId
-      }, false
+      }, true
       );
 
     } catch (error) {
@@ -485,7 +480,7 @@ export class VendorRepository {
         success: false,
         message: "error in adding the Bank details",
         token: tokens,
-      }, false
+      }, true
       );
     } finally {
       client.release();
@@ -593,7 +588,7 @@ export class VendorRepository {
           token: tokens,
           data: updatedRow,
         },
-        false
+        true
       );
     } catch (error) {
       await client.query('ROLLBACK'); // Rollback the transaction in case of any error
@@ -604,7 +599,7 @@ export class VendorRepository {
           message: `Error In Updating the Documents: ${(error as Error).message}`,
           token: tokens
         },
-        false
+        true
       );
     } finally {
       client.release(); // Release the client back to the pool
@@ -613,61 +608,73 @@ export class VendorRepository {
   }
 
   public async deleteRestaurentDocV1(userData: any, tokendata: any): Promise<any> {
-    const token = { id: tokendata.id }
-    const tokens = generateTokenWithExpire(token, true)
+    const client: PoolClient = await getClient();
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+  
     try {
-      let filePath: string | any;
-
+      if (!userData.documentId && !userData.filePath) {
+        return encrypt(
+          {
+            success: false,
+            message: "No documentId or filePath provided in the payload",
+          },
+          true
+        );
+      }
+      let filePath: string | null = null;
+      await client.query("BEGIN");
       if (userData.documentId) {
-        // Retrieve the image record from the database
-        const imageRecord = await executeQuery(getDocumentQuery, [userData.documentId]);
-        if (imageRecord.length === 0) {
+        // Fetch document record from the database
+        const documentRecord = await client.query(getDocumentQuery, [userData.documentId]);
+        if (!documentRecord.rows || documentRecord.rows.length === 0) {
+          await client.query("ROLLBACK");
           return encrypt(
             {
               success: false,
-              message: "Image record not found",
+              message: "Document record not found",
             },
             true
           );
         }
-        filePath = imageRecord[0].refImagePath;
-
-        // Delete the image record from the database
-        await executeQuery(deleteDocumentQuery, [userData.documentId]);
-      } else {
+  
+        // Extract file path if available
+        filePath = documentRecord.rows[0]?.logoImage || null;
+  
+        // Clear document fields in the database
+        await client.query(deleteDocumentQuery, [userData.documentId]);
+      } else if (userData.filePath) {
+        // Case for filePath provided
         filePath = userData.filePath;
       }
-
+  
+      // Delete file from the file system if a path exists
       if (filePath) {
-        // Delete the file from local storage
         await deleteFile(filePath);
       }
-      const TransTypeID = 7;
-      const transData = "Restaurent Documents Deleted";
-      const TransTime = CurrentTime(); // Current time in ISO format
-      const updatedBy = "Vendor";
-      const transactionValues = [TransTypeID, userData.refUserId, transData, TransTime, updatedBy];
-
-      await executeQuery(updateHistoryQuery, transactionValues);
-
+  
+      await client.query("COMMIT");
       return encrypt(
         {
           success: true,
-          message: "Restaurent Documents Deleted Successfully",
-          token: tokens
+          message: "Document or file deleted successfully",
+          token: tokens,
         },
         true
       );
     } catch (error) {
-      console.error('Error in deleting file:', (error as Error).message); // Log the error for debugging
+      console.error("Error in deleting document or file:", (error as Error).message);
+      await client.query("ROLLBACK");
       return encrypt(
         {
           success: false,
-          message: `Error In Deleting the Restaurent Documents: ${(error as Error).message}`,
-          token: tokens
+          message: `Error in deleting document or file: ${(error as Error).message}`,
+          token: tokens,
         },
         true
       );
+    } finally {
+      client.release();
     }
   }
 
@@ -725,27 +732,25 @@ export class VendorRepository {
   }
 
   public async LogoUpdateV1(userData: any, tokendata: any): Promise<any> {
+    const client: PoolClient = await getClient();
     const token = { id: tokendata.id }
     const tokens = generateTokenWithExpire(token, true)
     try {
+      await client.query("BEGIN");
       const {
         logoImage,
-        refUserId // Add refUserId to userData
+        documentId,
       } = userData;
-
-      const result = await executeQuery(ImageStoreQuery, [
-        logoImage
-      ]);
-
+      const result = await executeQuery(ImageStoreQuery, [logoImage, documentId]);
       const updatedRow = result[0]; // Access the first element of the result array
       const TransTypeID = 8;
       const transData = "Restaurant Logo Updated";
       const TransTime = CurrentTime(); // Current time in ISO format
       const updatedBy = "Vendor";
-      const transactionValues = [TransTypeID, refUserId, transData, TransTime, updatedBy];
+      const transactionValues = [TransTypeID, tokendata.id, transData, TransTime, updatedBy];
 
       await executeQuery(updateHistoryQuery, transactionValues);
-
+      await client.query("COMMIT");
       return encrypt(
         {
           success: true,
@@ -757,6 +762,7 @@ export class VendorRepository {
       );
     } catch (error) {
       console.error('Error updating data:', (error as Error).message); // Log the error for debugging
+      await client.query("ROLLBACK");
       return encrypt(
         {
           success: false,
@@ -765,194 +771,83 @@ export class VendorRepository {
         },
         true
       );
+    } finally {
+      client.release();
     }
   }
 
   public async deleteLogoV1(userData: any, tokendata: any): Promise<any> {
-    const token = { id: tokendata.id }
-    const tokens = generateTokenWithExpire(token, true)
+    const client: PoolClient = await getClient();
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
     try {
-      let filePath: string | any;
-
+      if (!userData.documentId && !userData.filePath) {
+        return encrypt(
+          {
+            success: false,
+            message: "No documentId or filePath provided in the payload",
+          },
+          true
+        );
+      }
+      let filePath: string | null = null;
+      await client.query("BEGIN");
       if (userData.documentId) {
-
-        // Retrieve the image record from the database
-        const imageRecord = await executeQuery(getDocumentQuery, [userData.documentId]);
-        if (imageRecord.length === 0) {
+        // Fetch document record from the database
+        const documentRecord = await client.query(getDocumentQuery, [userData.documentId]);
+        if (!documentRecord.rows || documentRecord.rows.length === 0) {
+          await client.query("ROLLBACK");
           return encrypt(
             {
               success: false,
-              message: "Image record not found",
-              token: tokens
+              message: "Document record not found",
             },
-            false
+            true
           );
         }
-        filePath = imageRecord[0].refImagePath;
-
-        // Delete the image record from the database
-        await executeQuery(deleteImageQuery, [userData.documentId]);
-      } else {
-
-        console.log('userData.filePath line --------------- 762 \n', userData.filePath)
+        // Extract file path if available
+        filePath = documentRecord.rows[0]?.logoImage || null;
+        // Clear document fields in the database
+        await client.query(deleteImageQuery, [userData.documentId]);
+      } else if (userData.filePath) {
+        // Case for filePath provided
         filePath = userData.filePath;
-        console.log('filePath line ------------------------ 763', filePath)
       }
-
+      // Delete file from the file system if a path exists
       if (filePath) {
-        console.log('filePath line ------------------- 767', filePath)
-        // Delete the file from local storage
         await deleteFile(filePath);
       }
-      console.log('Attempting to delete file at:', filePath);
-
       const TransTypeID = 9;
       const transData = "Restaurent Documents Deleted";
       const TransTime = CurrentTime(); // Current time in ISO format
       const updatedBy = "Admin";
-      const transactionValues = [TransTypeID, userData.refUserId, transData, TransTime, updatedBy];
+      const transactionValues = [TransTypeID, tokendata.id, transData, TransTime, updatedBy];
 
       await executeQuery(updateHistoryQuery, transactionValues);
-
+      await client.query("COMMIT");
       return encrypt(
         {
           success: true,
-          message: "Restaurent Documents Deleted Successfully",
-          token: tokens
+          message: "Document or file deleted successfully",
+          token: tokens,
         },
         true
       );
     } catch (error) {
-      console.error('Error in deleting file:', (error as Error).message); // Log the error for debugging
+      console.error("Error in deleting document or file:", (error as Error).message);
+      await client.query("ROLLBACK");
       return encrypt(
         {
           success: false,
-          message: `Error In Deleting the Restaurent Documents: ${(error as Error).message}`,
-          token: tokens
+          message: `Error in deleting document or file: ${(error as Error).message}`,
+          token: tokens,
         },
         true
       );
+    } finally {
+      client.release();
     }
   }
-
-  // public async addProductV1(userData: any, tokendata: any): Promise<any> {
-  //   const client: PoolClient = await getClient();
-  //   const token = { id: tokendata.id };
-  //   console.log('token', token);
-  //   const tokens = generateTokenWithExpire(token, true);
-  //   console.log('tokens', tokens);
-
-  //   try {
-  //     await client.query('BEGIN');
-
-  //     const {
-  //       refVendorname,       // Extract refVendorId from userData
-  //       productName,
-  //       productPrice,
-  //       category,
-  //       description,
-  //       rating,
-  //       offerAppliedStatus,
-  //       offer,
-  //       range,
-  //       refArrange
-
-  //     } = userData;
-
-  //     // Apply logic based on offerAppliedStatus
-  //     const finalOffer = offerAppliedStatus ? offer : '-';
-
-  //     // Add refVendorId and refUserId to the parameters
-  //     const params = [
-  //       refVendorname,
-  //       productName,
-  //       productPrice,
-  //       category,
-  //       description,
-  //       rating,
-  //       offerAppliedStatus,
-  //       finalOffer, // Use the computed offer value
-  //       range,
-  //       refArrange
-  //     ];
-  //     console.log('Insert Product Params:', params);
-
-  //     const userResult = await client.query(insertproductQuery, params);
-  //     const newUser = userResult.rows[0];
-  //     console.log('newUser', newUser);
-
-  //     if (newUser) {
-  //       const history = [
-  //         12,
-  //         token.id, // Use refUserId from userData
-  //         "add products",
-  //         CurrentTime(),
-  //         'vendor',
-  //       ];
-
-  //       console.log('history', history);
-  //       const updateHistory = await client.query(updateHistoryQuery, history);
-
-  //       if (updateHistory.rowCount === 0) {
-  //         await client.query('ROLLBACK'); // Rollback if history update fails
-  //         return encrypt(
-  //           {
-  //             success: false,
-  //             message: 'Failed to update history',
-  //             token: tokens,
-  //           },
-  //           false
-  //         );
-  //       }
-
-  //       await client.query('COMMIT'); // Commit the transaction
-  //       return encrypt(
-  //         {
-  //           success: true,
-  //           message: 'Product added successfully',
-  //           token: tokens,
-  //         },
-  //         false
-  //       );
-  //     } else {
-  //       await client.query('ROLLBACK'); // Rollback if any insert fails
-  //       return encrypt(
-  //         {
-  //           success: false,
-  //           message: 'Product insertion failed',
-  //           token: tokens,
-  //         },
-  //         false
-  //       );
-  //     }
-  //   } catch (error: unknown) {
-  //     await client.query('ROLLBACK'); // Rollback the transaction in case of any error
-  //     console.error('Error during product addition:', error);
-
-  //     if (error instanceof Error) {
-  //       return encrypt(
-  //         {
-  //           success: false,
-  //           message: 'An unexpected error occurred during product addition',
-  //           error: error.message,
-  //         },
-  //         false
-  //       );
-  //     } else {
-  //       return encrypt(
-  //         {
-  //           success: false,
-  //           message: 'An unknown error occurred during product addition',
-  //           token: tokens,
-  //           error: String(error),
-  //         },
-  //         false
-  //       );
-  //     }
-  //   } finally {
-  //     client.release(); // Release the client back to the pool
-  //   }
-  // }
   public async addProductV1(userData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient();
     const token = { id: tokendata.id };
@@ -1036,7 +931,7 @@ export class VendorRepository {
             message: 'Product added successfully',
             token: tokens,
           },
-          false
+          true
         );
       } else {
         await client.query('ROLLBACK');  // Rollback if any insert fails
@@ -1060,7 +955,7 @@ export class VendorRepository {
             message: 'An unexpected error occurred during product addition',
             error: error.message,
           },
-          false
+          true
         );
       } else {
         return encrypt(
@@ -1077,6 +972,7 @@ export class VendorRepository {
       client.release();  // Release the client back to the pool
     }
   }
+
   public async ViewaddedProductV1(user_data: any, tokendata: any): Promise<any> {
     const token = { id: tokendata.id }; // Extract token ID
     console.log('token', token);
@@ -1098,7 +994,7 @@ export class VendorRepository {
           token: tokens,
           Restroproducts: Restroproducts,
         },
-        false
+        true
       );
     } catch (error) {
       // Error handling
@@ -1114,7 +1010,7 @@ export class VendorRepository {
           error: errorMessage,
           token: tokens,
         },
-        false
+        true
       );
     }
   }
@@ -1191,7 +1087,7 @@ export class VendorRepository {
         success: true,
         message: 'Offer applied and transaction history recorded successfully',
         token: tokens,
-      }, false);
+      }, true);
 
     } catch (error: unknown) {
       // Ensure rollback if an error occurs
@@ -1207,7 +1103,7 @@ export class VendorRepository {
         message: 'Offer application failed',
         error: errorMessage,
         token: tokens
-      }, false);
+      }, true);
 
     } finally {
       // Release the client back to the pool
@@ -1235,7 +1131,7 @@ export class VendorRepository {
           token: tokens,
           restroOffers: restroOffers,
         },
-        false
+        true
       );
     } catch (error) {
       // Error handling
@@ -1251,7 +1147,7 @@ export class VendorRepository {
           error: errorMessage,
           token: tokens,
         },
-        false
+        true
       );
     }
   }
@@ -1277,7 +1173,7 @@ export class VendorRepository {
           token: tokens,
           restroDetails: restroDetails,
         },
-        false
+        true
       );
     } catch (error) {
       // Error handling
@@ -1293,7 +1189,7 @@ export class VendorRepository {
           error: errorMessage,
           token: tokens,
         },
-        false
+        true
       );
     }
   }
@@ -1343,7 +1239,7 @@ export class VendorRepository {
           token: tokens,
           //data: insertedData, // Return the inserted document data
         },
-        false
+        true
       );
     } catch (error) {
       // Error handling
@@ -1358,7 +1254,7 @@ export class VendorRepository {
           error: errorMessage,
           token: tokens,
         },
-        false
+        true
       );
     }
   }
@@ -1403,7 +1299,7 @@ export class VendorRepository {
           token: tokens,
           restroDetails: restroDetails,
         },
-        false
+        true
       );
     } catch (error) {
       // Error handling
@@ -1419,7 +1315,7 @@ export class VendorRepository {
           error: errorMessage,
           token: tokens,
         },
-        false
+        true
       );
     }
   }
@@ -1434,6 +1330,8 @@ export class VendorRepository {
     console.log('tokens', tokens);
 
     try {
+      await client.query("BEGIN");
+
       // Get Restaurant/Document Details
       const {
         visibility,
@@ -1446,7 +1344,7 @@ export class VendorRepository {
         restroDocTypeId
       ];
 
-      const restroDetails = await executeQuery(updatevisibilityQuery, documentParams);
+      const restroDetails = await client.query(updatevisibilityQuery, documentParams);
       const txnHistoryParams = [
         16, // TransTypeID
         tokendata.id, // refUserId
@@ -1454,17 +1352,67 @@ export class VendorRepository {
         CurrentTime(),  // TransTime
         "vendor" // UpdatedBy
       ];
-      const txnHistoryResult = await executeQuery(updateHistoryQuery, txnHistoryParams);
+      const txnHistoryResult = await client.query(updateHistoryQuery, txnHistoryParams);
 
       // Return success response
+      await client.query("COMMIT");
+
       return encrypt(
         {
+          
           success: true,
           message: 'update restaurent docs successfully',
           token: tokens,
           restroDetails: restroDetails,
         },
-        false
+        true
+      );
+    } catch (error) {
+      await client.query("ROLLBACK");
+
+      // Error handling
+      const errorMessage =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      console.error('Error during data retrieval:', error);
+      await client.query("ROLLBACK");
+
+      // Return error response
+      return encrypt(
+        {
+          success: false,
+          message: 'Data retrieval failed',
+          error: errorMessage,
+          token: tokens,
+        },
+        true
+      );
+    }finally {
+      client.release();
+    }
+
+  }
+  public async getPayementV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id }; // Extract token ID
+    console.log('token', token);
+
+    // Generate token with expiration
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
+
+    try {
+      // Get Restaurant/Document Details
+      const restroDetails = await executeQuery(paymentDetailsQuery);
+      console.log('restroDetails', restroDetails);
+
+      // Return success response
+      return encrypt(
+        {
+          success: true,
+          message: 'return restaurent docs successfully',
+          token: tokens,
+          restroDetails: restroDetails,
+        },
+        true
       );
     } catch (error) {
       // Error handling
@@ -1480,11 +1428,72 @@ export class VendorRepository {
           error: errorMessage,
           token: tokens,
         },
-        false
+        true
       );
     }
   }
+  public async paymentVisibilityV1(user_data: any, tokendata: any): Promise<any> {
+    const client: PoolClient = await getClient(); 
+    const token = { id: tokendata.id }; 
+    console.log('token', token);
+      
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
 
+    try {
+      await client.query("BEGIN");
+
+      const {
+        visibility,
+        paymentId
+      } = user_data;
+      console.log('user_data', user_data)
+
+      const paymentParams = [
+        visibility,
+        paymentId
+      ];
+
+      const paymentDetails = await client.query(updatePayementVisibilityQuery, paymentParams);
+      console.log('paymentDetails', paymentDetails)
+      const txnHistoryParams = [
+        18, // TransTypeID
+        tokendata.id, // refUserId
+        "add payment visibility", // transData
+        CurrentTime(),  // TransTime
+        "vendor" // UpdatedBy
+      ];
+      const txnHistoryResult = await client.query(updateHistoryQuery, txnHistoryParams);
+      await client.query("COMMIT");
+
+      // Return success response
+      return encrypt(
+        {
+          success: true,
+          message: 'update restaurent docs successfully',
+          token: tokens,
+          paymentType : paymentDetails,
+        },
+        true
+      );
+    } catch (error) {
+      // Error handling
+      const errorMessage =
+        error instanceof Error ? error.message : 'An unknown error occurred';
+      console.error('Error during data retrieval:', error);
+      await client.query("ROLLBACK");
+      // Return error response
+      return encrypt(
+        {
+          success: false,
+          message: 'Data retrieval failed',
+          error: errorMessage,
+          token: tokens,
+        },
+        true
+      );
+    }
+  }
   public async VendorAuditListV1(userData: { refUserId: string }, tokendata: any): Promise<any> {
 
     const token = { id: tokendata.id }

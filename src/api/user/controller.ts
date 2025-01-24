@@ -88,11 +88,12 @@ export class UserController {
     request: any,
     response: Hapi.ResponseToolkit
   ): Promise<any> => {
-    logger.info("Router ------------");
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    // logger.info("Router ------------");
     try {
-      const decodedToken ={
-        id:request.plugins.token.id
-      }
+      
       console.log('decodedToken', decodedToken)
       let entity;
       entity = await this.resolver.orderplacementV1(request.payload, decodedToken);
@@ -112,26 +113,34 @@ export class UserController {
     }
   }
   public vieworderplacement = async (
-    request: Hapi.Request,
-    response: Hapi.ResponseToolkit
-  ): Promise<any> => {
-    logger.info("Router ------------");
-    try {
-      let entity;
-      entity = await this.resolver.vieworderplacementV1(request.payload);
-
-      if (entity.success) {
-        return response.response(entity).code(201); // Created
+      request: any,
+      response: Hapi.ResponseToolkit
+    ): Promise<any> => {
+      const decodedToken ={
+        id:request.plugins.token.id
       }
-      return response.response(entity).code(200); // Bad Request if failed
-    } catch (error) {
-      logger.error("Error in userSignUp:", error);
-      return response
-        .response({
-          success: false,
-          message: "An unknown error occurred",
-        })
-        .code(500);
-    }
-  }
+      console.log('decodedToken', decodedToken)
+      // logger.info("Router-----store Address");
+      try {
+        let entity;
+        entity = await this.resolver.vieworderplacementV1(request.payload,decodedToken);
+  
+        if (entity.success) {
+          return response.response(entity).code(201); // Created
+        }
+        return response.response(entity).code(200); // Bad Request if failed
+  
+      } catch (error) {
+        logger.error("Error in getting order", error);
+        return response
+          .response({
+            success: false,
+            message:
+              error instanceof Error
+                ? error.message
+                : "An unknown error occurred",
+          })
+          .code(500);
+      }
+    };
 }
