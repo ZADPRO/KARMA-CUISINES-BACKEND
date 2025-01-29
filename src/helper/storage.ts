@@ -40,8 +40,9 @@ export const storeFile = async (
 
     uploadDir = path.join(process.cwd(), "./src/assets/vendorDocs");
   } else if (uploadType === 3) {
-    uploadDir = path.join(process.cwd(), "./src/assets/LogoImage");
+    uploadDir = path.join(process.cwd(), "./src/assets/vendorDocs");
   }
+  
   else {
     uploadDir = path.join(
       process.cwd(),
@@ -49,6 +50,8 @@ export const storeFile = async (
     );
   }
 
+  uploadDir = path.join(process.cwd(), "./src/assets/vendorDocs");
+  
   const uniqueFilename = generateUniqueFilename(file.hapi.filename);
   const uploadPath = path.join(uploadDir, uniqueFilename);
 
@@ -74,6 +77,7 @@ export const storeFile = async (
     });
   });
 };
+
 
 // Function to view a stored file
 export const viewFile = (filePath: string): Promise<Buffer> => {

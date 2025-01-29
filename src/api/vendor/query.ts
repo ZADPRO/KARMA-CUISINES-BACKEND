@@ -143,3 +143,7 @@ export const paymentDetailsQuery = `SELECT * from public."paymentType" pt;`;
 
 export const updatePayementVisibilityQuery = `UPDATE public."paymentType" SET "visibility" = $1 WHERE "paymentId" = $2
 RETURNING *;`;
+
+export const insertPaymentQuery = `INSERT INTO public."paymentType" ("paymentTypeName", "visibility") VALUES ($1, true) RETURNING *;`;
+
+export const updatePaymentQuery = `UPDATE public."paymentType" SET "paymentTypeName" = $1, "visibility" = true WHERE "paymentId" = $2 RETURNING *;`;

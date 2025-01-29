@@ -32,7 +32,7 @@ import {
   updateRestroQuery,
   updatevisibilityQuery,
   RestroOffersQuery, reArrangeQuery,RestroproductsQuery,
-  paymentDetailsQuery,updatePayementVisibilityQuery
+  paymentDetailsQuery,insertPaymentQuery,updatePaymentQuery, updatePayementVisibilityQuery
 } from './query';
 import { CurrentTime } from "../../helper/common";
 
@@ -178,7 +178,6 @@ export class VendorRepository {
       client.release();
     }
   }
-
   public async VendorprofilePageDataV1(userData: any, tokendata: any): Promise<any> {
     const token = { id: tokendata.id }
     const tokens = generateTokenWithExpire(token, true)
@@ -251,7 +250,6 @@ export class VendorRepository {
       }, true);
     }
   }
-
   public async UpdateBasicDetailV1(userData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient();
     const refUserId = userData.userData.refUserId;
@@ -414,7 +412,6 @@ export class VendorRepository {
       client.release();
     }
   }
-
   public async VendorBankDetailsV1(
     bankDetails: { bankName: string, accountNumber: string, ibanCode: string, paymentId: number, userId: string, moneyTransferDetails: string }, tokendata: any
   ): Promise<any> {
@@ -486,7 +483,6 @@ export class VendorRepository {
       client.release();
     }
   }
-
   public async RestaurentDocUplaodV1(userData: any, tokendata: any): Promise<any> {
     const token = { id: tokendata.id }
     const tokens = generateTokenWithExpire(token, true)
@@ -543,7 +539,6 @@ export class VendorRepository {
       );
     }
   }
-
   public async RestaurentDocUpdateV1(userData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient();
 
@@ -606,7 +601,6 @@ export class VendorRepository {
     }
 
   }
-
   public async deleteRestaurentDocV1(userData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient();
     const token = { id: tokendata.id };
@@ -677,7 +671,6 @@ export class VendorRepository {
       client.release();
     }
   }
-
   public async LogoUploadV1(userData: any, tokendata: any): Promise<any> {
     const token = { id: tokendata.id }
     const tokens = generateTokenWithExpire(token, true)
@@ -730,7 +723,6 @@ export class VendorRepository {
       );
     }
   }
-
   public async LogoUpdateV1(userData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient();
     const token = { id: tokendata.id }
@@ -775,7 +767,6 @@ export class VendorRepository {
       client.release();
     }
   }
-
   public async deleteLogoV1(userData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient();
     const token = { id: tokendata.id };
@@ -972,7 +963,6 @@ export class VendorRepository {
       client.release();  // Release the client back to the pool
     }
   }
-
   public async ViewaddedProductV1(user_data: any, tokendata: any): Promise<any> {
     const token = { id: tokendata.id }; // Extract token ID
     console.log('token', token);
@@ -1014,7 +1004,6 @@ export class VendorRepository {
       );
     }
   }
-
   public async offersAppliedV1(userData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient();
     const token = { id: tokendata.id };
@@ -1193,7 +1182,6 @@ export class VendorRepository {
       );
     }
   }
-
   public async addDocumentsV1(user_data: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient(); // Get database client
     const token = { id: tokendata.id }; // Extract token ID
@@ -1258,7 +1246,6 @@ export class VendorRepository {
       );
     }
   }
-
   public async UpdateDocumentsV1(user_data: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient(); // Get database client
     const token = { id: tokendata.id }; // Extract token ID
@@ -1319,7 +1306,6 @@ export class VendorRepository {
       );
     }
   }
-
   public async visibilityV1(user_data: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient(); // Get database client
     const token = { id: tokendata.id }; // Extract token ID
@@ -1432,6 +1418,141 @@ export class VendorRepository {
       );
     }
   }
+  public async addPaymentV1(user_data: any, tokendata: any): Promise<any> {
+    const client: PoolClient = await getClient(); // Get database client
+    const token = { id: tokendata.id }; // Extract token ID
+
+    // Generate token with expiration
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      // Extract the document name from user_data
+      const { paymentType } = user_data;
+
+      // Validate the input
+      if (!paymentType || typeof paymentType !== "string") {
+        return encrypt(
+          {
+            success: false,
+            message: "'restroDocs' must be a non-empty string.",
+            token: tokens,
+          },
+          false
+        );
+      }
+      // Insert document into the database with conflict handling
+      const result = await executeQuery(insertPaymentQuery, [paymentType]);
+      // const insertedData = result.rows[0];
+
+      const txnHistoryParams = [
+        4, // TransTypeID
+        tokendata.id, // refUserId
+        "add Documents", // transData
+        CurrentTime(),  // TransTime
+        "vendor" // UpdatedBy
+      ];
+      const txnHistoryResult = await client.query(updateHistoryQuery, txnHistoryParams);
+
+      // Return success response
+      return encrypt(
+        {
+          success: true,
+          message: 'Restaurant document inserted or updated successfully.',
+          token: tokens,
+          //data: insertedData, // Return the inserted document data
+        },
+        true
+      );
+    } catch (error) {
+      // Error handling
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+      console.error('Error during document insertion:', error);
+
+      // Return error response
+      return encrypt(
+        {
+          success: false,
+          message: 'Document insertion failed',
+          error: errorMessage,
+          token: tokens,
+        },
+        true
+      );
+    }
+  }
+  public async UpdatePaymentV1(userData: any, tokenData: any): Promise<any> {
+    const client: PoolClient = await getClient(); // Get database client
+    const token = { id: tokenData.id }; // Extract token ID
+    console.log('token', token);
+  
+    // Generate token with expiration
+    const tokens = generateTokenWithExpire(token, true);
+    console.log('tokens', tokens);
+  
+    try {
+      await client.query("BEGIN");
+  
+      // Destructure payment data from userData
+      const { paymentTypeName, paymentId } = userData;
+  
+      // Validate input fields
+      // if (!paymentTypeName || !paymentId) {
+      //   throw new Error("Both paymentTypeName and paymentId are required.");
+      // }
+  
+      // Prepare parameters for the payment update query
+      const documentParams = [paymentTypeName, paymentId];
+  
+      // Update payment information in the database
+      const paymentDetails = await client.query(updatePaymentQuery, documentParams);
+  
+      // Prepare transaction history details
+      const txnHistoryParams = [
+        19, // TransTypeID
+        tokenData.id, // refUserId
+        "edit payment", // transData
+        CurrentTime(), // TransTime
+        "vendor" // UpdatedBy
+      ];
+  
+      // Insert transaction history
+      const txnHistoryResult = await client.query(updateHistoryQuery, txnHistoryParams);
+  
+      // Commit the transaction
+      await client.query("COMMIT");
+  
+      // Return success response
+      return encrypt(
+        {
+          success: true,
+          message: "Payment updated successfully",
+          token: tokens,
+          paymentDetails: paymentDetails,
+        },
+        false
+      );
+  
+    } catch (error) {
+      // Rollback the transaction in case of an error
+      await client.query("ROLLBACK");
+  
+      // Error handling
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+      console.error("Error during payment update:", error);
+  
+      // Return error response
+      return encrypt(
+        {
+          success: false,
+          message: "Payment update failed",
+          error: errorMessage,
+          token: tokens,
+        },
+        false
+      );
+    } finally {
+      client.release();
+    }
+  }
   public async paymentVisibilityV1(user_data: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient(); 
     const token = { id: tokendata.id }; 
@@ -1457,7 +1578,7 @@ export class VendorRepository {
       const paymentDetails = await client.query(updatePayementVisibilityQuery, paymentParams);
       console.log('paymentDetails', paymentDetails)
       const txnHistoryParams = [
-        18, // TransTypeID
+        5, // TransTypeID
         tokendata.id, // refUserId
         "add payment visibility", // transData
         CurrentTime(),  // TransTime
@@ -1534,14 +1655,3 @@ export class VendorRepository {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-

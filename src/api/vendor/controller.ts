@@ -608,6 +608,68 @@ export class VendorProfile {
         .code(500);
     }
   };
+  public addPayment = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
+    // logger.info("Router-----store Address");
+    try {
+      let entity;
+      entity = await this.resolver.addPaymentV1(request.payload,decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201); // Created
+      }
+      return response.response(entity).code(200); // Bad Request if failed
+
+    } catch (error) {
+      logger.error("Error in add documents", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  public UpdatePayment = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    const decodedToken ={
+      id:request.plugins.token.id
+    }
+    console.log('decodedToken', decodedToken)
+    logger.info("Router-----/api/v1/vendorRoutes/UpdatePayment");
+    try {
+      let entity;
+      entity = await this.resolver.UpdatePaymentV1(request.payload,decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201); // Created
+      }
+      return response.response(entity).code(200); // Bad Request if failed
+
+    } catch (error) {
+      logger.error("Error in update payment", error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
   public paymentVisibility = async (
     request: any,
     response: Hapi.ResponseToolkit

@@ -1,6 +1,5 @@
 import { UserRepository } from "./user-repository";
 
-
 export class UserResolver {
   public userRepository: any;
   constructor() {

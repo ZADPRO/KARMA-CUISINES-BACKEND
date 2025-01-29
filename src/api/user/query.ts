@@ -9,14 +9,12 @@ export const insertUserQuery = `
   ) VALUES ($1, $2, $3, $4) 
   RETURNING "refRoleId", "refUserCustId","refUserId";
 `;
-
 export const insertUserDomainQuery = `
   INSERT INTO public."refUsersDomain" (
     "refUserId", "refCustId","refUserName", "refCustPassword", 
     "refCustHashedPassword","refCustMobileNum1", "refUserEmail"
   ) VALUES ($1, $2,$3, $4, $5, $6, $7)
   RETURNING *;`;
-
 
 export const insertUserCommunicationQuery = `
   INSERT INTO public."refCommunication" (
@@ -30,7 +28,6 @@ export const updateHistoryQuery = `
   ) VALUES ($1, $2, $3, $4, $5)
   RETURNING *;
 `;
-
 
 export const ValidateEmailUserName = `SELECT
   ud."refUserId",

@@ -224,6 +224,26 @@ export class vendorRoutes implements IRoute {
         },
         {
           method: "POST",
+          path: "/api/v1/vendorRoutes/addPayment",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.addPayment,
+            description: "add Payment",
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendorRoutes/UpdatePayment",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.UpdatePayment,
+            description: "update payment",
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
           path: "/api/v1/vendorRoutes/paymentVisibility",
           config: {
             pre: [{ method: validateToken, assign: "token" }],

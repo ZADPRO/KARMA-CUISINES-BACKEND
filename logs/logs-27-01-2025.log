@@ -1,0 +1,174 @@
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:18:36.807Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-27T07:20:38.906Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:21:26.562Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:22:42.135Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:22:47.791Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:22:53.607Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:22:59.064Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:23:04.181Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:23:09.100Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:23:23.100Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:23:30.226Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-27T07:23:34.293Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:24:08.714Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:24:13.309Z"}
+{"level":"info","message":"Router ------------","timestamp":"2025-01-27T07:24:29.584Z"}
+{"level":"info","message":"Router-----view Vendor profile","timestamp":"2025-01-27T07:27:33.912Z"}
+{"level":"error","message":"Error in view vendor profile this.NewVendorRepository.viewProfileviewProfileV1viewProfileviewProfileV1 is not a function","stack":"TypeError: this.NewVendorRepository.viewProfileviewProfileV1viewProfileviewProfileV1 is not a function\n    at NewVendorResolver.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\resolver.ts:12:43)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\resolver.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\resolver.ts:4:12)\n    at NewVendorResolver.viewProfileviewProfileV1 (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\resolver.ts:24:16)\n    at NewVendor.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\controller.ts:61:36)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\controller.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-27T07:27:33.927Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:27:54.591Z"}
+{"level":"info","message":"Router-----view Vendor profile","timestamp":"2025-01-27T07:27:54.910Z"}
+{"level":"info","message":"Router-----view Vendor profile","timestamp":"2025-01-27T07:28:25.743Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:28:54.250Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:29:32.028Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:29:55.184Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:30:01.245Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:30:22.063Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:30:36.126Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:30:46.598Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:31:11.021Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:32:09.049Z"}
+{"level":"info","message":"Router-----view Vendor profile","timestamp":"2025-01-27T07:32:24.092Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:33:56.590Z"}
+{"level":"info","message":"Router-----view Vendor profile","timestamp":"2025-01-27T07:33:57.044Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:34:33.437Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:34:47.668Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:35:11.043Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:35:35.054Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:35:45.867Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:36:05.823Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:36:32.848Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:36:44.865Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:37:03.233Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:41:07.141Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:41:13.016Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:41:25.795Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:41:41.047Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:41:50.635Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:41:59.676Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:43:15.651Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:43:19.970Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:43:25.516Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:43:35.795Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:43:45.699Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:43:58.117Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:44:11.064Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:44:20.097Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:44:37.431Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:45:06.547Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:45:18.196Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:45:32.740Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:46:35.475Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:47:35.429Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:48:29.124Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:48:38.321Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:48:53.251Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:49:08.852Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:49:31.695Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:49:49.715Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:49:59.544Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:50:11.217Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:50:20.897Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:50:32.068Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:50:54.420Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:51:07.189Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:52:11.423Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:52:18.784Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:52:51.437Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:52:57.196Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:54:05.508Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:54:32.174Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:56:07.829Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T07:56:25.507Z"}
+{"level":"info","message":"Router-----update Vendor profile","timestamp":"2025-01-27T07:59:19.611Z"}
+{"level":"error","message":"Error in update vendor profile this.resolver.viewProfileviewProfileV1 is not a function","stack":"TypeError: this.resolver.viewProfileviewProfileV1 is not a function\n    at NewVendor.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\controller.ts:93:36)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\controller.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\controller.ts:4:12)\n    at NewVendor.updateProfile (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\newVendor\\controller.ts:84:21)\n    at exports.Manager.execute (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\toolkit.js:57:29)\n    at Object.internals.handler (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\handler.js:46:48)\n    at exports.execute (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\handler.js:31:36)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-01-27T07:59:19.621Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T08:00:11.438Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T08:00:16.780Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T08:00:20.220Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T08:00:35.708Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T08:00:41.830Z"}
+{"level":"info","message":"Router-----update Vendor profile","timestamp":"2025-01-27T08:00:42.103Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T08:02:59.522Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T09:33:42.315Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T09:33:51.195Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T09:42:18.631Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T09:42:23.029Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T09:55:32.382Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:05:40.922Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:09:28.161Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:09:35.119Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:17:56.391Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:20:18.196Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:21:32.753Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:21:42.510Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:28:04.803Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:28:23.811Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:45:50.676Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:46:11.106Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:46:15.850Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:46:20.055Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:47:29.801Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/addDocuments conflicts with existing /api/v1/vendorRoutes/addDocuments","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/addDocuments conflicts with existing /api/v1/vendorRoutes/addDocuments\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-27T10:48:18.402Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/addDocuments conflicts with existing /api/v1/vendorRoutes/addDocuments","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/addDocuments conflicts with existing /api/v1/vendorRoutes/addDocuments\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-27T10:48:51.366Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:48:57.119Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:49:09.398Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:50:37.388Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:50:47.673Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:51:21.692Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:51:38.985Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:52:17.733Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:52:27.723Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:52:32.800Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:57:35.406Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:57:55.330Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T10:58:01.698Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:01:23.819Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:03:22.083Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:05:06.464Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/vendorRoutes/UpdateDocuments conflicts with existing /api/v1/vendorRoutes/UpdateDocuments","name":"AssertError","stack":"AssertError: New route /api/v1/vendorRoutes/UpdateDocuments conflicts with existing /api/v1/vendorRoutes/UpdateDocuments\n    at module.exports.internals.Segment.internals.Segment.add (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:14:14\n    at new Promise (<anonymous>)\n    at vendorRoutes.<anonymous> (C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:12:12)\n    at Generator.next (<anonymous>)\n    at C:\\Users\\INDUMATHI\\Desktop\\KARMA-CUISINE-BACKEND\\src\\api\\vendor\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-01-27T11:05:38.001Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:05:45.001Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:05:49.769Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:06:23.575Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:06:35.285Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:06:46.760Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:06:52.849Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:07:14.567Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:07:33.526Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:08:52.798Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:08:57.298Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:11:25.158Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:13:19.391Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:13:29.012Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:13:45.049Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:13:50.348Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:14:10.593Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:14:24.341Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:14:42.432Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:16:08.758Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:16:12.926Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:17:25.617Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:17:48.270Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:18:03.336Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:18:39.277Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:18:54.471Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:19:04.561Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:19:12.431Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:19:17.219Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:19:34.823Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:19:39.814Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:19:57.527Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:20:54.237Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:22:40.258Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:22:47.955Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:23:54.058Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:24:02.601Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:24:10.972Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:24:29.769Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:25:50.537Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:33:32.642Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:33:49.833Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:34:47.847Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:34:54.929Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:34:59.048Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:35:59.465Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-01-27T11:37:38.963Z"}
+{"level":"info","message":"Router-----/api/v1/vendorRoutes/UpdatePayment","timestamp":"2025-01-27T11:37:40.348Z"}

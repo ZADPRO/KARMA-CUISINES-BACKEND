@@ -149,3 +149,19 @@ export function generateClassDurationString(
     refClassCount > 1 ? "es" : ""
   } in ${refMonthDuration} Month${refMonthDuration > 1 ? "s" : ""} Duration`;
 }
+
+export function generateFileName(): string {
+  // Generate a random string of 6 alphabets
+  const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@$*";
+  const randomChars = Array.from({ length: 6 }, () =>
+    alphabets.charAt(Math.floor(Math.random() * alphabets.length))
+  ).join("");
+
+  // Get current date in DDMMYYYY format
+  const today = new Date();
+  const datePart = `${String(today.getDate()).padStart(2, '0')}${String(today.getMonth() + 1).padStart(2, '0')}${today.getFullYear()}`;
+
+  // Combine random characters with date
+  return `${randomChars}${datePart}`;
+}
+

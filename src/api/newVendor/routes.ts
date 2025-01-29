@@ -11,9 +11,31 @@ export class NewVendorRoute implements IRoute {
           method: "POST",
           path: "/api/v1/vendor/addNew",
           config: {
-            //   pre: [{ method: validateToken, assign: "token" }],
+            pre: [{ method: validateToken, assign: "token" }],
             handler: controller.addNewVendor,
             description: "Add New Vendor Details",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendor/viewProfile",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.viewProfile,
+            description: "view Vendor Details",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/vendor/updateProfile",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.updateProfile,
+            description: "update Vendor Details",
             tags: ["api", "Users"],
             auth: false,
           },

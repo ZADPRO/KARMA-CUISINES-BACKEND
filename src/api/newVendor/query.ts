@@ -109,3 +109,35 @@ export const updateHistoryQuery = `
  INSERT INTO public."refTransactionHistory" ("transTypeId", "refUserId", "transData", "transTime", "updatedBy")
   VALUES ($1, $2, $3, $4, $5)
   ;`;
+
+export const fetchProfileData = `SELECT
+    u."refUserFName", u."refUserLName", u."refRoleId", 
+    rc."refMobileNo", rc."refEmail",
+    rua."refStreet", rua."refCity", rua."refPostalCode", rua."refZone", rua."refCountry",
+    vwd."refDayId", vwd."refStartTime", vwd."refEndTime",
+    vt."refVendorName", vt."refVendorDesignation",
+    vsl."websiteUrl", vsl."facebookUrl", vsl."instagramUrl", vsl."twitterUrl",
+    vt."refVendorLogo",
+    rrd."restroDocId", rrd."refDocPath",
+    rbd."refBankName", rbd."refAccountNumber", rbd."refIbanCode", rbd."paymentId", rbd."refMoneyTransferDetails"
+    
+FROM 
+    public.users u
+LEFT JOIN 
+    public."refCommunication" rc ON u."refUserId" = (rc."refUserId")
+LEFT JOIN 
+    public."refUserAddress" rua ON rua."refUserId" = (u."refUserId")
+LEFT JOIN 
+    public."refVandorRestroWorkDay" vwd ON u."refUserId" = vwd."refUserId"
+LEFT JOIN 
+    public."vendorTable" vt ON u."refUserId" = vt."refUserId"
+LEFT JOIN 
+    public."vendorSocialLinks" vsl ON u."refUserId" = vsl."refUserId"
+LEFT JOIN 
+    public."refRestaurentDocuments" rrd ON u."refUserId" = rrd."refUserId"
+LEFT JOIN
+    public."vendorBankDetails" rbd ON u."refUserId" = rbd."refUserId"
+WHERE 
+    vt."refUserId" = $1;`;
+
+  export const fetchRestroCertificates =`SELECT "refCertificateType" FROM public."restroDocs";`; 
