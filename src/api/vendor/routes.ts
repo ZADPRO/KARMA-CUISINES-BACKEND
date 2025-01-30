@@ -1,11 +1,9 @@
 import * as Hapi from "@hapi/hapi";
 
-
 // import { Logger } from "winston";
 import { decodeToken, validateToken } from "../../helper/token";
 import { VendorProfile } from "./controller";
 import IRoute from "../../helper/routes";
-
 
 export class vendorRoutes implements IRoute {
   public async register(server: any): Promise<any> {
@@ -29,7 +27,8 @@ export class vendorRoutes implements IRoute {
           config: {
             pre: [{ method: validateToken, assign: "token" }], // Use the validateToken function here
             handler: controller.VendorprofilePageData,
-            description: "Passing the Vendorprofile Data to the Vendorprofile Page",
+            description:
+              "Passing the Vendorprofile Data to the Vendorprofile Page",
             tags: ["api", "Users"],
             auth: false,
           },
@@ -40,7 +39,8 @@ export class vendorRoutes implements IRoute {
           config: {
             pre: [{ method: validateToken, assign: "token" }], // Use the validateToken function here
             handler: controller.UpdateBasicDetail,
-            description: "Passing the Vendorprofile Data to the Vendorprofile Page",
+            description:
+              "Passing the Vendorprofile Data to the Vendorprofile Page",
             tags: ["api", "Users"],
             auth: false,
           },
@@ -71,7 +71,6 @@ export class vendorRoutes implements IRoute {
               parse: true,
               multipart: true,
             },
-
           },
         },
         {
@@ -109,7 +108,6 @@ export class vendorRoutes implements IRoute {
               parse: true,
               multipart: true,
             },
-
           },
         },
         {
@@ -148,6 +146,15 @@ export class vendorRoutes implements IRoute {
           config: {
             pre: [{ method: validateToken, assign: "token" }],
             handler: controller.ViewaddedProduct,
+            description: "adding products",
+            auth: false,
+          },
+        },
+        {
+          method: "GET",
+          path: "/api/v1/userRoutes/viewProducts",
+          config: {
+            handler: controller.userViewProducts,
             description: "adding products",
             auth: false,
           },
@@ -219,6 +226,16 @@ export class vendorRoutes implements IRoute {
             pre: [{ method: validateToken, assign: "token" }],
             handler: controller.getPayement,
             description: "getting documents",
+            auth: false,
+          },
+        },
+        {
+          method: "GET",
+          path: "/api/v1/vendorRoutes/getVendorList",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.getVendorList,
+            description: "vendor",
             auth: false,
           },
         },

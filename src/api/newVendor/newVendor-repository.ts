@@ -16,9 +16,17 @@ import {
 
 import {
   getVendorCountQuery,
-  insertVendorBasicDetails, insertCommunicationQuery, insertUserAddressQuery, insertVendorData, insertRestroDays, insertVendorSocialLinksQuery, insertRestroDocs, insertVendorBankDetailsQuery,
+  insertVendorBasicDetails,
+  insertCommunicationQuery,
+  insertUserAddressQuery,
+  insertVendorData,
+  insertRestroDays,
+  insertVendorSocialLinksQuery,
+  insertRestroDocs,
+  insertVendorBankDetailsQuery,
   updateHistoryQuery,
-  fetchProfileData, fetchRestroCertificates
+  fetchProfileData,
+  fetchRestroCertificates,
 } from "./query";
 import { CurrentTime } from "../../helper/common";
 
@@ -129,7 +137,7 @@ export class NewVendorRepository {
             "Vendor and user data with social links inserted successfully",
           token: tokens,
         },
-        false
+        true
       );
     } catch (error) {
       console.log("error", error);
@@ -140,259 +148,276 @@ export class NewVendorRepository {
           message: "Data insertion failed",
           token: tokens,
         },
-        false
+        true
       );
     } finally {
       client.release();
     }
   }
   public async viewProfileV1(userData: any, tokendata: any): Promise<any> {
-      const token = { id: tokendata.id }
-      const tokens = generateTokenWithExpire(token, true)
-  
-      try {  
-        const refUserId = userData.userData.refUserId;
-      
-        if (!refUserId) {
-          console.log('refUserId', refUserId)
-          throw new Error("Invalid refUserId. Cannot be null or undefined.");
-        }
-  
-        console.log('Parsed refUserId:', refUserId);
-  
-        const params = [refUserId];
-        console.log('params', params)
-        const BasicInfo = await executeQuery(fetchProfileData, params);
-        console.log('profileResult', BasicInfo)
-  
-        if (BasicInfo.length === 0) {
-          throw new Error("No profile data found for the given refUserId.");
-        }
-  
-        const profileData = {
-          users: {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+
+    try {
+      const refUserId = userData.userData.refUserId;
+
+      if (!refUserId) {
+        console.log("refUserId", refUserId);
+        throw new Error("Invalid refUserId. Cannot be null or undefined.");
+      }
+
+      console.log("Parsed refUserId:", refUserId);
+
+      const params = [refUserId];
+      console.log("params", params);
+      const BasicInfo = await executeQuery(fetchProfileData, params);
+      console.log("profileResult", BasicInfo);
+
+      if (BasicInfo.length === 0) {
+        throw new Error("No profile data found for the given refUserId.");
+      }
+
+      const profileData = {
+        users: {
           fname: BasicInfo[0].refUserFName,
           lname: BasicInfo[0].refUserLName,
           refRoleId: BasicInfo[0].refRoleId,
-          },
-          Communtication:{
+        },
+        Communtication: {
           phone: BasicInfo[0].refMobileNo,
           email: BasicInfo[0].refEmail,
-          },
-          address: {
-            street: BasicInfo[0].refStreet,
-            city: BasicInfo[0].refCity,
-            postalCode: BasicInfo[0].refPostalCode,
-            zone: BasicInfo[0].refZone,
-            country: BasicInfo[0].refCountry,
-          },
-          RestroWork:{
-          refDayId:BasicInfo[0].refDayId,
-          StartTime:BasicInfo[0].refStartTime,
-          EndTime:BasicInfo[0].refEndTime,
-          },
-          Vendor:{
+        },
+        address: {
+          street: BasicInfo[0].refStreet,
+          city: BasicInfo[0].refCity,
+          postalCode: BasicInfo[0].refPostalCode,
+          zone: BasicInfo[0].refZone,
+          country: BasicInfo[0].refCountry,
+        },
+        RestroWork: {
+          refDayId: BasicInfo[0].refDayId,
+          StartTime: BasicInfo[0].refStartTime,
+          EndTime: BasicInfo[0].refEndTime,
+        },
+        Vendor: {
           vendorName: BasicInfo[0].refVendorName,
           vendorDesignation: BasicInfo[0].refVendorDesignation,
-          },
-          socialLinks: {
-            websiteUrl: BasicInfo[0].websiteUrl,
-            facebookUrl: BasicInfo[0].facebookUrl,
-            instagramUrl: BasicInfo[0].instagramUrl,
-            twitterUrl: BasicInfo[0].twitterUrl,
-          },
-          ProfileImgPath:{
+        },
+        socialLinks: {
+          websiteUrl: BasicInfo[0].websiteUrl,
+          facebookUrl: BasicInfo[0].facebookUrl,
+          instagramUrl: BasicInfo[0].instagramUrl,
+          twitterUrl: BasicInfo[0].twitterUrl,
+        },
+        ProfileImgPath: {
           logo: BasicInfo[0].refVendorLogo,
-          },
-          RestroDetails: {
-          documents: BasicInfo.map(doc => ({
+        },
+        RestroDetails: {
+          documents: BasicInfo.map((doc) => ({
             restroDocId: doc.restroDocId,
             refDocPath: doc.refDocPath,
-          }))},
-          bankDetails: {
-            bankName: BasicInfo[0].refBankName,
-            accountNumber: BasicInfo[0].refAccountNumber,
-            ibanCode: BasicInfo[0].refIbanCode,
-            paymentId: BasicInfo[0].paymentId,
-            moneyTransferDetails: BasicInfo[0].refMoneyTransferDetails,
-          },
-        };
-        
-        const Result = await executeQuery(fetchRestroCertificates, []);
-        console.log('Result', Result)
-        const restroDetails = Result.map((row: any) => ({
-          CertificateType: row.refCertificateType,
-        }));
-  
-        const registerData = {
-          ProfileData: profileData,
-          restroDetails, // Use the mapped `restroDetails` here
-        };
-  
-        console.log('Constructed registerData:', registerData);
-  
-        return encrypt({
+          })),
+        },
+        bankDetails: {
+          bankName: BasicInfo[0].refBankName,
+          accountNumber: BasicInfo[0].refAccountNumber,
+          ibanCode: BasicInfo[0].refIbanCode,
+          paymentId: BasicInfo[0].paymentId,
+          moneyTransferDetails: BasicInfo[0].refMoneyTransferDetails,
+        },
+      };
+
+      const Result = await executeQuery(fetchRestroCertificates, []);
+      console.log("Result", Result);
+      const restroDetails = Result.map((row: any) => ({
+        CertificateType: row.refCertificateType,
+      }));
+
+      const registerData = {
+        ProfileData: profileData,
+        restroDetails, // Use the mapped `restroDetails` here
+      };
+
+      console.log("Constructed registerData:", registerData);
+
+      return encrypt(
+        {
           success: true,
           message: "Vendor Profile Page Data retrieved successfully",
           token: tokens,
           data: registerData,
-        }, false);
-      } catch (error) {
-        const errorMessage = (error as Error).message; // Cast `error` to `Error` type
-        console.error('Error in VendorprofilePageData:', errorMessage);
-        return encrypt({
+        },
+        false
+      );
+    } catch (error) {
+      const errorMessage = (error as Error).message; // Cast `error` to `Error` type
+      console.error("Error in VendorprofilePageData:", errorMessage);
+      return encrypt(
+        {
           success: false,
           message: `Error in Vendor Profile Page Data retrieval: ${errorMessage}`,
-          token: tokens
-        }, false);
-      }
+          token: tokens,
+        },
+        false
+      );
+    }
   }
   public async updateProfileV1(userData: any, tokendata: any): Promise<any> {
-      const client: PoolClient = await getClient();
-      const refUserId = userData.userData.refUserId;
-      const token = { id: tokendata.id }
-      console.log('token', token)
-      const tokens = generateTokenWithExpire(token, true)
-      console.log('tokens', tokens)
-      try {
-        await client.query("BEGIN");
-  
-        const updateSections = userData.userData.user_data;
-  
-        for (const section in updateSections) {
-  
-          if (updateSections.hasOwnProperty(section)) {
-            let tableName: string;
-            let updatedData: any = {};
-            let oldData: any = {};
-  
-            switch (section) {
-              case "user":
-                console.log('user',)
-                tableName = "users";
-                for (const key in updateSections.user) {
-                  updatedData[key] = updateSections.user[key].newData;
-                  oldData[key] = updateSections.user[key].oldData;
-                }
-                break;
-                case "communication":
-                  console.log('communication',)
-                  tableName = "refCommunication";
-                  for (const key in updateSections.communication) {
-                    updatedData[key] = updateSections.communication[key].newData;
-                    oldData[key] = updateSections.communication[key].oldData;
-                  }
-                  break;
-              case "address":
-                  console.log('address',)
-                  tableName = "refUserAddress";
-                  for (const key in updateSections.socialLinks) {
-                    updatedData[key] = updateSections.socialLinks[key].newData;
-                    oldData[key] = updateSections.socialLinks[key].oldData;
-                  }
-                  break;
-              case "RestroWorkDay":
-                  console.log('RestroWorkDay',)
-                  tableName = "refVandorRestroWorkDay";
-                  for (const key in updateSections.socialLinks) {
-                    updatedData[key] = updateSections.socialLinks[key].newData;
-                    oldData[key] = updateSections.socialLinks[key].oldData;
-                  }
-                  break;
-                  case "vendorTable":
-                    console.log('vendorTable',)
-                    tableName = "vendorTable";
-                    for (const key in updateSections.socialLinks) {
-                      updatedData[key] = updateSections.socialLinks[key].newData;
-                      oldData[key] = updateSections.socialLinks[key].oldData;
-                    }
-                    break;
+    const client: PoolClient = await getClient();
+    const refUserId = userData.userData.refUserId;
+    const token = { id: tokendata.id };
+    console.log("token", token);
+    const tokens = generateTokenWithExpire(token, true);
+    console.log("tokens", tokens);
+    try {
+      await client.query("BEGIN");
 
-              case "socialLinks":
-                console.log('socialLinks',)
-                tableName = "vendorSocialLinks";
-                for (const key in updateSections.socialLinks) {
-                  updatedData[key] = updateSections.socialLinks[key].newData;
-                  oldData[key] = updateSections.socialLinks[key].oldData;
-                }
-                break;
-                case "RestaurentDocuments":
-                console.log('RestaurentDocuments',)
-                tableName = "refRestaurentDocuments";
-                for (const key in updateSections.socialLinks) {
-                  updatedData[key] = updateSections.socialLinks[key].newData;
-                  oldData[key] = updateSections.socialLinks[key].oldData;
-                }
-                break;
-                case "socialLinks":
-                console.log('socialLinks',)
-                tableName = "vendorBankDetails";
-                for (const key in updateSections.socialLinks) {
-                  updatedData[key] = updateSections.socialLinks[key].newData;
-                  oldData[key] = updateSections.socialLinks[key].oldData;
-                }
-                break;
-              default:
-                continue;
-            }
-  
-            const identifier = { column: "refUserId", value: refUserId };
-            console.log('identifier', identifier);
-  
-            const { updateQuery, values } = buildUpdateQuery(
-              tableName,
-              updatedData,
-              identifier
-            );
-            console.log('updateQuery', updateQuery)
-            console.log('values', values)
-  
-            const userResult = await client.query(updateQuery, values);
-            console.log('userResult', userResult);
-            if (!userResult.rowCount) {
-              throw new Error("Failed to update the profile data.");
-            }
-  
+      const updateSections = userData.userData.user_data;
+
+      for (const section in updateSections) {
+        if (updateSections.hasOwnProperty(section)) {
+          let tableName: string;
+          let updatedData: any = {};
+          let oldData: any = {};
+
+          switch (section) {
+            case "user":
+              console.log("user");
+              tableName = "users";
+              for (const key in updateSections.user) {
+                updatedData[key] = updateSections.user[key].newData;
+                oldData[key] = updateSections.user[key].oldData;
+              }
+              break;
+            case "communication":
+              console.log("communication");
+              tableName = "refCommunication";
+              for (const key in updateSections.communication) {
+                updatedData[key] = updateSections.communication[key].newData;
+                oldData[key] = updateSections.communication[key].oldData;
+              }
+              break;
+            case "address":
+              console.log("address");
+              tableName = "refUserAddress";
+              for (const key in updateSections.socialLinks) {
+                updatedData[key] = updateSections.socialLinks[key].newData;
+                oldData[key] = updateSections.socialLinks[key].oldData;
+              }
+              break;
+            case "RestroWorkDay":
+              console.log("RestroWorkDay");
+              tableName = "refVandorRestroWorkDay";
+              for (const key in updateSections.socialLinks) {
+                updatedData[key] = updateSections.socialLinks[key].newData;
+                oldData[key] = updateSections.socialLinks[key].oldData;
+              }
+              break;
+            case "vendorTable":
+              console.log("vendorTable");
+              tableName = "vendorTable";
+              for (const key in updateSections.socialLinks) {
+                updatedData[key] = updateSections.socialLinks[key].newData;
+                oldData[key] = updateSections.socialLinks[key].oldData;
+              }
+              break;
+
+            case "socialLinks":
+              console.log("socialLinks");
+              tableName = "vendorSocialLinks";
+              for (const key in updateSections.socialLinks) {
+                updatedData[key] = updateSections.socialLinks[key].newData;
+                oldData[key] = updateSections.socialLinks[key].oldData;
+              }
+              break;
+            case "RestaurentDocuments":
+              console.log("RestaurentDocuments");
+              tableName = "refRestaurentDocuments";
+              for (const key in updateSections.socialLinks) {
+                updatedData[key] = updateSections.socialLinks[key].newData;
+                oldData[key] = updateSections.socialLinks[key].oldData;
+              }
+              break;
+            case "socialLinks":
+              console.log("socialLinks");
+              tableName = "vendorBankDetails";
+              for (const key in updateSections.socialLinks) {
+                updatedData[key] = updateSections.socialLinks[key].newData;
+                oldData[key] = updateSections.socialLinks[key].oldData;
+              }
+              break;
+            default:
+              continue;
+          }
+
+          const identifier = { column: "refUserId", value: refUserId };
+          console.log("identifier", identifier);
+
+          const { updateQuery, values } = buildUpdateQuery(
+            tableName,
+            updatedData,
+            identifier
+          );
+          console.log("updateQuery", updateQuery);
+          console.log("values", values);
+
+          const userResult = await client.query(updateQuery, values);
+          console.log("userResult", userResult);
+          if (!userResult.rowCount) {
+            throw new Error("Failed to update the profile data.");
           }
         }
-  
-        // Insert transaction history
-        const txnHistoryParams = [
-          10, // TransTypeID
-          userData.userData.refUserId, // refUserId
-          "Vendor details Updated", // transData
-          CurrentTime(),  // TransTime
-          "Vendor" // UpdatedBy
-        ];
-        console.log('Inserting transaction history with params:', txnHistoryParams);
-        const txnResult = await client.query(updateHistoryQuery, txnHistoryParams);
-        console.log('Transaction History Insert Result:', txnResult);
-  
-        if (!txnResult.rowCount) {
-          throw new Error("Insert transaction history query failed");
-        }
-  
-        await client.query("COMMIT");
-        return encrypt({
+      }
+
+      // Insert transaction history
+      const txnHistoryParams = [
+        10, // TransTypeID
+        userData.userData.refUserId, // refUserId
+        "Vendor details Updated", // transData
+        CurrentTime(), // TransTime
+        "Vendor", // UpdatedBy
+      ];
+      console.log(
+        "Inserting transaction history with params:",
+        txnHistoryParams
+      );
+      const txnResult = await client.query(
+        updateHistoryQuery,
+        txnHistoryParams
+      );
+      console.log("Transaction History Insert Result:", txnResult);
+
+      if (!txnResult.rowCount) {
+        throw new Error("Insert transaction history query failed");
+      }
+
+      await client.query("COMMIT");
+      return encrypt(
+        {
           success: true,
           message: "Profile data updated successfully",
           token: tokens,
-        }, true);
-      } catch (error) {
-        await client.query("ROLLBACK");
-  
-        let errorMessage = "Error in updating the profile data";
-        if (error instanceof Error) {
-          errorMessage = `Error in updating the profile data: ${error.message}`;
-        }
-  
-        return encrypt({
+        },
+        true
+      );
+    } catch (error) {
+      await client.query("ROLLBACK");
+
+      let errorMessage = "Error in updating the profile data";
+      if (error instanceof Error) {
+        errorMessage = `Error in updating the profile data: ${error.message}`;
+      }
+
+      return encrypt(
+        {
           success: false,
           message: errorMessage,
           token: tokens,
-        }, true);
-      } finally {
-        client.release();
-      }
+        },
+        true
+      );
+    } finally {
+      client.release();
+    }
   }
 }

@@ -9,15 +9,9 @@ import {
   generateTokenWithExpire,
   generateTokenWithoutExpire,
 } from "../../helper/token";
-import {
-  selectUserByLogin,
-  updateHistoryQuery
-  
-} from "./query";
+import { selectUserByLogin, updateHistoryQuery } from "./query";
 import { CurrentTime } from "../../helper/common";
 
-
-      
 export class adminRepository {
   public async adminloginV1(user_data: any, domain_code?: any): Promise<any> {
     try {
@@ -28,7 +22,10 @@ export class adminRepository {
         const user = users[0];
 
         // Verify the password
-        const validPassword = await bcrypt.compare(user_data.password, user.refCustHashedPassword);
+        const validPassword = await bcrypt.compare(
+          user_data.password,
+          user.refCustHashedPassword
+        );
         if (validPassword) {
           const history = [2, user.refUserId, "Login", CurrentTime(), "Admin"];
           const updateHistory = await executeQuery(updateHistoryQuery, history);
@@ -39,10 +36,11 @@ export class adminRepository {
             return encrypt(
               {
                 success: true,
+                userDetails: users,
                 message: "Login successful",
-                token: generateTokenWithExpire(tokenData, true)
+                token: generateTokenWithExpire(tokenData, true),
               },
-              false
+              true
             );
           }
         }
@@ -54,7 +52,7 @@ export class adminRepository {
           success: false,
           message: "Invalid login credentials",
         },
-        false
+        true
       );
     } catch (error) {
       console.error("Error during login:", error);
@@ -63,13 +61,8 @@ export class adminRepository {
           success: false,
           message: "Internal server error",
         },
-        false
+        true
       );
     }
   }
-
 }
-
-
-  
-

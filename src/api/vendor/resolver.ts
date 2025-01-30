@@ -44,6 +44,10 @@ export class VendorResolver {
   public async ViewaddedProductV1(user_data: any, token_data: any, domain_code: any,): Promise<any> {
     return await this.VendorRepository.ViewaddedProductV1(user_data, token_data, domain_code);
   }
+
+  public async UserViewProducts(user_data: any, token_data: any, domain_code: any,): Promise<any> {
+    return await this.VendorRepository.UserViewProducts(user_data, token_data, domain_code);
+  }
   public async offersAppliedV1(user_data: any, token_data: any, domain_code: any,): Promise<any> {
     return await this.VendorRepository.offersAppliedV1(user_data, token_data, domain_code);
   }
@@ -65,6 +69,11 @@ export class VendorResolver {
   public async getPayementV1(user_data: any, token_data: any, domain_code: any,): Promise<any> {
     return await this.VendorRepository.getPayementV1(user_data, token_data, domain_code);
   }
+
+  public async getVendorListV1(user_data: any, token_data: any, domain_code: any,): Promise<any> {
+    return await this.VendorRepository.getVendorListV1(user_data, token_data, domain_code);
+  }
+
   public async addPaymentV1(user_data: any, token_data: any, domain_code: any): Promise<any> {
     return await this.VendorRepository.addPaymentV1(user_data, token_data, domain_code);
   }

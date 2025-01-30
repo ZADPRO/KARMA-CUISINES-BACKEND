@@ -1,4 +1,3 @@
-
 export const getVendorCountQuery = `
   SELECT COUNT(*) as count FROM public."vendorTable";
 `;
@@ -113,8 +112,8 @@ ORDER BY
     "transTime" DESC;
 `;
 
-export const insertproductQuery = `INSERT INTO public."refProductTable" ( "refVendorId", "productName", "productPrice", "category", "description", "ratings", "offerApplied", "offer", "range", "refArrange")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+export const insertproductQuery = `INSERT INTO public."refProductTable" ( "refVendorId", "productName", "productPrice", "category", "description", "foodPic", "ratings", "offerApplied", "offer", "range", "refArrange")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
   RETURNING *;`;
 
 export const insertOfferQuery = `INSERT INTO public."offersTable" (
@@ -122,9 +121,9 @@ export const insertOfferQuery = `INSERT INTO public."offersTable" (
 
 export const RestroOffersQuery = `select * from public."offersTable" ot;`;
 
-export const insertDocumentQuery = `INSERT INTO public."restroDocs" ("refCertificateType", "visibility") VALUES ($1, true) RETURNING *;`;     
+export const insertDocumentQuery = `INSERT INTO public."restroDocs" ("refCertificateType", "visibility") VALUES ($1, true) RETURNING *;`;
 
-export const updateRestroQuery = `UPDATE public."restroDocs" SET "refCertificateType" = $1, "visibility" = true WHERE "restroDocTypeId" = $2 RETURNING *;`;         
+export const updateRestroQuery = `UPDATE public."restroDocs" SET "refCertificateType" = $1, "visibility" = true WHERE "restroDocTypeId" = $2 RETURNING *;`;
 
 export const updatevisibilityQuery = `UPDATE public."restroDocs"
 SET "visibility" = $1
@@ -147,3 +146,5 @@ RETURNING *;`;
 export const insertPaymentQuery = `INSERT INTO public."paymentType" ("paymentTypeName", "visibility") VALUES ($1, true) RETURNING *;`;
 
 export const updatePaymentQuery = `UPDATE public."paymentType" SET "paymentTypeName" = $1, "visibility" = true WHERE "paymentId" = $2 RETURNING *;`;
+
+export const vendorListProducts = `SELECT vt."refVendorId", vt."refUserId", vt."refVendorName" FROM "vendorTable" vt;`;
