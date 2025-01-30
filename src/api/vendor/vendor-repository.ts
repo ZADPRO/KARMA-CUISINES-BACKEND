@@ -4,7 +4,7 @@ import { storeFile, viewFile, deleteFile } from "../../helper/storage";
 import path from "path";
 import { encrypt } from "../../helper/encrypt";
 import { formatDate } from "../../helper/common";
-
+import * as fs from "fs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { buildUpdateQuery, getChanges } from "../../helper/buildquery";
@@ -1150,6 +1150,26 @@ export class VendorRepository {
       // Get Restaurant/Document Details
       const Restroproducts = await executeQuery(RestroproductsQuery);
       console.log("Restroproducts", Restroproducts);
+
+      // Convert images to Base64 format
+      for (const product of Restroproducts) {
+        if (product.foodPic) {
+          try {
+            const fileBuffer = await fs.promises.readFile(product.foodPic);
+            product.foodPic = {
+              filename: path.basename(product.foodPic),
+              content: fileBuffer.toString("base64"),
+              contentType: "image/jpeg", // Change based on actual file type if necessary
+            };
+          } catch (err) {
+            console.error(
+              `Error reading image file for product ${product.productId}:`,
+              err
+            );
+            product.foodPic = null; // Handle missing or unreadable files gracefully
+          }
+        }
+      }
 
       // Return success response
       return encrypt(
