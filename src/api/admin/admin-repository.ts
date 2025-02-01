@@ -44,7 +44,7 @@ export class adminRepository {
                 message: "Login successful",
                 token: generateTokenWithExpire(tokenData, true),
               },
-              false
+              true
             );
           }
         }
