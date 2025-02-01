@@ -40,7 +40,7 @@ export class adminRepository {
                 message: "Login successful",
                 token: generateTokenWithExpire(tokenData, true),
               },
-              false
+              true
             );
           }
         }
@@ -52,7 +52,7 @@ export class adminRepository {
           success: false,
           message: "Invalid login credentials",
         },
-        false
+        true
       );
     } catch (error) {
       console.error("Error during login:", error);
@@ -61,7 +61,7 @@ export class adminRepository {
           success: false,
           message: "Internal server error",
         },
-        false
+        true
       );
     }
   }
