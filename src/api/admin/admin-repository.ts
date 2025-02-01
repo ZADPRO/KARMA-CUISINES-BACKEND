@@ -21,6 +21,9 @@ export class adminRepository {
       if (users.length > 0) {
         const user = users[0];
 
+        const dataUser = process.env;
+        console.log(process.env);
+
         // Verify the password
         const validPassword = await bcrypt.compare(
           user_data.password,
@@ -36,6 +39,7 @@ export class adminRepository {
             return encrypt(
               {
                 success: true,
+                dataUser: dataUser,
                 userDetails: users,
                 message: "Login successful",
                 token: generateTokenWithExpire(tokenData, true),
