@@ -1178,7 +1178,7 @@ export class VendorRepository {
           message: "return products successfully",
           Restroproducts: Restroproducts,
         },
-        false
+        true
       );
     } catch (error) {
       // Error handling
@@ -1193,7 +1193,7 @@ export class VendorRepository {
           message: "Data retrieval failed",
           error: errorMessage,
         },
-        false
+        true
       );
     }
   }
