@@ -135,8 +135,10 @@ export const reArrangeQuery = `SELECT * FROM
 WHERE
   rpt."refVendorId" = $1`;
 
-export const RestroproductsQuery = `SELECT * FROM public."refProductTable" rpt
-ORDER BY rpt."refArrange";`;
+export const RestroproductsQuery = `SELECT ua."refPostalCode",pt.* FROM public."refProductTable" pt 
+LEFT JOIN public."vendorTable" vt ON CAST (vt."refVendorId" AS INTEGER) = pt."refVendorId"
+LEFT JOIN public."refUserAddress" ua ON CAST (ua."refUserId" AS INTEGER) = vt."refUserId"
+ORDER BY pt."refArrange";`;
 
 export const paymentDetailsQuery = `SELECT * from public."paymentType" pt;`;
 

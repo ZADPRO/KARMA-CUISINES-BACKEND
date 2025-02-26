@@ -13,21 +13,31 @@ import {
   generateTokenWithoutExpire,
 } from "../../helper/token";
 import {
-  checkQuery, getCustomerCount, insertUserQuery, insertUserDomainQuery, insertUserCommunicationQuery,
+  checkQuery,
+  getCustomerCount,
+  insertUserQuery,
+  insertUserDomainQuery,
+  insertUserCommunicationQuery,
   updateHistoryQuery,
-  userQuery, SetOtptime, SetOtp, mobileNumbersQuery,
-  insertOrderMasterQuery, insertUserContactQuery, insertProductContentQuery, insertorderContentQuery, insertUserAddressQuery,
-  orderDetailsQuery
+  userQuery,
+  SetOtptime,
+  SetOtp,
+  mobileNumbersQuery,
+  insertOrderMasterQuery,
+  insertUserContactQuery,
+  insertProductContentQuery,
+  insertorderContentQuery,
+  insertUserAddressQuery,
+  orderDetailsQuery,
 } from "./query";
 import { CurrentTime, formatDate } from "../../helper/common";
 import { tooManyRequests } from "@hapi/boom";
 
 export class UserRepository {
-
   public async userSignUpV1(userData: any, token_data?: any): Promise<any> {
     const client: PoolClient = await getClient();
     try {
-      await client.query('BEGIN');
+      await client.query("BEGIN");
 
       const hashedPassword = await bcrypt.hash(userData.temp_password, 10);
 
@@ -35,13 +45,13 @@ export class UserRepository {
       console.log(check);
 
       const userCheck = await client.query(checkQuery, check);
-      console.log('userCheck', userCheck);
+      console.log("userCheck", userCheck);
 
       const userFind = userCheck.rows[0];
-      console.log('userFind', userFind);
+      console.log("userFind", userFind);
 
       if (userFind) {
-        await client.query('ROLLBACK');
+        await client.query("ROLLBACK");
         return encrypt(
           {
             message: "Already exists",
@@ -52,14 +62,14 @@ export class UserRepository {
       }
 
       const userCountResult = await client.query(getCustomerCount);
-      console.log('userCountResult', userCountResult);
+      console.log("userCountResult", userCountResult);
 
       const userCount = parseInt(userCountResult.rows[0].count, 10);
-      console.log('userCount', userCount);
+      console.log("userCount", userCount);
 
-      const newCustomerId = `KC${(userCount + 1).toString().padStart(3, '0')}`;
+      const newCustomerId = `KC${(userCount + 1).toString().padStart(3, "0")}`;
       let userType = 1;
-      console.log('newCustomerId', newCustomerId);
+      console.log("newCustomerId", newCustomerId);
 
       const params = [
         userData.temp_fname, // refStFName
@@ -71,7 +81,7 @@ export class UserRepository {
 
       const userResult = await client.query(insertUserQuery, params);
       const newUser = userResult.rows[0];
-      console.log('newUser', newUser);
+      console.log("newUser", newUser);
 
       const domainParams = [
         newUser.refUserId, // refUserId from users table
@@ -83,7 +93,10 @@ export class UserRepository {
         userData.temp_email,
       ];
       console.log(domainParams);
-      const domainResult = await client.query(insertUserDomainQuery, domainParams);
+      const domainResult = await client.query(
+        insertUserDomainQuery,
+        domainParams
+      );
       const communicationParams = [
         newUser.refUserId, // refUserId from users table
         userData.temp_phone,
@@ -91,9 +104,12 @@ export class UserRepository {
       ];
       console.log(communicationParams);
 
-      const communicationResult = await client.query(insertUserCommunicationQuery, communicationParams);
+      const communicationResult = await client.query(
+        insertUserCommunicationQuery,
+        communicationParams
+      );
 
-      console.log('line --------- 96');
+      console.log("line --------- 96");
       if (
         userResult.rows.length > 0 &&
         domainResult.rows.length > 0 &&
@@ -104,21 +120,21 @@ export class UserRepository {
           newUser.refUserId,
           "User SignUp",
           CurrentTime(),
-          "user"
+          "user",
         ];
 
-        console.log('history', history);
+        console.log("history", history);
         const updateHistory = await client.query(updateHistoryQuery, history);
 
         if (updateHistory.rows.length > 0) {
           const tokenData = {
             id: newUser.refUserId, // refUserId from users table
-            email: userData.temp_su_email,
+            email: userData.temp_email,
             custId: newUser.refSCustId,
             status: newUser.refSUserStatus,
           };
 
-          await client.query('COMMIT');  // Commit the transaction
+          await client.query("COMMIT"); // Commit the transaction
           return encrypt(
             {
               success: true,
@@ -129,7 +145,7 @@ export class UserRepository {
             false
           );
         } else {
-          await client.query('ROLLBACK');  // Rollback if history update fails
+          await client.query("ROLLBACK"); // Rollback if history update fails
           return encrypt(
             {
               success: false,
@@ -139,7 +155,7 @@ export class UserRepository {
           );
         }
       } else {
-        await client.query('ROLLBACK');  // Rollback if any insert fails
+        await client.query("ROLLBACK"); // Rollback if any insert fails
         return encrypt(
           {
             success: false,
@@ -149,8 +165,8 @@ export class UserRepository {
         );
       }
     } catch (error: unknown) {
-      await client.query('ROLLBACK');  // Rollback the transaction in case of any error
-      console.error('Error during user signup:', error);
+      await client.query("ROLLBACK"); // Rollback the transaction in case of any error
+      console.error("Error during user signup:", error);
 
       if (error instanceof Error) {
         return encrypt(
@@ -172,17 +188,17 @@ export class UserRepository {
         );
       }
     } finally {
-      client.release();  // Release the client back to the pool
+      client.release(); // Release the client back to the pool
     }
   }
-  
+
   public async forgotPasswordV1(userData: any): Promise<any> {
     console.log("Input Payload:", userData);
     const client: PoolClient = await getClient();
-  
+
     try {
       const { refUserId, emailId } = userData;
-  
+
       // Validate input
       if (!emailId || !refUserId) {
         return encrypt(
@@ -193,21 +209,20 @@ export class UserRepository {
           false
         );
       }
-  
+
       console.log("Validating User ID and Email ID:", { refUserId, emailId });
-  
+
       // Begin database transaction
       await client.query("BEGIN");
-  
+
       // Fetch all mobile numbers associated with the user
-  
+
       const mobileNumbersResult = await executeQuery(mobileNumbersQuery, [
-    
         emailId,
       ]);
-  
+
       console.log("Mobile Numbers Result:", mobileNumbersResult);
-  
+
       // Check if any mobile numbers were found
       if (!mobileNumbersResult.length) {
         return encrypt(
@@ -218,17 +233,17 @@ export class UserRepository {
           false
         );
       }
-  
+
       // Map mobile numbers from the result
       const mobileNumbers = mobileNumbersResult.map(
         (row: any) => row.refCustMobileNum1
       );
-  
+
       console.log("Mapped Mobile Numbers:", mobileNumbers);
-  
+
       // Commit transaction
       await client.query("COMMIT");
-  
+
       // Return the mobile numbers and email ID in the response
       return encrypt(
         {
@@ -241,10 +256,10 @@ export class UserRepository {
       );
     } catch (error) {
       console.error("Error retrieving user contact info:", error);
-  
+
       // Rollback transaction in case of failure
       await client.query("ROLLBACK");
-  
+
       return encrypt(
         {
           success: false,
@@ -260,7 +275,7 @@ export class UserRepository {
   public async sendOtpV1(userData: any): Promise<any> {
     console.log("Input Payload:", userData);
     const client: PoolClient = await getClient();
-  
+
     try {
       const { mobileNumber, emailId } = userData;
       // Validate input
@@ -273,7 +288,10 @@ export class UserRepository {
           false
         );
       }
-      console.log("Validating Mobile Number and Email ID:", { mobileNumber, emailId });
+      console.log("Validating Mobile Number and Email ID:", {
+        mobileNumber,
+        emailId,
+      });
       await client.query("BEGIN");
       const userResult = await executeQuery(userQuery, [mobileNumber, emailId]);
       console.log("User Query Result:", userResult);
@@ -281,29 +299,30 @@ export class UserRepository {
         return encrypt(
           {
             success: false,
-            message: "No matching user found for the given mobile number and email ID",
+            message:
+              "No matching user found for the given mobile number and email ID",
           },
           false
         );
       }
-  
+
       const { refUserId } = userResult[0];
       console.log("refUserId:", refUserId);
-  
+
       // Generate a numeric OTP
       const generateNumericOtp = (length = 6): string =>
         Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
 
       const otp = generateNumericOtp();
       console.log("Generated OTP:", otp);
-  
+
       // Prepare email content
       const mailOptions = {
         to: emailId,
         subject: "Forgot Password OTP",
         html: sendOtpTemplate("Dear User", otp),
       };
-  
+
       try {
         await sendEmail(mailOptions);
       } catch (error) {
@@ -316,18 +335,18 @@ export class UserRepository {
           true
         );
       }
-  
+
       // Create a token for OTP
       const tokenOtp = generateTokenOtp({ otp }, true);
-  
+
       // Store OTP in the database
       const otpParams = [refUserId, tokenOtp, CurrentTime()];
       const otpResult = await client.query(SetOtp, otpParams);
-  
-      console.log('formatDate(30)', formatDate(30))
+
+      console.log("formatDate(30)", formatDate(30));
       const otpTimeParams = [tokenOtp, CurrentTime(), formatDate(30)]; // Adds 30 seconds
       const otpTimeResult = await client.query(SetOtptime, otpTimeParams);
-  
+
       // Update transaction history
       const txnHistoryParams = [
         3, // TransTypeID
@@ -337,10 +356,10 @@ export class UserRepository {
         "System", // Updated by
       ];
       await executeQuery(updateHistoryQuery, txnHistoryParams);
-  
+
       // Commit transaction
       await client.query("COMMIT");
-  
+
       // Return success response
       return encrypt(
         {
@@ -354,10 +373,10 @@ export class UserRepository {
       );
     } catch (error) {
       console.error("Error in forgot password process:", error);
-  
+
       // Rollback transaction in case of failure
       await client.query("ROLLBACK");
-  
+
       return encrypt(
         {
           success: false,
@@ -371,14 +390,20 @@ export class UserRepository {
   }
   public async orderplacementV1(orderData: any, tokendata: any): Promise<any> {
     const client: PoolClient = await getClient(); // Assuming getClient() is a function to get DB client
-    const token = { id: tokendata.id }
+    const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire({ id: orderData.userId }, true); // Mock token generation
-    console.log('Generated Token:', tokens);
+    console.log("Generated Token:", tokens);
 
     try {
       await client.query("BEGIN");
 
-      const { foodContents, totalAmount, userAddress, contactNumber, modeOfPayment } = orderData;
+      const {
+        foodContents,
+        totalAmount,
+        userAddress,
+        contactNumber,
+        modeOfPayment,
+      } = orderData;
 
       // Insert Order Master
       const orderMasterParams = [
@@ -391,17 +416,23 @@ export class UserRepository {
         modeOfPayment.paymentStatus, // refStatus
         modeOfPayment.paymentMode, // paymentMode
       ];
-      const orderMasterResult = await client.query(insertOrderMasterQuery, orderMasterParams);
-      console.log('Order Master Result:', orderMasterResult);
+      const orderMasterResult = await client.query(
+        insertOrderMasterQuery,
+        orderMasterParams
+      );
+      console.log("Order Master Result:", orderMasterResult);
 
       // Insert User Contact
       const contactParams = [
         contactNumber.mobile, // refMobileNo
         parseInt(orderData.userId),
       ];
-      console.log('contactParams', contactParams)
-      const contactResult = await client.query(insertUserContactQuery, contactParams);
-      console.log('contactResult', contactResult)
+      console.log("contactParams", contactParams);
+      const contactResult = await client.query(
+        insertUserContactQuery,
+        contactParams
+      );
+      console.log("contactResult", contactResult);
 
       // Insert Food Contents
       for (const key in foodContents) {
@@ -417,8 +448,14 @@ export class UserRepository {
           food.overallPrice, // totalPrice
         ];
 
-        const foodContentResult = await client.query(insertProductContentQuery, productTable);
-        const foodOrderResult = await client.query(insertorderContentQuery, orderTable);
+        const foodContentResult = await client.query(
+          insertProductContentQuery,
+          productTable
+        );
+        const foodOrderResult = await client.query(
+          insertorderContentQuery,
+          orderTable
+        );
 
         // const foodContentResult = await executeQuery(insertFoodContentQuery, foodContentParams);
         // console.log(`Inserted Food Content for productId ${food.productId}:`, foodContentResult);
@@ -433,8 +470,11 @@ export class UserRepository {
           userAddress.addressZone, // refZone
           userAddress.addressCountry, // refCountry
         ];
-        const userAddressResult = await client.query(insertUserAddressQuery, userAddressParams);
-        console.log('User Address Result:', userAddressResult);
+        const userAddressResult = await client.query(
+          insertUserAddressQuery,
+          userAddressParams
+        );
+        console.log("User Address Result:", userAddressResult);
 
         // Insert Transaction History
         const txnHistoryParams = [
@@ -446,64 +486,76 @@ export class UserRepository {
         ];
         await client.query(updateHistoryQuery, txnHistoryParams);
 
-
         // Commit the transaction
-        console.log('Transaction successful. Committing.');
+        console.log("Transaction successful. Committing.");
         await client.query("COMMIT");
 
         // Return success response
-        return encrypt({
-          success: true,
-          message: 'Order processed successfully',
-          token: tokens,
-          orderId: parseInt(orderData.userId),
-        }, true);
+        return encrypt(
+          {
+            success: true,
+            message: "Order processed successfully",
+            token: tokens,
+            orderId: parseInt(orderData.userId),
+          },
+          true
+        );
       }
     } catch (error) {
       // Rollback the transaction in case of error
-      console.error('Error during order processing:', error);
+      console.error("Error during order processing:", error);
       await client.query("ROLLBACK");
-      let errorMessage = 'An unknown error occurred';
+      let errorMessage = "An unknown error occurred";
       if (error instanceof Error) {
         errorMessage = error.message;
       }
 
-      return encrypt({
-        success: false,
-        message: 'Order processing failed',
-        error: errorMessage,
-        token: tokens,
-      }, true);
+      return encrypt(
+        {
+          success: false,
+          message: "Order processing failed",
+          error: errorMessage,
+          token: tokens,
+        },
+        true
+      );
     } finally {
       await client.query("COMMIT");
       client.release();
     }
   }
-  public async vieworderplacementV1(userData: any, tokendata: any): Promise<any> {
-    const token = { id: tokendata.id }; 
+  public async vieworderplacementV1(
+    userData: any,
+    tokendata: any
+  ): Promise<any> {
+    const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire(token, true);
-    console.log('tokens', tokens);
-  
+    console.log("tokens", tokens);
+
     try {
-      console.log('Received userData', userData);
-  
+      console.log("Received userData", userData);
+
       const refTransactionId = userData.refTransactionId;
       if (!refTransactionId) {
-        throw new Error("Invalid refTransactionId. Cannot be null or undefined.");
+        throw new Error(
+          "Invalid refTransactionId. Cannot be null or undefined."
+        );
       }
-  
-      console.log('Parsed refTransactionId:', refTransactionId);
-  
+
+      console.log("Parsed refTransactionId:", refTransactionId);
+
       // Execute query with parameters
       const params = [refTransactionId];
-      console.log('Query parameters:', params);
+      console.log("Query parameters:", params);
       const orderDetailsResult = await executeQuery(orderDetailsQuery, params);
-      console.log('orderDetailsResult:', orderDetailsResult);
-  
+      console.log("orderDetailsResult:", orderDetailsResult);
+
       if (orderDetailsResult.length === 0) {
-        throw new Error("No order details found for the given refTransactionId.");
+        throw new Error(
+          "No order details found for the given refTransactionId."
+        );
       }
-  
+
       // Format order details data
       const orderDetails = orderDetailsResult.map((row: any) => ({
         refTransactionId: row.refTransactionId,
@@ -529,9 +581,9 @@ export class UserRepository {
           country: row.refCountry,
         },
       }));
-  
-      console.log('Formatted orderDetails:', orderDetails);
-  
+
+      console.log("Formatted orderDetails:", orderDetails);
+
       // Return encrypted response
       return encrypt(
         {
@@ -544,8 +596,8 @@ export class UserRepository {
       );
     } catch (error) {
       const errorMessage = (error as Error).message;
-      console.error('Error in getOrderDetailsHandler:', errorMessage);
-  
+      console.error("Error in getOrderDetailsHandler:", errorMessage);
+
       // Return encrypted error response
       return encrypt(
         {
@@ -556,6 +608,5 @@ export class UserRepository {
         true
       );
     }
-  };
-   
+  }
 }
