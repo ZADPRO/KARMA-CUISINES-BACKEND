@@ -117,7 +117,7 @@ export const insertproductQuery = `INSERT INTO public."refProductTable" ( "refVe
   RETURNING *;`;
 
 export const insertOfferQuery = `INSERT INTO public."offersTable" (
-  "refOfferName", "refOfferDescription", "refOfferMinValue", "refOfferTypeId", "refStartDate", "refEndDate", "refCoupon") VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+  "refOfferName", "refDiscountPrice", "refOfferDescription", "refOfferMinValue", "refOfferType", "refStartDate", "refEndDate", "refCoupon", "createdAt", "createdBy") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
 
 export const RestroOffersQuery = `select * from public."offersTable" ot;`;
 

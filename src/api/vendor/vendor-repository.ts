@@ -1212,6 +1212,7 @@ export class VendorRepository {
       // Extract user data from the input
       const {
         refOfferName,
+        refDiscountPrice,
         refOfferDescription,
         refOfferMinValue,
         refOfferType,
@@ -1220,15 +1221,20 @@ export class VendorRepository {
         refCoupon,
       } = userData;
 
+      const createdAt = new Date();
+      const createdBy = "Admin";
       // Prepare parameters for the offer insertion
       const offerParams = [
         refOfferName,
+        refDiscountPrice,
         refOfferDescription,
         refOfferMinValue,
         refOfferType,
         refStartDate,
         refEndDate,
         refCoupon,
+        createdAt,
+        createdBy,
       ];
       console.log("Insert Offer Params:", offerParams);
 
