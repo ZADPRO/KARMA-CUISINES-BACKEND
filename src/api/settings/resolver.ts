@@ -27,4 +27,27 @@ export class SettingsResolver {
       domain_code
     );
   }
+
+  public async AddFoodSubCategoryV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductRepository.AddSubProductFoodCategory(
+      user_data,
+      token_data
+    );
+  }
+
+  public async GetFoodSubCategoryV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductRepository.GetSubFoodCategory(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
 }

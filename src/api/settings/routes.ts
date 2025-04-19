@@ -32,6 +32,28 @@ export class SettingsRoutes implements IRoute {
             auth: false,
           },
         },
+        {
+          method: "POST",
+          path: "/api/v1/settingsRoutes/addSubFoodCategory",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.AddSubCategoriesCont,
+            description: "Store Sub",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+        {
+          method: "GET",
+          path: "/api/v1/settingsRoutes/getSubFoodCategory",
+          config: {
+            pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.GetSubCategoriesCont,
+            description: "Store Sub",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
       ]);
       resolve(true);
     });

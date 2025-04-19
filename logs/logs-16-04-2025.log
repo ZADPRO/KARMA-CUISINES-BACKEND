@@ -167,3 +167,68 @@
 {"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T12:29:24.156Z"}
 {"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T12:29:29.521Z"}
 {"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T12:29:35.974Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T12:31:08.455Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T12:31:38.048Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T12:31:43.104Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T12:31:43.379Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T12:33:48.253Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T12:57:23.497Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T12:57:23.926Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T14:53:28.951Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T14:53:29.641Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T14:53:31.504Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T14:53:31.594Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:25:57.140Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:25:59.966Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:26:45.355Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:26:45.543Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:27:30.756Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:27:31.812Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T15:33:59.114Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:51:35.204Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:51:35.576Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T15:53:14.340Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/settingsRoutes/addFoodCategory conflicts with existing /api/v1/settingsRoutes/addFoodCategory","name":"AssertError","stack":"AssertError: New route /api/v1/settingsRoutes/addFoodCategory conflicts with existing /api/v1/settingsRoutes/addFoodCategory\n    at module.exports.internals.Segment.internals.Segment.add (D:\\KarmaCuisines\\backend\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (D:\\KarmaCuisines\\backend\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (D:\\KarmaCuisines\\backend\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (D:\\KarmaCuisines\\backend\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at D:\\KarmaCuisines\\backend\\src\\api\\settings\\routes.ts:12:14\n    at new Promise (<anonymous>)\n    at SettingsRoutes.<anonymous> (D:\\KarmaCuisines\\backend\\src\\api\\settings\\routes.ts:10:12)\n    at Generator.next (<anonymous>)\n    at D:\\KarmaCuisines\\backend\\src\\api\\settings\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-04-16T15:53:47.109Z"}
+{"level":"error","message":"Server not running ---  New route /api/v1/settingsRoutes/getFoodCategory conflicts with existing /api/v1/settingsRoutes/getFoodCategory","name":"AssertError","stack":"AssertError: New route /api/v1/settingsRoutes/getFoodCategory conflicts with existing /api/v1/settingsRoutes/getFoodCategory\n    at module.exports.internals.Segment.internals.Segment.add (D:\\KarmaCuisines\\backend\\node_modules\\@hapi\\call\\lib\\segment.js:47:14)\n    at exports.Router.internals.Router.internals.Router.add (D:\\KarmaCuisines\\backend\\node_modules\\@hapi\\call\\lib\\index.js:65:16)\n    at internals.Server._addRoute (D:\\KarmaCuisines\\backend\\node_modules\\@hapi\\hapi\\lib\\server.js:529:46)\n    at internals.Server.route (D:\\KarmaCuisines\\backend\\node_modules\\@hapi\\hapi\\lib\\server.js:518:22)\n    at D:\\KarmaCuisines\\backend\\src\\api\\settings\\routes.ts:12:14\n    at new Promise (<anonymous>)\n    at SettingsRoutes.<anonymous> (D:\\KarmaCuisines\\backend\\src\\api\\settings\\routes.ts:10:12)\n    at Generator.next (<anonymous>)\n    at D:\\KarmaCuisines\\backend\\src\\api\\settings\\routes.ts:8:71\n    at new Promise (<anonymous>)","timestamp":"2025-04-16T15:54:26.795Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T15:54:41.710Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T15:56:17.185Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T15:56:39.463Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T15:57:40.970Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T15:57:58.103Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T15:58:10.294Z"}
+{"level":"info","message":"Server running --- from server.ts","timestamp":"2025-04-16T15:58:16.934Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:58:49.046Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:58:49.955Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:58:58.224Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:58:58.234Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:58:58.323Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:58:58.347Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:59:45.149Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:59:45.167Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:59:45.576Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T15:59:45.587Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:24.036Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:24.065Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:24.567Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:24.582Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:33.073Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:33.089Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:36.767Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:36.774Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:44.462Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:44.544Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:56.940Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:00:57.272Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:12.019Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:12.038Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:12.413Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:12.420Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:37.547Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:42.060Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:42.065Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:42.130Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:42.141Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:48.432Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:48.439Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:53.566Z"}
+{"level":"info","message":"Sub category controller entered --- Added","timestamp":"2025-04-16T16:01:53.689Z"}
