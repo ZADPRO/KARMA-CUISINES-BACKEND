@@ -6,6 +6,7 @@ import { adminRouters } from "./api/admin/routes";
 import { NewVendorRoute } from "./api/newVendor/routes";
 import { productRoutesNew } from "./api/productsUpdate/routes";
 import { SettingsRoutes } from "./api/settings/routes";
+import { productComboRoutesNew } from "./api/productAndCombo/routes";
 
 export default class Router {
   public static async loadRoutes(server: Hapi.Server): Promise<any> {
@@ -15,5 +16,6 @@ export default class Router {
     await new NewVendorRoute().register(server);
     await new productRoutesNew().register(server);
     await new SettingsRoutes().register(server);
+    await new productComboRoutesNew().register(server);
   }
 }
