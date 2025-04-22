@@ -27,5 +27,103 @@ export class ProductsComboResolver {
       domain_code
     );
   }
-
+  public async updateCategoryV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.updateCategoryV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async deleteCategoryV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.deleteCategoryV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async searchFoodV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.searchFoodV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async addFoodV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.addFoodV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async deleteFoodV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.deleteFoodV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async UpdateFoodV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.UpdateFoodV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async CreateComboV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.CreateComboV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async FoodImgV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.FoodImgV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async foodListV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.foodListV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
 }

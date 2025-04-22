@@ -34,24 +34,21 @@ export const storeFile = async (
 ): Promise<string> => {
   let uploadDir: string;
 
+  uploadDir = path.join(process.cwd(), "./src/assets/vendorDocs");
+
   // Determine the directory based on the uploadType value
   if (uploadType === 4) {
-    console.log('uploadType', uploadType)
+    console.log("uploadType", uploadType);
 
     uploadDir = path.join(process.cwd(), "./src/assets/vendorDocs");
   } else if (uploadType === 3) {
     uploadDir = path.join(process.cwd(), "./src/assets/vendorDocs");
-  }
-  
-  else {
-    uploadDir = path.join(
-      process.cwd(),
-      "./src/assets/DOC"
-    );
+  } else if (uploadType === 5) {
+    uploadDir = path.join(process.cwd(), "./src/assets/FoodImage");
+  } else {
+    uploadDir = path.join(process.cwd(), "./src/assets/DOC");
   }
 
-  uploadDir = path.join(process.cwd(), "./src/assets/vendorDocs");
-  
   const uniqueFilename = generateUniqueFilename(file.hapi.filename);
   const uploadPath = path.join(uploadDir, uniqueFilename);
 
@@ -78,9 +75,8 @@ export const storeFile = async (
   });
 };
 
-
 // Function to view a stored file
-export const viewFile = (filePath: string): Promise<Buffer> => {
+export const viewFile = async (filePath: string): Promise<Buffer> => {
   return new Promise((resolve, reject) => {
     fs.readFile(
       filePath,
@@ -95,7 +91,7 @@ export const viewFile = (filePath: string): Promise<Buffer> => {
 };
 
 export const deleteFile = async (filePath: string): Promise<void> => {
-  console.log('filePath line ----------------- 94 \n', filePath)
+  console.log("filePath line ----------------- 94 \n", filePath);
   return new Promise((resolve, reject) => {
     fs.unlink(filePath, (err) => {
       if (err) {

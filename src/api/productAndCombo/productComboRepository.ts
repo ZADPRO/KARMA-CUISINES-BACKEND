@@ -8,7 +8,19 @@ import * as fs from "fs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { buildUpdateQuery, getChanges } from "../../helper/buildquery";
-import { getCategory, newCategory } from "./query";
+import {
+  addFood,
+  ComboList,
+  createCombo,
+  deleteCategory,
+  deleteFood,
+  FoodList,
+  getCategory,
+  newCategory,
+  searchFood,
+  updateCategory,
+  updateFood,
+} from "./query";
 
 import {
   generateTokenWithExpire,
@@ -19,7 +31,6 @@ import { CurrentTime } from "../../helper/common";
 
 export class ProductsComboRepository {
   public async addCategoryV1(user_data: any, tokendata: any): Promise<any> {
-    const client: PoolClient = await getClient();
     const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire(token, true);
     try {
@@ -29,20 +40,24 @@ export class ProductsComboRepository {
         {
           success: true,
           message: "New Food Category Is Added Successfully",
+          token: tokens,
         },
         true
       );
     } catch (error) {
       console.log("error in line --------- 26", error);
-      return encrypt({
-        success: false,
-        message: "Error in Creating New Category",
-      });
+      return encrypt(
+        {
+          success: false,
+          message: "Error in Creating New Category",
+          token: tokens,
+        },
+        true
+      );
     } finally {
     }
   }
   public async getCategoryV1(user_data: any, tokendata: any): Promise<any> {
-    const client: PoolClient = await getClient();
     const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire(token, true);
     try {
@@ -52,15 +67,369 @@ export class ProductsComboRepository {
           success: true,
           message: "Category List Passed SUccessfully",
           data: Category,
+          token: tokens,
         },
         true
       );
     } catch (error) {
       console.log("error in line --------- 59", error);
-      return encrypt({
-        success: false,
-        message: "Error in passing the Category List",
+      return encrypt(
+        {
+          success: false,
+          message: "Error in passing the Category List",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async updateCategoryV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const params = [
+        user_data.categoryId,
+        user_data.categoryName,
+        CurrentTime(),
+        tokendata.id,
+      ];
+      await executeQuery(updateCategory, params);
+      return encrypt(
+        {
+          success: true,
+          message: "Category is Updated Successfully",
+          token: tokens,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error in updating The Category",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async deleteCategoryV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const params = [user_data.categoryId, CurrentTime(), tokendata.id];
+      await executeQuery(deleteCategory, params);
+      return encrypt(
+        {
+          success: true,
+          message: "Category is Deleted Successfully",
+          token: tokens,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error in Deleting the Category",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async searchFoodV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      console.log(" -> Line Number ----------------------------------- 147");
+      console.log("user_data", user_data);
+      const params = [user_data.searchKey];
+      const FoodItem = await executeQuery(searchFood, params);
+      return encrypt(
+        {
+          success: true,
+          message: "Category is Updated Successfully",
+          token: tokens,
+          data: FoodItem,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error in updating The Category",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async addFoodV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const params = [
+        user_data.foodName,
+        user_data.foodDescription,
+        user_data.foodImgPath,
+        user_data.foodPrice,
+        user_data.foodQuantity,
+        user_data.foodCategory,
+        user_data.foodAddOns,
+        CurrentTime(),
+        tokendata.id,
+        user_data.menuId,
+      ];
+      console.log("params line ----- 186", params);
+      await executeQuery(addFood, params);
+      return encrypt(
+        {
+          success: true,
+          message: "New Food Added Successfully",
+          token: tokens,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In Adding New Food",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async deleteFoodV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const params = [user_data.foodId];
+      const Result = await executeQuery(deleteFood, params);
+      console.log("Result", Result);
+
+      return encrypt(
+        {
+          success: true,
+          status: Result[0].status,
+          message: Result[0].message,
+          token: tokens,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In Deleting The Food Item",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async UpdateFoodV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const params = [
+        user_data.foodName,
+        user_data.foodDescription,
+        user_data.foodImgPath,
+        user_data.foodPrice,
+        user_data.foodQuantity,
+        user_data.foodCategory,
+        user_data.foodAddOns,
+        CurrentTime(),
+        tokendata.id,
+        user_data.menuId,
+        user_data.foodId,
+      ];
+      await executeQuery(updateFood, params);
+
+      return encrypt(
+        {
+          success: true,
+          message: "Food Item Updated Successfully",
+          token: tokens,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In Updating the Food Item",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async FoodImgV1(userData: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      console.log("userData line ----- 282", userData);
+      console.log("userData", userData.foodImg);
+      const files = userData.foodImg;
+      let filePaths: { files: string[] } = { files: [] };
+      let storedFiles: any[] = [];
+
+      console.log("files.length line ------ 326", files.length);
+
+      const pdfPath = await storeFile(files, 5);
+      filePaths.files.push(pdfPath);
+
+      const pdfBuffer = await viewFile(pdfPath);
+      const pdfBase64 = pdfBuffer.toString("base64");
+
+      storedFiles.push({
+        filename: path.basename(pdfPath),
+        content: pdfBase64,
+        contentType: "image/jpeg",
       });
+
+      return encrypt(
+        {
+          success: true,
+          message: "Food Image Stored Successfully",
+          token: tokens,
+          filePaths: filePaths,
+          files: storedFiles,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In Storing the Food Image",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async CreateComboV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const params = [
+        user_data.menuId,
+        user_data.comboName,
+        user_data.comboImg,
+        user_data.fixedFood,
+        user_data.fixedQuantity,
+        user_data.mainDish,
+        user_data.mainDishLimit,
+        user_data.sideDish,
+        user_data.sideDishLimit,
+        user_data.comboPrice,
+        CurrentTime(),
+        tokendata.id,
+      ];
+      await executeQuery(createCombo, params);
+
+      return encrypt(
+        {
+          success: true,
+          message: "Food Item Updated Successfully",
+          token: tokens,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In Updating the Food Item",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async foodListV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      let FoodItem = await executeQuery(FoodList, []);
+      let comboList = await executeQuery(ComboList, []);
+
+      FoodItem = await Promise.all(
+        FoodItem.map(async (data) => {
+          if (data.refFoodImage !== null) {
+            const fileBuffer = await viewFile(data.refFoodImage);
+            const fileBase64 = fileBuffer.toString("base64");
+            const profileFile = {
+              filename: path.basename(data.refFoodImage),
+              content: fileBase64,
+              contentType: "image/jpeg",
+            };
+            return { ...data, profileFile };
+          }
+          return data;
+        })
+      );
+
+      console.log("comboList line ---- 396", comboList);
+      comboList = await Promise.all(
+        comboList.map(async (data) => {
+          if (data.refComboImg !== null) {
+            const fileBuffer = await viewFile(data.refComboImg);
+            const fileBase64 = fileBuffer.toString("base64");
+            const profileFile = {
+              filename: path.basename(data.refComboImg),
+              content: fileBase64,
+              contentType: "image/jpeg",
+            };
+            return { ...data, profileFile };
+          }
+          return data;
+        })
+      );
+
+      return encrypt(
+        {
+          success: true,
+          message: "Over View of Menu",
+          token: tokens,
+          FoodItem: FoodItem,
+          comboList: comboList,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In Getting Overview Menu",
+          token: tokens,
+        },
+        true
+      );
     } finally {
     }
   }
