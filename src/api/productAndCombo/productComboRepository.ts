@@ -10,12 +10,15 @@ import jwt from "jsonwebtoken";
 import { buildUpdateQuery, getChanges } from "../../helper/buildquery";
 import {
   addFood,
+  comboDelete,
   ComboList,
   createCombo,
   deleteCategory,
   deleteFood,
+  fetchOrderlist,
   FoodList,
   getCategory,
+  menuIdCheck,
   newCategory,
   searchFood,
   updateCategory,
@@ -217,6 +220,7 @@ export class ProductsComboRepository {
     const tokens = generateTokenWithExpire(token, true);
     try {
       const params = [user_data.foodId];
+      console.log("params line ----- 222", params);
       const Result = await executeQuery(deleteFood, params);
       console.log("Result", Result);
 
@@ -225,6 +229,34 @@ export class ProductsComboRepository {
           success: true,
           status: Result[0].status,
           message: Result[0].message,
+          token: tokens,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In Deleting The Food Item",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async deleteComboV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const params = [user_data.comboId];
+      await executeQuery(comboDelete, params);
+
+      return encrypt(
+        {
+          success: true,
+          message: "Combo Deleted Successfully",
           token: tokens,
         },
         true
@@ -346,6 +378,7 @@ export class ProductsComboRepository {
         user_data.comboPrice,
         CurrentTime(),
         tokendata.id,
+        user_data.comboDescription,
       ];
       await executeQuery(createCombo, params);
 
@@ -426,6 +459,64 @@ export class ProductsComboRepository {
         {
           success: false,
           message: "Error In Getting Overview Menu",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async checkMenuIdV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const menuIdCheckResult = await executeQuery(menuIdCheck, [
+        user_data.menuID,
+      ]);
+
+      return encrypt(
+        {
+          success: true,
+          menuID: menuIdCheckResult[0].case,
+          message: "Menu Id Validation is Completed",
+          token: tokens,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In Validating the Menu Id",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async orderListV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const OrderList = await executeQuery(fetchOrderlist, []);
+
+      return encrypt(
+        {
+          success: true,
+          message: "Order List Passed Successfully",
+          token: tokens,
+          data: OrderList,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In Passing Order List",
           token: tokens,
         },
         true

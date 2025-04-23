@@ -228,6 +228,37 @@ export class ProductComboController {
         .code(500);
     }
   };
+  public deleteCombo = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    logger.info(`GET URL REQ => ${request.url.href}`);
+    try {
+      // const decodedToken = { id: request.plugins.token.id };
+      const decodedToken = { id: 1 };
+      console.log("decodedToken", decodedToken);
+      let entity;
+
+      entity = await this.resolver.deleteComboV1(request.payload, decodedToken);
+
+      if (entity.success) {
+        logger.info("Add New Food Category");
+        return response.response(entity).code(201);
+      }
+      return response.response(entity).code(200);
+    } catch (error) {
+      logger.error(`GET URL REQ => ${request.url.href}`, error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
   public UpdateFood = async (
     request: any,
     response: Hapi.ResponseToolkit
@@ -330,6 +361,66 @@ export class ProductComboController {
       let entity;
 
       entity = await this.resolver.foodListV1(request.payload, decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201);
+      }
+      return response.response(entity).code(200);
+    } catch (error) {
+      logger.error(`GET URL REQ => ${request.url.href}`, error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  public checkMenuId = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    logger.info(`GET URL REQ => ${request.url.href}`);
+    try {
+      // const decodedToken = { id: request.plugins.token.id };
+      const decodedToken = { id: 1 };
+      console.log("decodedToken", decodedToken);
+      let entity;
+
+      entity = await this.resolver.checkMenuIdV1(request.payload, decodedToken);
+
+      if (entity.success) {
+        return response.response(entity).code(201);
+      }
+      return response.response(entity).code(200);
+    } catch (error) {
+      logger.error(`GET URL REQ => ${request.url.href}`, error);
+      return response
+        .response({
+          success: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "An unknown error occurred",
+        })
+        .code(500);
+    }
+  };
+  public orderList = async (
+    request: any,
+    response: Hapi.ResponseToolkit
+  ): Promise<any> => {
+    logger.info(`GET URL REQ => ${request.url.href}`);
+    try {
+      // const decodedToken = { id: request.plugins.token.id };
+      const decodedToken = { id: 1 };
+      console.log("decodedToken", decodedToken);
+      let entity;
+
+      entity = await this.resolver.orderListV1(request.payload, decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201);

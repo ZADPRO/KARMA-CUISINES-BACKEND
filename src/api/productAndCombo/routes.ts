@@ -89,6 +89,17 @@ export class productComboRoutesNew implements IRoute {
         },
         {
           method: "POST",
+          path: "/api/v1/productCombo/deleteCombo",
+          config: {
+            // pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.deleteCombo,
+            description: "Deletes Food Combo",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
           path: "/api/v1/productCombo/UpdateFood",
           config: {
             // pre: [{ method: validateToken, assign: "token" }],
@@ -133,6 +144,28 @@ export class productComboRoutesNew implements IRoute {
             // pre: [{ method: validateToken, assign: "token" }],
             handler: controller.foodList,
             description: "Get the Food List",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/productCombo/checkMenuId",
+          config: {
+            // pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.checkMenuId,
+            description: "Validate Menu Id",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
+        {
+          method: "POST",
+          path: "/api/v1/productCombo/orderList",
+          config: {
+            // pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.orderList,
+            description: "Get Order List",
             tags: ["api", "Users"],
             auth: false,
           },

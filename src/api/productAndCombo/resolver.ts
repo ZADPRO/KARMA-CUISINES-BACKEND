@@ -82,6 +82,17 @@ export class ProductsComboResolver {
       domain_code
     );
   }
+  public async deleteComboV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.deleteComboV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
   public async UpdateFoodV1(
     user_data: any,
     token_data: any,
@@ -121,6 +132,28 @@ export class ProductsComboResolver {
     domain_code: any
   ): Promise<any> {
     return await this.ProductComboRepository.foodListV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async checkMenuIdV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.checkMenuIdV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
+  public async orderListV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.orderListV1(
       user_data,
       token_data,
       domain_code
