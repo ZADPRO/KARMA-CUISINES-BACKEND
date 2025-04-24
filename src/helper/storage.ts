@@ -15,7 +15,7 @@ interface HapiFile {
 // Function to generate a unique filename
 const generateUniqueFilename = (originalName: string): string => {
   const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let uniqueName = "";
 
   for (let i = 0; i < 10; i++) {
