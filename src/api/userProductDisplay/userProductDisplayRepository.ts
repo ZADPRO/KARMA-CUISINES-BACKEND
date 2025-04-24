@@ -58,8 +58,8 @@ export class userProductDisplayRepository {
             const fileBase64 = fileBuffer.toString("base64");
             const profileFile = {
               filename: path.basename(data.refFoodImage),
-              content: fileBase64,
-              contentType: "image/jpeg",
+              // content: fileBase64,
+              // contentType: "image/jpeg",
             };
             return { ...data, profileFile };
           }
@@ -147,8 +147,8 @@ export class userProductDisplayRepository {
               const fileBase64 = fileBuffer.toString("base64");
               const profileFile = {
                 filename: path.basename(data.refFoodImage),
-                content: fileBase64,
-                contentType: "image/jpeg",
+                // content: fileBase64,
+                // contentType: "image/jpeg",
               };
               data.profileFile = profileFile;
             }
@@ -162,8 +162,8 @@ export class userProductDisplayRepository {
                     const fileBase64 = fileBuffer.toString("base64");
                     const profileFile = {
                       filename: path.basename(food.refFoodImage),
-                      content: fileBase64,
-                      contentType: "image/jpeg",
+                      // content: fileBase64,
+                      // contentType: "image/jpeg",
                     };
                     return { ...food, profileFile };
                   }
@@ -184,8 +184,8 @@ export class userProductDisplayRepository {
               const fileBase64 = fileBuffer.toString("base64");
               const profileFile = {
                 filename: path.basename(data.refComboImg),
-                content: fileBase64,
-                contentType: "image/jpeg",
+                // content: fileBase64,
+                // contentType: "image/jpeg",
               };
               data.profileFile = profileFile;
             }
@@ -202,8 +202,8 @@ export class userProductDisplayRepository {
                     const fileBase64 = fileBuffer.toString("base64");
                     const profileFile = {
                       filename: path.basename(food.refFoodImage),
-                      content: fileBase64,
-                      contentType: "image/jpeg",
+                      // content: fileBase64,
+                      // contentType: "image/jpeg",
                     };
                     return { ...food, profileFile };
                   }
@@ -223,8 +223,8 @@ export class userProductDisplayRepository {
                     const fileBase64 = fileBuffer.toString("base64");
                     const profileFile = {
                       filename: path.basename(food.refFoodImage),
-                      content: fileBase64,
-                      contentType: "image/jpeg",
+                      // content: fileBase64,
+                      // contentType: "image/jpeg",
                     };
                     return { ...food, profileFile };
                   }
@@ -244,8 +244,8 @@ export class userProductDisplayRepository {
                     const fileBase64 = fileBuffer.toString("base64");
                     const profileFile = {
                       filename: path.basename(food.refFoodImage),
-                      content: fileBase64,
-                      contentType: "image/jpeg",
+                      // content: fileBase64,
+                      // contentType: "image/jpeg",
                     };
                     return { ...food, profileFile };
                   }
