@@ -15,7 +15,7 @@ FROM
 WHERE
   fi."refIfDelete" IS NOT true
 ORDER BY
-  fi."refCategoryId"`;
+  fi."refMenuId"`;
 
 export const comboList = `SELECT
   fc."refComboId",
@@ -27,7 +27,8 @@ export const comboList = `SELECT
 FROM
   public."refFoodCombo" fc
 WHERE
-  fc."refIfDelete" IS NOT true`;
+  fc."refIfDelete" IS NOT true
+  order by fc."refMenuId"`;
 
 export const FoodItemList = `SELECT
   f."refFoodId",
