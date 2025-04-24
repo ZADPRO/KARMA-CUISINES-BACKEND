@@ -74,8 +74,8 @@ export class userProductDisplayRepository {
             const fileBase64 = fileBuffer.toString("base64");
             const profileFile = {
               filename: path.basename(data.refComboImg),
-              content: fileBase64,
-              contentType: "image/jpeg",
+              // content: fileBase64,
+              // contentType: "image/jpeg",
             };
             return { ...data, profileFile };
           }
@@ -100,7 +100,7 @@ export class userProductDisplayRepository {
       const groupedFoodItems = Array.from(groupedMap.values());
 
       if (comboItem.length > 0) {
-        groupedFoodItems.push({
+        groupedFoodItems.splice(2, 0, {
           refCategoryId: 0,
           refFoodCategoryName: "Combo",
           items: comboItem,
