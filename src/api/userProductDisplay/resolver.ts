@@ -38,4 +38,15 @@ export class userProductDisplayResolver {
       domain_code
     );
   }
+  public async paymentGateway(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.userProductDisplayRepository.paymentGateway(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
 }

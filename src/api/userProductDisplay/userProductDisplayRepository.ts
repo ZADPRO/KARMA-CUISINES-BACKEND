@@ -42,6 +42,7 @@ import {
   storeFoodOrder,
   storeSubFoodOrder,
 } from "./query";
+import Payrexx from "../../helper/Payrexx";
 
 export class userProductDisplayRepository {
   public async FoodListV1(user_data: any, tokendata: any): Promise<any> {
@@ -399,6 +400,61 @@ export class userProductDisplayRepository {
       );
     } finally {
       client.release();
+    }
+  }
+
+  public async paymentGateway(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+
+    const payrexx = new Payrexx(
+      "karmacuisine",
+      "qnIpjxsQFqhc718RQ3UYbDosl6MRss"
+    );
+
+    try {
+      // Send payment request to Payrexx
+      const result = await payrexx.post("Gateway", {
+        amount: 100,
+        currency: "CHF",
+        vatRate: 7.7,
+        purpose: "Test Payment", // Example purpose
+        psp: [44, 36],
+        pm: ["visa", "mastercard", "twint", "amex", "postfinance"],
+        fields: {
+          email: { value: "mailtothirukumara.com" },
+          forename: { value: "Max" },
+          surname: { value: "Muster" },
+        },
+      });
+
+      console.log("Payrexx API Response:", result);
+
+      if (result && result.status && result.data) {
+        return encrypt(
+          {
+            success: true,
+            message: "Employee Payed List passed successfully",
+            token: tokens,
+            data: result.data,
+          },
+          true
+        );
+      } else {
+        throw new Error("Payrexx response does not contain expected data");
+      }
+    } catch (error) {
+      console.error("Error in Payrexx API call:", error);
+
+      return encrypt(
+        {
+          success: false,
+          message: "Failed to create payment link",
+          error: error || "Unknown error",
+          token: tokens,
+        },
+        true
+      );
     }
   }
 }

@@ -43,6 +43,17 @@ export class userProductDisplayRoutesNew implements IRoute {
             auth: false,
           },
         },
+        {
+          method: "POST",
+          path: "/api/v1/userProduct/paymentGateway",
+          config: {
+            // pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.paymentGateway,
+            description: "Order The Food Item",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
       ]);
       resolve(true);
     });
