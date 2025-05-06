@@ -27,14 +27,10 @@ export default class Payrexx {
         (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`
       );
     }
-    console.log("queryStr", queryStr);
     return Base64.stringify(hmacSHA256(queryStr, this.secret));
   }
 
   private buildBaseUrl(path: string): string {
-    console.log("path", path);
-    console.log("{this.baseUrl", this.baseUrl);
-    console.log("this.instance", this.instance);
     return `${this.baseUrl}${path}?instance=${this.instance}`;
   }
 
@@ -43,7 +39,6 @@ export default class Payrexx {
     const url = `${baseUrl}&ApiSignature=${this.buildSignature()}`;
     try {
       const response = await axios.get(url);
-      console.log("response", response);
       return response.data;
     } catch (error: any) {
       return (
@@ -52,13 +47,11 @@ export default class Payrexx {
     }
   }
 
-  async getAll(endpoint:   string): Promise<any> {
+  async getAll(endpoint: string): Promise<any> {
     const baseUrl = this.buildBaseUrl(`${endpoint}/`);
     const url = `${baseUrl}&ApiSignature=${this.buildSignature()}`;
-    console.log("url", url);
     try {
       const response = await axios.get(url);
-      console.log("response", response);
       return response.data;
     } catch (error: any) {
       return (

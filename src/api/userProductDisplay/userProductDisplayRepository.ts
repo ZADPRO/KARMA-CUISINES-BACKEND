@@ -408,8 +408,8 @@ export class userProductDisplayRepository {
     const tokens = generateTokenWithExpire(token, true);
 
     const payrexx = new Payrexx(
-      "karmacuisine",
-      "qnIpjxsQFqhc718RQ3UYbDosl6MRss"
+      "karmacuisines",
+      "p9d4TdHGnkujeNx2T90jaygculBt9Q"
     );
 
     try {
@@ -420,7 +420,7 @@ export class userProductDisplayRepository {
         vatRate: 7.7,
         purpose: "Test Payment", // Example purpose
         psp: [44, 36],
-        pm: ["visa", "mastercard", "twint", "amex", "postfinance"],
+        pm: ["visa", "mastercard", "twint", "amex"],
         fields: {
           email: { value: "mailtothirukumara.com" },
           forename: { value: "Max" },
