@@ -415,18 +415,18 @@ export class userProductDisplayRepository {
     try {
       // Send payment request to Payrexx
       const result = await payrexx.post("Gateway", {
-        amount: 100,
+        amount: user_data.amount * 100,
         currency: "CHF",
         vatRate: 7.7,
         purpose: "Test Payment",
         psp: [44, 36],
         successRedirectUrl:
-          "http://localhost:5173/orders?status=success&message=Payment+Successful",
-        failedRedirectUrl: "http://localhost:5173/orders?status=failure",
+          "https://karmacuisine.ch//orders?status=success&message=Payment+Successful",
+        failedRedirectUrl: "https://karmacuisine.ch//orders?status=failure",
         fields: {
-          email: { value: "mailtothirukumara.com" },
-          forename: { value: "Max" },
-          surname: { value: "Muster" },
+          email: { value: user_data.email },
+          forename: { value: user_data.firstName },
+          surname: { value: user_data.lastName },
         },
       });
 
