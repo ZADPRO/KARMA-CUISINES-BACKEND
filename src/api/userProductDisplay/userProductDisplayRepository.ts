@@ -291,14 +291,14 @@ export class userProductDisplayRepository {
       await client.query("BEGIN");
 
       const userParams = [
-        user_data.userFName,
-        user_data.userLName,
-        user_data.userMobile,
-        user_data.userEmail,
-        user_data.userStreet,
-        user_data.userPostalCode,
-        user_data.userZone,
-        user_data.userCountry,
+        user_data.payload.userFName,
+        user_data.payload.userLName,
+        user_data.payload.userMobile,
+        user_data.payload.userEmail,
+        user_data.payload.userStreet,
+        user_data.payload.userPostalCode,
+        user_data.payload.userZone,
+        user_data.payload.userCountry,
         CurrentTime(),
         "User",
       ];
@@ -311,14 +311,14 @@ export class userProductDisplayRepository {
       const OrderId = `KC${baseOrderId + orderCountValue}`;
       console.log("OrderId line ---- 307", OrderId);
 
-      user_data.order.map(async (data: any, index: number) => {
+      user_data.payload.order.map(async (data: any, index: number) => {
         if (!data.ifCambo) {
           console.log(
             " -> Line Number ----------------------------------- 311"
           );
           const foodItemParams = [
             OrderId,
-            user_data.storeId,
+            user_data.payload.storeId,
             userResult.rows[0].refUserId,
             data.FoodId,
             data.FoodName,
@@ -326,9 +326,9 @@ export class userProductDisplayRepository {
             data.foodPrice,
             data.foodQuantity,
             data.ifCambo,
-            user_data.transactionId,
-            user_data.paymentType,
-            user_data.totalAmtPaid,
+            user_data.payload.transactionId,
+            user_data.payload.paymentType,
+            user_data.payload.totalAmtPaid,
             CurrentTime(),
             "user",
           ];
@@ -340,7 +340,7 @@ export class userProductDisplayRepository {
           );
           const foodParams = [
             OrderId,
-            user_data.storeId,
+            user_data.payload.storeId,
             userResult.rows[0].refUserId,
             data.FoodId,
             data.FoodName,
@@ -348,9 +348,9 @@ export class userProductDisplayRepository {
             data.foodPrice,
             data.foodQuantity,
             data.ifCambo,
-            user_data.transactionId,
-            user_data.paymentType,
-            user_data.totalAmtPaid,
+            user_data.payload.transactionId,
+            user_data.payload.paymentType,
+            user_data.payload.totalAmtPaid,
             CurrentTime(),
             "user",
           ];
@@ -384,7 +384,7 @@ export class userProductDisplayRepository {
           token: tokens,
           orderId: OrderId,
         },
-        false
+        true
       );
     } catch (error) {
       console.log("error in foodInfoV1 ---------", error);
@@ -396,7 +396,7 @@ export class userProductDisplayRepository {
           message: "Error in Placing The Order",
           token: tokens,
         },
-        false
+        true
       );
     } finally {
       client.release();
@@ -418,9 +418,11 @@ export class userProductDisplayRepository {
         amount: 100,
         currency: "CHF",
         vatRate: 7.7,
-        purpose: "Test Payment", // Example purpose
+        purpose: "Test Payment",
         psp: [44, 36],
-        pm: ["visa", "mastercard", "twint", "amex"],
+        successRedirectUrl:
+          "http://localhost:5173/orders?status=success&message=Payment+Successful",
+        failedRedirectUrl: "http://localhost:5173/orders?status=failure",
         fields: {
           email: { value: "mailtothirukumara.com" },
           forename: { value: "Max" },
