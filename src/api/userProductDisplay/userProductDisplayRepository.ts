@@ -421,8 +421,8 @@ export class userProductDisplayRepository {
         purpose: "Test Payment",
         psp: [44, 36],
         successRedirectUrl:
-          "https://karmacuisine.ch//orders?status=success&message=Payment+Successful",
-        failedRedirectUrl: "https://karmacuisine.ch//orders?status=failure",
+          "https://karmacuisine.ch/orders?status=success&message=Payment+Successful",
+        failedRedirectUrl: "https:/karmacuisine.ch//orders?status=failure",
         fields: {
           email: { value: user_data.email },
           forename: { value: user_data.firstName },
