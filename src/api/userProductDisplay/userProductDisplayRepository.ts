@@ -382,7 +382,7 @@ export class userProductDisplayRepository {
       const mail = async () => {
         const mailOptions = {
           to: user_data.payload.userEmail,
-          subject: "You Accont has be Created Successfully In our Platform",
+          subject: "Order Confirmation - Karma Cuisine",
           html: sendOrderConfirmationTemplate(user_data.payload),
         };
         try {
