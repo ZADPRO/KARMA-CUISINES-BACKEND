@@ -43,6 +43,8 @@ import {
   storeSubFoodOrder,
 } from "./query";
 import Payrexx from "../../helper/Payrexx";
+import { sendEmail } from "../../helper/mail";
+import { sendOrderConfirmationTemplate } from "../../helper/mailcontent";
 
 export class userProductDisplayRepository {
   public async FoodListV1(user_data: any, tokendata: any): Promise<any> {
@@ -377,6 +379,21 @@ export class userProductDisplayRepository {
       });
       await client.query("COMMIT");
 
+      const mail = async () => {
+        const mailOptions = {
+          to: user_data.payload.userEmail,
+          subject: "You Accont has be Created Successfully In our Platform",
+          html: sendOrderConfirmationTemplate(user_data.payload),
+        };
+        try {
+          await sendEmail(mailOptions);
+          console.log("mailOptions", mailOptions);
+        } catch (error) {
+          console.error("Failed to send email:", error);
+        }
+      };
+      mail().catch(console.error);
+
       return encrypt(
         {
           success: true,
@@ -422,7 +439,7 @@ export class userProductDisplayRepository {
         psp: [44, 36],
         successRedirectUrl:
           "https://karmacuisine.ch/orders?status=success&message=Payment+Successful",
-        failedRedirectUrl: "https:/karmacuisine.ch//orders?status=failure",
+        failedRedirectUrl: "https:/karmacuisine.ch/orders?status=failure",
         fields: {
           email: { value: user_data.email },
           forename: { value: user_data.firstName },
