@@ -501,6 +501,7 @@ export class ProductsComboRepository {
     const tokens = generateTokenWithExpire(token, true);
     try {
       const OrderList = await executeQuery(fetchOrderlist, []);
+      console.log("OrderList", OrderList);
 
       return encrypt(
         {

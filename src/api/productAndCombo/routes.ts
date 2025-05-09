@@ -160,7 +160,7 @@ export class productComboRoutesNew implements IRoute {
           },
         },
         {
-          method: "POST",
+          method: "GET",
           path: "/api/v1/productCombo/orderList",
           config: {
             // pre: [{ method: validateToken, assign: "token" }],
