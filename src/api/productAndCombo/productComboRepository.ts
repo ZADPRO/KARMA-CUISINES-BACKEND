@@ -417,8 +417,8 @@ export class ProductsComboRepository {
             const fileBase64 = fileBuffer.toString("base64");
             const profileFile = {
               filename: path.basename(data.refFoodImage),
-              content: fileBase64,
-              contentType: "image/jpeg",
+              // content: fileBase64,
+              // contentType: "image/jpeg",
             };
             return { ...data, profileFile };
           }
