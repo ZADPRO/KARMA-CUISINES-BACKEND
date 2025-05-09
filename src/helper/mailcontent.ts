@@ -139,7 +139,7 @@ export function sendOrderConfirmationTemplate(payload: any) {
       </div>
 
       <div class="footer">
-        &copy; 2024 Karma Cuisine. All rights reserved.
+        &copy; 2025 Karma Cuisine. All rights reserved.
       </div>
     </div>
   </body>
