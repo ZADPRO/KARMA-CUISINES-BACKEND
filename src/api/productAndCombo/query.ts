@@ -211,12 +211,19 @@ export const menuIdCheck = `SELECT
     ELSE true
   END `;
 
-export const fetchOrderlist = `SELECT DISTINCT ON (ol."refUserId")
+export const fetchOrderlist = `
+SELECT DISTINCT ON (ol."refUserId")
   uol."refUserFName",
   uol."refUserLName",
   uol."refUserMobile",
   uol."refCreateAt",
-  ol."refCustOrId",ol."refFoodAmtPaid",ol."refPaymentType"
+  uol."refUserPostCode",
+  uol."refUserZone",
+  ol."refStoreId",
+  ol."refCustOrId",
+  ol."refFoodAmtPaid",
+  ol."refPaymentType"
 FROM public."refUserOrderList" uol
 LEFT JOIN public."refOrderList" ol ON CAST(ol."refUserId" AS INTEGER) = uol."refUserId"
-ORDER BY ol."refUserId", uol."refCreateAt" DESC;`;
+ORDER BY ol."refUserId", uol."refCreateAt" DESC;
+`;
