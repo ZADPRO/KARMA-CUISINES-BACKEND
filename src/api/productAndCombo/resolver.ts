@@ -159,4 +159,15 @@ export class ProductsComboResolver {
       domain_code
     );
   }
+  public async viewOrderDataV1(
+    user_data: any,
+    token_data: any,
+    domain_code: any
+  ): Promise<any> {
+    return await this.ProductComboRepository.viewOrderDataV1(
+      user_data,
+      token_data,
+      domain_code
+    );
+  }
 }

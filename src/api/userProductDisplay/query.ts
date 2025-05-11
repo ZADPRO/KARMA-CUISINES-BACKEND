@@ -228,7 +228,8 @@ export const storeFoodOrder = `INSERT INTO
     "refPaymentType",
     "refFoodAmtPaid",
     "refCreateAt",
-    "refCreateBy"
+    "refCreateBy",
+    "refComments"
   )
 values
   (
@@ -245,7 +246,8 @@ values
     $11,
     $12,
     $13,
-    $14
+    $14,
+    $15
   )
 RETURNING
   *;`;

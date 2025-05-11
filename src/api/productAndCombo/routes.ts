@@ -170,6 +170,17 @@ export class productComboRoutesNew implements IRoute {
             auth: false,
           },
         },
+        {
+          method: "POST",
+          path: "/api/v1/productCombo/viewOrderData",
+          config: {
+            // pre: [{ method: validateToken, assign: "token" }],
+            handler: controller.viewOrderData,
+            description: "Get The Seprate Order Data",
+            tags: ["api", "Users"],
+            auth: false,
+          },
+        },
       ]);
       resolve(true);
     });

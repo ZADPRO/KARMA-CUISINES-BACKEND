@@ -227,3 +227,51 @@ FROM public."refUserOrderList" uol
 LEFT JOIN public."refOrderList" ol ON CAST(ol."refUserId" AS INTEGER) = uol."refUserId"
 ORDER BY ol."refUserId", uol."refCreateAt" DESC;
 `;
+
+export const getOrderData = `SELECT
+  uol.*,
+  json_agg(
+    json_build_object(
+      'refFoodName',
+      ol."refFoodName",
+      'refFoodCategory',
+      ol."refFoodCategory",
+      'refFoodPrice',
+      ol."refFoodPrice",
+      'refFoodQuantity',
+      ol."refFoodQuantity",
+      'refComments',
+      ol."refComments",
+      'refIfCombo',
+      ol."refIfCombo",
+      'subProduct',
+      CASE
+        WHEN ol."refIfCombo" = true THEN (
+          SELECT
+            json_agg(
+              json_build_object(
+                'refFoodName',
+                sol."refFoodName",
+                'refFoodQuantity',
+                sol."refFoodQuantity",
+                'refFoodType',
+                sol."refFoodType"
+              )
+            )
+          FROM
+            public."refSubOrderList" sol
+          WHERE
+            sol."refOrderId" = ol."refOrderId"
+        )
+        ELSE NULL
+      END
+    )
+  ) AS "order",
+  SUM(ol."refFoodPrice"::NUMERIC) AS "TotalOrderPrice"
+FROM
+  public."refOrderList" ol
+  LEFT JOIN public."refUserOrderList" uol ON CAST(uol."refUserId" AS INTEGER) = ol."refUserId"::INTEGER
+WHERE
+  ol."refCustOrId" = $1
+GROUP BY
+  uol."refUserId";`;

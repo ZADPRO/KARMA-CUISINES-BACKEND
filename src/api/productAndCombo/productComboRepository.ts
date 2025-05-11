@@ -18,6 +18,7 @@ import {
   fetchOrderlist,
   FoodList,
   getCategory,
+  getOrderData,
   menuIdCheck,
   newCategory,
   searchFood,
@@ -518,6 +519,34 @@ export class ProductsComboRepository {
         {
           success: false,
           message: "Error In Passing Order List",
+          token: tokens,
+        },
+        true
+      );
+    } finally {
+    }
+  }
+  public async viewOrderDataV1(user_data: any, tokendata: any): Promise<any> {
+    const token = { id: tokendata.id };
+    const tokens = generateTokenWithExpire(token, true);
+    try {
+      const OrderData = await executeQuery(getOrderData, [user_data.orderId]);
+
+      return encrypt(
+        {
+          success: true,
+          message: "A Order Food Data is Passed Successfully",
+          token: tokens,
+          data: OrderData,
+        },
+        true
+      );
+    } catch (error) {
+      console.log("error in line --------- 59", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Error In getting the Ordered Food Data",
           token: tokens,
         },
         true

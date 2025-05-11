@@ -333,6 +333,7 @@ export class userProductDisplayRepository {
             user_data.payload.totalAmtPaid,
             CurrentTime(),
             "user",
+            data.comment || null,
           ];
           console.log("foodItemParams line ------ 330 \n", foodItemParams);
           await client.query(storeFoodOrder, foodItemParams);
@@ -355,6 +356,7 @@ export class userProductDisplayRepository {
             user_data.payload.totalAmtPaid,
             CurrentTime(),
             "user",
+            data.comment || null,
           ];
           console.log("foodItemParams line ----- 352 \n", foodParams);
           const orderResult: any = await client.query(
