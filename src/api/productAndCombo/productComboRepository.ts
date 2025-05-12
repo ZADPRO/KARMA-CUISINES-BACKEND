@@ -531,6 +531,7 @@ export class ProductsComboRepository {
     const tokens = generateTokenWithExpire(token, true);
     try {
       const OrderData = await executeQuery(getOrderData, [user_data.orderId]);
+      console.log("OrderData", OrderData);
 
       return encrypt(
         {
