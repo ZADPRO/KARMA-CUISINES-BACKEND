@@ -48,13 +48,19 @@ export function sendOrderConfirmationTemplate(payload: any) {
     userCountry,
     storeId,
     transactionId,
+    itemComment,
+    floor,
+    guestMobile,
+    guestName,
     paymentType,
     totalAmtPaid,
     order,
   } = payload;
 
   const fullName = `${userFName} ${userLName}`;
-  const address = `${userStreet}, ${userPostalCode} ${userZone}, ${userCountry}`;
+  const address = `${userStreet}${
+    floor ? `, ${floor}` : ""
+  }, ${userPostalCode} ${userZone}, ${userCountry}`;
 
   const orderItems = order
     .map((item: any) => {
@@ -71,16 +77,18 @@ export function sendOrderConfirmationTemplate(payload: any) {
           <td><strong>${item.FoodName}</strong><br><ul>${subItems}</ul></td>
           <td>${item.foodCategory}</td>
           <td>CHF ${item.foodPrice}</td>
+            <td>${item.comment ? `${item.comment}` : "-"}</td>
         </tr>
       `;
       } else {
         return `
-        <tr>
-          <td>${item.FoodName}</td>
-          <td>${item.foodCategory}</td>
-          <td>CHF ${item.foodPrice}</td>
-        </tr>
-      `;
+          <tr>
+            <td>${item.FoodName}</td>
+            <td>${item.foodCategory}</td>
+            <td>CHF ${item.foodPrice}</td>
+            <td>${item.comment ? `${item.comment}` : "-"}</td>
+          </tr>
+        `;
       }
     })
     .join("");
@@ -114,7 +122,7 @@ export function sendOrderConfirmationTemplate(payload: any) {
         <h3>Customer Details</h3>
         <p><strong>Name:</strong> ${fullName}</p>
         <p><strong>Email:</strong> ${userEmail}</p>
-        <p><strong>Mobile:</strong> ${userMobile}</p>
+        <p><strong>Mobile:</strong> +${userMobile}</p>
         <p><strong>Address:</strong> ${address}</p>
       </div>
 
@@ -126,14 +134,28 @@ export function sendOrderConfirmationTemplate(payload: any) {
               <th>Item</th>
               <th>Category</th>
               <th>Price</th>
+              <th>Comments</th>
             </tr>
           </thead>
           <tbody>
             ${orderItems}
           </tbody>
         </table>
-        <p style="margin-top: 15px;"><strong>Total Paid:</strong> CHF ${totalAmtPaid}</p>
+        <p style="margin-top: 15px;">
+          <strong>${
+            paymentType === "offline" ? "Amount to Pay" : "Total Paid"
+          }:</strong> CHF ${totalAmtPaid}
+        </p>        
+        <p style="margin-top: 15px;"><strong>Additional Notes:</strong> ${itemComment}</p>
         <p><strong>Payment Type:</strong> ${paymentType}</p>
+
+        ${guestName ? `<p><strong>Guest Name:</strong> ${guestName}</p>` : ""}
+        ${
+          guestMobile
+            ? `<p><strong>Guest Mobile:</strong> ${guestMobile}</p>`
+            : ""
+        }
+
         <p><strong>Store ID:</strong> KC-00${storeId}</p>
         <p><strong>Store Name:</strong> Kings Kurry </p>
       </div>

@@ -381,6 +381,7 @@ export class userProductDisplayRepository {
       });
       await client.query("COMMIT");
 
+      console.log("user_data.payload", user_data.payload);
       const mail = async () => {
         const mailOptions = {
           to: user_data.payload.userEmail,
@@ -388,12 +389,13 @@ export class userProductDisplayRepository {
           html: sendOrderConfirmationTemplate(user_data.payload),
         };
         try {
-          await sendEmail(mailOptions);
+          await sendEmail(mailOptions); // Now it auto-retries inside
           console.log("mailOptions", mailOptions);
         } catch (error) {
-          console.error("Failed to send email:", error);
+          console.error("Failed to send email after retries:", error);
         }
       };
+
       mail().catch(console.error);
 
       return encrypt(
