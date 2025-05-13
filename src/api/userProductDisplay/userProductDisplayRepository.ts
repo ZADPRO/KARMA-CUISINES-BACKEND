@@ -310,7 +310,7 @@ export class userProductDisplayRepository {
       console.log("orderCount", orderCount);
       const baseOrderId = 10001;
       const orderCountValue = orderCount?.[0]?.orderCount || 0;
-      const OrderId = `KC${baseOrderId + orderCountValue}`;
+      const OrderId = `KC${Number(baseOrderId) + Number(orderCountValue)}`;
       console.log("OrderId line ---- 307", OrderId);
 
       user_data.payload.order.map(async (data: any, index: number) => {
