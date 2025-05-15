@@ -69,4 +69,118 @@ export class adminRepository {
       );
     }
   }
+
+  public async uploadVendorV1(user_data: any, domain_code?: any): Promise<any> {
+    console.log("user_data", user_data);
+    try {
+      const {
+        restroName,
+        vendorId,
+        contactName,
+        designation,
+        email,
+        mobile,
+        street,
+        floor,
+        zone,
+        code,
+        land,
+        vatNumber,
+        commercialExtract,
+        alcoholLicense,
+        bankName,
+        accountNumber,
+        bankCode,
+      } = user_data;
+
+      const query = `
+      INSERT INTO public."vendorDetails"
+      (
+        "restroName", "vendorId", "personName", designation, email, mobile,
+        "streetNo", floor, zone, code, land, vat, cre, alcohol,
+        "bankName", iban, "bankCode"
+      )
+      VALUES
+      (
+        $1, $2, $3, $4, $5, $6,
+        $7, $8, $9, $10, $11, $12, $13, $14,
+        $15, $16, $17
+      )
+      RETURNING id
+    `;
+
+      const values = [
+        restroName,
+        vendorId,
+        contactName,
+        designation,
+        email,
+        mobile,
+        street,
+        floor,
+        zone,
+        code,
+        land,
+        vatNumber,
+        commercialExtract,
+        alcoholLicense,
+        bankName,
+        accountNumber,
+        bankCode,
+      ];
+
+      const result = await executeQuery(query, values);
+      console.log("result", result);
+
+      return encrypt(
+        {
+          success: true,
+          message: "Insert vendor successfully",
+        },
+        true
+      );
+    } catch (error) {
+      console.error("Error during vendor insertion:", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Internal server error",
+        },
+        true
+      );
+    }
+  }
+
+  public async getAllVendorDetails(
+    user_data: any,
+    domain_code?: any
+  ): Promise<any> {
+    console.log("user_data", user_data);
+    try {
+      const query = `
+      SELECT * FROM public."vendorDetails";
+    `;
+
+      const result = await executeQuery(query);
+      console.log("result", result);
+
+      return encrypt(
+        {
+          success: true,
+          message: "Selected vendor successfully",
+          result: result,
+        },
+        true
+      );
+    } catch (error) {
+      console.error("Error during vendor fetching:", error);
+      return encrypt(
+        {
+          success: false,
+          message: "Internal server error",
+        },
+        true
+      );
+    }
+  }
 }
