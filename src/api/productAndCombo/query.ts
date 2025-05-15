@@ -232,6 +232,8 @@ export const getOrderData = `SELECT
   uol.*,
   json_agg(
     json_build_object(
+      'refPaymentType',
+      ol."refPaymentType",
       'refFoodName',
       ol."refFoodName",
       'refFoodCategory',
