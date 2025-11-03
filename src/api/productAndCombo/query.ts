@@ -62,7 +62,8 @@ export const addFood = `INSERT INTO public."refFoodItem" (
     "refAddOns",
     "refCreateAt",
     "refCreateBy",
-    "refMenuId"
+    "refMenuId",
+    "restroId"
   ) 
   VALUES (
     $1,
@@ -73,7 +74,8 @@ export const addFood = `INSERT INTO public."refFoodItem" (
     $6,
     $7::INTEGER[],
     $8,
-    $9,$10
+    $9,$10,
+    $11
   )
   `;
 
@@ -157,7 +159,8 @@ export const createCombo = `INSERT INTO
     "refComboPrice",
     "refCreateAt",
     "refCreateBy",
-    "refComboDescription"
+    "refComboDescription",
+    "refRestroId"
   )
 VALUES
   (
@@ -170,7 +173,7 @@ VALUES
     $7,
     $8::INTEGER[],
     $9,
-    $10,$11,$12,$13
+    $10,$11,$12,$13,$14
   )`;
 
 export const FoodList = `SELECT
@@ -181,15 +184,23 @@ export const FoodList = `SELECT
   fi."refPrice",
   fi."refQuantity",
   fc."refFoodCategoryName",
-  fi."refMenuId"
+  fi."refMenuId",
+  fi."restroId",
+  vd."restroName"
 FROM
   public."refFoodItem" fi
   LEFT JOIN public."refFoodCategory" fc ON CAST(fc."refFoodCategoryId" AS INTEGER) = fi."refCategoryId"::INTEGER
+  INNER JOIN public."vendorDetails" vd ON vd.id = fi."restroId"
 WHERE
   fi."refIfDelete" IS NOT TRUE`;
 
-export const ComboList = `SELECT * FROM public."refFoodCombo"
-  WHERE "refIfDelete" IS NOT TRUE`;
+export const ComboList = `SELECT
+  *
+FROM
+  public."refFoodCombo" rfc
+ 	INNER JOIN public."vendorDetails" vd ON vd.id = rfc."restroId"
+WHERE
+  "refIfDelete" IS NOT TRUE`;
 
 export const menuIdCheck = `SELECT
   CASE

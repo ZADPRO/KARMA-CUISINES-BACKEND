@@ -5,7 +5,7 @@ dotenv.config();
 
 const pool = new Pool({
   user: process.env.DB_USER || "cuisines_user",
-  host: process.env.DB_HOST || "zadroit.brightoncloudtech.com",
+  host: process.env.DB_HOST || "192.168.1.112",
   database: process.env.DB_NAME || "karma_cuisines_db",
   password: process.env.DB_PASSWORD || "karmaadmin@1",
   port: Number(process.env.DB_PORT) || 5436,

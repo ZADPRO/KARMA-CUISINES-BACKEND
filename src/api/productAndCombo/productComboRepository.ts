@@ -192,6 +192,7 @@ export class ProductsComboRepository {
         CurrentTime(),
         tokendata.id,
         user_data.menuId,
+        user_data.restroId,
       ];
       console.log("params line ----- 186", params);
       await executeQuery(addFood, params);
@@ -380,6 +381,7 @@ export class ProductsComboRepository {
         CurrentTime(),
         tokendata.id,
         user_data.comboDescription,
+        user_data.refRestroId,
       ];
       await executeQuery(createCombo, params);
 
@@ -407,40 +409,56 @@ export class ProductsComboRepository {
   public async foodListV1(user_data: any, tokendata: any): Promise<any> {
     const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire(token, true);
+
     try {
       let FoodItem = await executeQuery(FoodList, []);
       let comboList = await executeQuery(ComboList, []);
 
+      // --- Handle Food Items ---
       FoodItem = await Promise.all(
         FoodItem.map(async (data) => {
-          if (data.refFoodImage !== null) {
-            const fileBuffer = await viewFile(data.refFoodImage);
-            const fileBase64 = fileBuffer.toString("base64");
-            const profileFile = {
-              filename: path.basename(data.refFoodImage),
-              // content: fileBase64,
-              // contentType: "image/jpeg",
-            };
-            return { ...data, profileFile };
+          if (data.refFoodImage) {
+            try {
+              const fileBuffer = await viewFile(data.refFoodImage);
+              const fileBase64 = fileBuffer.toString("base64");
+              const profileFile = {
+                filename: path.basename(data.refFoodImage),
+                content: fileBase64,
+                contentType: "image/jpeg",
+              };
+              return { ...data, profileFile };
+            } catch (err) {
+              console.warn(
+                `⚠️ Food image not found for ${data.refFoodImage}: setting '-'`
+              );
+              return { ...data, profileFile: "-" };
+            }
           }
-          return data;
+          return { ...data, profileFile: "-" };
         })
       );
 
-      console.log("comboList line ---- 396", comboList);
+      // --- Handle Combo List ---
       comboList = await Promise.all(
         comboList.map(async (data) => {
-          if (data.refComboImg !== null) {
-            const fileBuffer = await viewFile(data.refComboImg);
-            const fileBase64 = fileBuffer.toString("base64");
-            const profileFile = {
-              filename: path.basename(data.refComboImg),
-              content: fileBase64,
-              contentType: "image/jpeg",
-            };
-            return { ...data, profileFile };
+          if (data.refComboImg) {
+            try {
+              const fileBuffer = await viewFile(data.refComboImg);
+              const fileBase64 = fileBuffer.toString("base64");
+              const profileFile = {
+                filename: path.basename(data.refComboImg),
+                content: fileBase64,
+                contentType: "image/jpeg",
+              };
+              return { ...data, profileFile };
+            } catch (err) {
+              console.warn(
+                `⚠️ Combo image not found for ${data.refComboImg}: setting '-'`
+              );
+              return { ...data, profileFile: "-" };
+            }
           }
-          return data;
+          return { ...data, profileFile: "-" };
         })
       );
 
@@ -449,8 +467,8 @@ export class ProductsComboRepository {
           success: true,
           message: "Over View of Menu",
           token: tokens,
-          FoodItem: FoodItem,
-          comboList: comboList,
+          FoodItem,
+          comboList,
         },
         true
       );
@@ -464,9 +482,9 @@ export class ProductsComboRepository {
         },
         true
       );
-    } finally {
     }
   }
+
   public async checkMenuIdV1(user_data: any, tokendata: any): Promise<any> {
     const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire(token, true);
@@ -527,6 +545,7 @@ export class ProductsComboRepository {
     }
   }
   public async viewOrderDataV1(user_data: any, tokendata: any): Promise<any> {
+    console.log("user_data", user_data);
     const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire(token, true);
     try {
@@ -540,7 +559,7 @@ export class ProductsComboRepository {
           token: tokens,
           data: OrderData,
         },
-        true
+        false
       );
     } catch (error) {
       console.log("error in line --------- 59", error);
