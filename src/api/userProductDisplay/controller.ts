@@ -19,10 +19,12 @@ export class userProductDisplayController {
     try {
       // const decodedToken = { id: request.plugins.token.id };
       const decodedToken = { id: 1 };
+      const routePath = request.query.routePath;
+      console.log("Received routePath:", routePath);
       console.log("decodedToken", decodedToken);
       let entity;
 
-      entity = await this.resolver.FoodListV1(request.payload, decodedToken);
+      entity = await this.resolver.FoodListV1({ routePath }, decodedToken);
 
       if (entity.success) {
         return response.response(entity).code(201);
@@ -113,7 +115,10 @@ export class userProductDisplayController {
       console.log("decodedToken", decodedToken);
       let entity;
 
-      entity = await this.resolver.paymentGateway(request.payload, decodedToken);
+      entity = await this.resolver.paymentGateway(
+        request.payload,
+        decodedToken
+      );
 
       if (entity.success) {
         return response.response(entity).code(201);

@@ -1,34 +1,36 @@
 export const listFood = `SELECT
-  fi."refFoodId",
-  fi."refFoodName",
-  fi."refDescription",
-  fi."refFoodImage",
-  fi."refPrice",
-  fi."refQuantity",
-  fi."refCategoryId",
-  fc."refFoodCategoryName",
-  fi."refMenuId",
-  fc."refFoodCategoryName"
-FROM
-  public."refFoodItem" fi
-  LEFT JOIN public."refFoodCategory" fc ON CAST(fc."refFoodCategoryId" AS INTEGER) = fi."refCategoryId"::INTEGER
-WHERE
-  fi."refIfDelete" IS NOT true
-ORDER BY
-  fi."refMenuId"`;
+        fi."refFoodId",
+        fi."refFoodName",
+        fi."refDescription",
+        fi."refFoodImage",
+        fi."refPrice",
+        fi."refQuantity",
+        fi."refCategoryId",
+        fc."refFoodCategoryName",
+        fi."refMenuId",
+        fi."restroId"
+      FROM
+        public."refFoodItem" fi
+        LEFT JOIN public."refFoodCategory" fc ON CAST(fc."refFoodCategoryId" AS INTEGER) = fi."refCategoryId"::INTEGER
+      WHERE
+        fi."refIfDelete" IS NOT true
+        AND fi."restroId" = $1
+      ORDER BY fi."refMenuId";`;
 
-export const comboList = `SELECT
-  fc."refComboId",
-  fc."refMenuId",
-  fc."refComboName",
-  fc."refComboImg",
-  fc."refComboPrice",
-  fc."refComboDescription"
-FROM
-  public."refFoodCombo" fc
-WHERE
-  fc."refIfDelete" IS NOT true
-  order by fc."refMenuId"`;
+export const comboList = ` SELECT
+        fc."refComboId",
+        fc."refMenuId",
+        fc."refComboName",
+        fc."refComboImg",
+        fc."refComboPrice",
+        fc."refComboDescription",
+        fc."restroId"
+      FROM
+        public."refFoodCombo" fc
+      WHERE
+        fc."refIfDelete" IS NOT true
+        AND fc."restroId" = $1
+      ORDER BY fc."refMenuId";`;
 
 export const FoodItemList = `SELECT
   f."refFoodId",

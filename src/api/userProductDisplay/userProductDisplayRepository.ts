@@ -51,8 +51,9 @@ export class userProductDisplayRepository {
     const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire(token, true);
     try {
-      let foodItem = await executeQuery(listFood, []);
-      let comboItem = await executeQuery(comboList, []);
+      const restroId = parseInt(user_data.routePath);
+      let foodItem = await executeQuery(listFood, [restroId]);
+      let comboItem = await executeQuery(comboList, [restroId]);
 
       foodItem = await Promise.all(
         foodItem.map(async (data) => {
