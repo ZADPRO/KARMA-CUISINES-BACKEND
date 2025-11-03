@@ -45,48 +45,96 @@ import {
 import Payrexx from "../../helper/Payrexx";
 import { sendEmail } from "../../helper/mail";
 import { sendOrderConfirmationTemplate } from "../../helper/mailcontent";
+import logger from "../../helper/logger";
 
 export class userProductDisplayRepository {
   public async FoodListV1(user_data: any, tokendata: any): Promise<any> {
     const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire(token, true);
+
+    logger.info(
+      `[FoodListV1] API CALLED - UserData: ${JSON.stringify(
+        user_data
+      )} - TokenID: ${tokendata.id}`
+    );
+
     try {
       const restroId = parseInt(user_data.routePath);
+      logger.info(`[FoodListV1] Resolved Restaurant ID => ${restroId}`);
+
+      // Fetch food and combo lists
+      logger.info(
+        `[FoodListV1] Executing SQL => listFood | Params => [${restroId}]`
+      );
       let foodItem = await executeQuery(listFood, [restroId]);
+      logger.info(`[FoodListV1] Food items fetched => ${foodItem.length}`);
+
+      logger.info(
+        `[FoodListV1] Executing SQL => comboList | Params => [${restroId}]`
+      );
       let comboItem = await executeQuery(comboList, [restroId]);
+      logger.info(`[FoodListV1] Combo items fetched => ${comboItem.length}`);
 
+      // Process food images
       foodItem = await Promise.all(
-        foodItem.map(async (data) => {
+        foodItem.map(async (data, index) => {
+          logger.info(
+            `[FoodListV1] Processing Food Item [${index + 1}] - ID: ${
+              data.refFoodId
+            }`
+          );
           if (data.refFoodImage !== null) {
-            const fileBuffer = await viewFile(data.refFoodImage);
-            const fileBase64 = fileBuffer.toString("base64");
-            const profileFile = {
-              filename: path.basename(data.refFoodImage),
-              // content: fileBase64,
-              // contentType: "image/jpeg",
-            };
-            return { ...data, profileFile };
+            try {
+              logger.info(
+                `[FoodListV1] Reading Food Image: ${data.refFoodImage}`
+              );
+              const fileBuffer = await viewFile(data.refFoodImage);
+              const profileFile = {
+                filename: path.basename(data.refFoodImage),
+              };
+              return { ...data, profileFile };
+            } catch (err) {
+              logger.error(
+                `[FoodListV1] Failed to read Food Image => ${data.refFoodImage}`,
+                err
+              );
+            }
           }
           return data;
         })
       );
+      logger.info(`[FoodListV1] Processed Food Items => ${foodItem.length}`);
 
+      // Process combo images
       comboItem = await Promise.all(
-        comboItem.map(async (data) => {
+        comboItem.map(async (data, index) => {
+          logger.info(
+            `[FoodListV1] Processing Combo Item [${index + 1}] - ID: ${
+              data.refComboId
+            }`
+          );
           if (data.refComboImg !== null) {
-            const fileBuffer = await viewFile(data.refComboImg);
-            const fileBase64 = fileBuffer.toString("base64");
-            const profileFile = {
-              filename: path.basename(data.refComboImg),
-              // content: fileBase64,
-              // contentType: "image/jpeg",
-            };
-            return { ...data, profileFile };
+            try {
+              logger.info(
+                `[FoodListV1] Reading Combo Image: ${data.refComboImg}`
+              );
+              const fileBuffer = await viewFile(data.refComboImg);
+              const profileFile = { filename: path.basename(data.refComboImg) };
+              return { ...data, profileFile };
+            } catch (err) {
+              logger.error(
+                `[FoodListV1] Failed to read Combo Image => ${data.refComboImg}`,
+                err
+              );
+            }
           }
           return data;
         })
       );
+      logger.info(`[FoodListV1] Processed Combo Items => ${comboItem.length}`);
 
+      // Grouping food items
+      logger.info(`[FoodListV1] Grouping food items by category`);
       const groupedMap = new Map<number, GroupedFoodItems>();
       for (const item of foodItem) {
         const existingGroup = groupedMap.get(item.refCategoryId);
@@ -102,8 +150,13 @@ export class userProductDisplayRepository {
       }
 
       const groupedFoodItems = Array.from(groupedMap.values());
+      logger.info(
+        `[FoodListV1] Grouped Food Items => ${groupedFoodItems.length} categories found`
+      );
 
+      // Add combo section
       if (comboItem.length > 0) {
+        logger.info(`[FoodListV1] Adding combo section at index 2`);
         groupedFoodItems.splice(2, 0, {
           refCategoryId: 0,
           refFoodCategoryName: "Combo",
@@ -111,27 +164,32 @@ export class userProductDisplayRepository {
         });
       }
 
-      return encrypt(
-        {
-          success: true,
-          message: "Food Item passed Successfully",
-          token: tokens,
-          foodItem: groupedFoodItems,
-        },
-        true
+      logger.info(
+        `[FoodListV1] Final grouped food items => ${groupedFoodItems.length}`
       );
+
+      const responsePayload = {
+        success: true,
+        message: "Food Item passed Successfully",
+        token: tokens,
+        foodItem: groupedFoodItems,
+      };
+
+      logger.info(`[FoodListV1] SUCCESS - Response Ready`);
+      return encrypt(responsePayload, true);
     } catch (error) {
-      console.log("error in line --------- 26", error);
-      return encrypt(
-        {
-          success: false,
-          message: "Error in Listing the Food Items",
-          token: tokens,
-        },
-        true
-      );
+      logger.error(`[FoodListV1] ERROR - Failed to process FoodList`, error);
+
+      const errorResponse = {
+        success: false,
+        message: "Error in Listing the Food Items",
+        token: tokens,
+      };
+
+      return encrypt(errorResponse, true);
     }
   }
+
   public async foodInfoV1(user_data: any, tokendata: any): Promise<any> {
     console.log("user_data line ----- 123", user_data);
     const token = { id: tokendata.id };
