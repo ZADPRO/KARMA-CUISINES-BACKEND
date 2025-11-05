@@ -160,7 +160,7 @@ export const createCombo = `INSERT INTO
     "refCreateAt",
     "refCreateBy",
     "refComboDescription",
-    "refRestroId"
+    "restroId"
   )
 VALUES
   (

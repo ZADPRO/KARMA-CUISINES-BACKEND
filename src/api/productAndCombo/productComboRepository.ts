@@ -381,31 +381,37 @@ export class ProductsComboRepository {
         CurrentTime(),
         tokendata.id,
         user_data.comboDescription,
-        user_data.refRestroId,
+        user_data.restroId,
       ];
-      await executeQuery(createCombo, params);
+
+      console.log("Combo Params =>", params);
+
+      const result = await executeQuery(createCombo, params);
+      if (!result || result.length === 0) {
+        throw new Error("Insert failed: no rows affected");
+      }
 
       return encrypt(
         {
           success: true,
-          message: "Food Item Updated Successfully",
+          message: "Combo created successfully",
           token: tokens,
         },
         true
       );
     } catch (error) {
-      console.log("error in line --------- 59", error);
+      console.error("Error inserting combo:", error);
       return encrypt(
         {
           success: false,
-          message: "Error In Updating the Food Item",
+          message: "Error inserting combo",
           token: tokens,
         },
         true
       );
-    } finally {
     }
   }
+
   public async foodListV1(user_data: any, tokendata: any): Promise<any> {
     const token = { id: tokendata.id };
     const tokens = generateTokenWithExpire(token, true);
